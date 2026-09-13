@@ -96,6 +96,38 @@ def verify_profit_integrity(root_dir: str) -> bool:
         return False
 
 
+def verify_mobile_viewport_gate(root_dir: str) -> bool:
+    """验证移动端视口所有权门禁（第34条）"""
+    if root_dir not in sys.path:
+        sys.path.insert(0, root_dir)
+    try:
+        from io import StringIO
+        import unittest
+        import tests.test_mobile_nav_viewport as tmn
+
+        suite = unittest.TestLoader().loadTestsFromModule(tmn)
+        return unittest.TextTestRunner(stream=StringIO(), verbosity=0).run(suite).wasSuccessful()
+    except Exception as e:
+        sys.stderr.write(f"[reflex_guard] Error in verify_mobile_viewport_gate: {e}\n")
+        return False
+
+
+def verify_closeout_hygiene(root_dir: str) -> Tuple[bool, str]:
+    """验证工作区机械收尾卫生（第35条）"""
+    try:
+        cmd = ["git", "status", "--porcelain"]
+        env = dict(os.environ, HOME="/tmp")
+        res = subprocess.run(cmd, cwd=root_dir, capture_output=True, text=True, timeout=3, env=env)
+        if res.returncode == 0:
+            lines = [l.strip() for l in res.stdout.splitlines() if l.strip()]
+            unclean = [l for l in lines if not l.endswith("real_money_ledger.db")]
+            if unclean:
+                return False, f"未收尾脏文件: {', '.join(unclean[:3])}"
+        return True, ""
+    except Exception:
+        return True, ""
+
+
 def handle_stop_hook(payload: Dict[str, Any]) -> Dict[str, Any]:
     """处理 Stop 事件: 检查是否允许 AI 停机"""
     violations = scan_python_file_lines(WORKSPACE_ROOT)
@@ -119,9 +151,22 @@ def handle_stop_hook(payload: Dict[str, Any]) -> Dict[str, Any]:
             "reason": "【仿生脊髓反射拦截】第24条盈利真实性与单向棘轮风控守卫测试未通过！禁止停机！必须自主自愈修复！"
         }
 
+    if not verify_mobile_viewport_gate(WORKSPACE_ROOT):
+        return {
+            "decision": "continue",
+            "reason": "【仿生脊髓反射拦截】第34条移动端物理视口所有权门禁测试未通过！严禁形式主义假全绿，必须自主自愈！"
+        }
+
+    is_clean, dirty_info = verify_closeout_hygiene(WORKSPACE_ROOT)
+    if not is_clean:
+        return {
+            "decision": "continue",
+            "reason": f"【仿生脊髓反射拦截】第35条机械收尾闸机违规：{dirty_info}。必须执行干净收尾方准停机！"
+        }
+
     return {
         "decision": "allow",
-        "reason": "仿生多重神经突触质检全绿，单向棘轮风控守恒，准予安全停机。"
+        "reason": "仿生多重神经突触质检全绿，视口所有权与单向棘轮风控守恒，准予安全停机。"
     }
 
 

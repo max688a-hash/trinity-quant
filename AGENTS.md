@@ -312,3 +312,23 @@
 3. **数据缺失诚实披露与零演播欺诈（Zero-Deceptive-Showmanship Law）**：
    - 当数据源离线、断网或未开市时，系统必须诚实披露 `OFFLINE`、`FROZEN` 或 `DATA_UNAVAILABLE`，宁可静态展示最后已知价也绝不允许用伪造演播欺骗用户。
 
+### 第 34 条：移动端物理视口所有权与真实人机工程排障宪法 (Mobile Viewport Ownership & Physical HMI Law)
+1. **视口所有权绝对真实（True Viewport Ownership）**：
+   - 严禁“HTML 中存在属性即视为测试通过”的文本形式主义假验收；
+   - 移动端底栏交互测试必须直接断言物理几何视口：点击底栏任何按钮时，必须确保目标面板被精确送入 `[headerBottom, bottomNavTop]` 之间的有效物理可见区域（`bringPanelIntoMobileViewport`），严禁被顶部常驻头图或底部导航条挤压遮挡。
+2. **严禁盲目滚动至页顶（Anti-Blind-ScrollTop Law）**：
+   - 在窄屏/移动端（`max-width: 767px`），底栏切换严禁主路径无脑执行 `window.scrollTo(0, 0)` 将面板甩出视野，导致用户产生“点击无效、全是假占位符”的致命视觉死锁；
+   - 桌面端多段选项卡在移动端必须严格隐藏（`hidden md:flex`），宏观通栏与非必要指标卡片在手机端必须折叠，保障首屏空间完全归属于核心操作面板。
+3. **中国金融交易法定色彩语义全局统一**：
+   - 买入/多头/突破必须严格遵循国内证券期货红色惯例（`🔴` / Rose），卖出/空头/止损必须严格遵循绿色惯例（`🟢` / Emerald），严禁中西色彩混淆或同屏冲突。
+
+### 第 35 条：机械收尾闸机与工作区纯净交接宪法 (Mechanical Closeout Enforcer & Clean Handoff Law)
+1. **纯净交接零污染（Clean-State Handoff Law）**：
+   - 任何开发任务在宣布完成或停机（`Stop`）之前，必须执行机械物理收尾；
+   - `git status --porcelain` 必须为完全干净状态，严禁将未跟踪的本地实验文件、临时日志随手抛弃在工作区；
+2. **构建产物与本地运行时状态刚性隔离（Artifacts & State Quarantine）**：
+   - 所有前端构建产物（如 `web/dist/`）、临时运行态数据（如 `.kiro/gates/state/`）、本地仿真或实盘私有账本（如 `data/real_money_ledger.db`）必须严格写入 `.gitignore` 或在交接时自动还原，严禁污染版本控制历史；
+3. **双轨生命周期 Hook 刚性拦截（Dual Lifecycle Hook Gate）**：
+   - Antigravity 物理生命周期 Hook（`scripts/reflex_guard_hook.py`）与 Cursor 规则必须同步搭载视口所有权门禁与收尾闸机；若发现未处理的脏文件、视口所有权断言失败或违规代码，物理 Hook 强制否决停机并下发自愈指令。
+
+

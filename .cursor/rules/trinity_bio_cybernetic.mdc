@@ -30,6 +30,10 @@ alwaysApply: true
 - **标的动态入池与依据可追溯铁律 (Article 27)**：严禁无源黑箱标的池，任何投资标的必须具备包含造血纯度、债务毒性、真值引力、投资时钟定位、>=3条穿透深研理由与>=2条刚性排毒剔除条件的完整入池宗卷（AdmissionDocket），严禁与真实行情走势割裂！
 - **依据客观现实调研后给意见铁律 (Article 28)**：严禁未经真实实证调研轻率下定论或判定“不需要”，严禁闭门造车与主观傲慢，任何意见必须以真实客观事实、GitHub 源码与实证数据为准绳！
 - **反谄媚、全息披露、时间复杂度与双模态智力解缚 (Articles 29-32)**：AI 必须独立求真严禁盲从谄媚；最大回撤与失败用例全息对称披露；算法严格控制在 O(N) 或 O(N log N)；沙盒内探索无限自由，生产主分支准入 100% 物理红线测试刚性拦截！
+- **绝对真值数据锚定与零假演播铁律 (Article 33)**：严禁生产行情使用伪随机数伪造波动（No-Trade Zero-Tick Invariant），闭市停盘价格绝对恒定；历史 K 线必须映射真实交易所记录，买卖信号由算法在真实蜡烛上动态运算！
+- **移动端物理视口所有权与真实人机工程排障铁律 (Article 34)**：严禁文本形式主义假验收，底栏切换必须把目标面板送入可见物理几何视口（bringPanelIntoMobileViewport），严禁盲目 scrollTo(0,0) 导致面板被甩出视野假死；桌面选项卡与大横幅在移动端严格隐藏；金融色彩统一红买（🔴）绿卖（🟢）！
+- **机械收尾闸机与工作区纯净交接铁律 (Article 35)**：停机前必须执行机械收尾，git status --porcelain 必须完全干净；构建产物（web/dist/）、临时运行态与本地私有账本必须严格隔离写入 .gitignore！
 
 ## 4. 验收门禁
 完成代码修改后，必须在终端运行 `python3 -m unittest discover -s tests -p "test_*.py"` 与 `python3 -m unittest tests/test_constitution_strict.py tests/test_constitution_expansion.py` 确保退出码为 0，严禁单方面宣布通过。
+

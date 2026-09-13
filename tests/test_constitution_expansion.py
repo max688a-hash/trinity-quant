@@ -100,6 +100,26 @@ class TestConstitutionExpansion(unittest.TestCase):
         self.assertIn("loadRealKlineData", html, "缺失真实K线加载器！")
         self.assertIn("calculateDynamicSignals", html, "缺失动态数学算法信号推导器！")
 
+    def test_article_34_mobile_viewport_ownership(self) -> None:
+        """断言第34条：移动端物理视口所有权与真实人机工程排障宪法"""
+        self.assertIn("第 34 条：移动端物理视口所有权与真实人机工程排障宪法", self.agents_md)
+        self.assertIn("Mobile Viewport Ownership", self.agents_md)
+        from tests.test_mobile_nav_viewport import TestMobileNavViewport
+        from io import StringIO
+        suite = unittest.TestLoader().loadTestsFromTestCase(TestMobileNavViewport)
+        res = unittest.TextTestRunner(stream=StringIO(), verbosity=0).run(suite)
+        self.assertTrue(res.wasSuccessful(), "移动端视口所有权测试未通过！")
+
+    def test_article_35_mechanical_closeout_clean_handoff(self) -> None:
+        """断言第35条：机械收尾闸机与工作区纯净交接宪法"""
+        self.assertIn("第 35 条：机械收尾闸机与工作区纯净交接宪法", self.agents_md)
+        self.assertIn("Mechanical Closeout Enforcer", self.agents_md)
+        with open(os.path.join(self.workspace_root, ".gitignore"), "r", encoding="utf-8") as fp:
+            gitignore = fp.read()
+        self.assertIn("web/dist/", gitignore, "构建产物 web/dist/ 必须写入 .gitignore！")
+        self.assertIn(".kiro/gates/state/", gitignore, "运行态 .kiro/gates/state/ 必须写入 .gitignore！")
+
 
 if __name__ == "__main__":
     unittest.main()
+
