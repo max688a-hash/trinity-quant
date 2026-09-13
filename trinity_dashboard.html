@@ -1282,6 +1282,19 @@
             <div class="col-span-2"><span class="text-slate-500">⏰ 真实交易时段:</span> <span id="specHours" class="text-slate-300 font-mono">09:30-11:30, 13:00-15:00</span></div>
             <div class="col-span-2"><span class="text-cyan-400 font-bold">⚖️ 物理规则/法条风控:</span> <span id="specLegalRule" class="text-amber-200 font-mono">A股T+1现货交收 · 卖出计提0.05%印花税 · 10%跌停硬熔断</span></div>
           </div>
+          <!-- 市场状态机与微观 OFI 高频 Alpha 看板 -->
+          <div id="tickerRegimeAlphaBar" class="mt-2 pt-2 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-slate-300 bg-slate-950/80 p-2 rounded-lg">
+            <div class="flex items-center gap-2">
+              <span class="text-amber-400 font-bold">🧠 市场状态/策略:</span>
+              <span id="tickerRegimeTag" class="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold border border-cyan-800">BULL_TREND (H=0.62)</span>
+              <span id="tickerActiveStrategy" class="text-emerald-400 font-bold">海龟唐奇安突破 (Half-Kelly 55%)</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span>🔬 OFI推力: <span id="tickerOfiVal" class="text-emerald-400 font-bold">+850手 (向上)</span></span>
+              <span>🧊 冰山单: <span id="tickerIcebergVal" class="text-cyan-300 font-bold">950手吸筹</span></span>
+              <span>🏛️ 主力真金: <span id="tickerMainFlowVal" class="text-rose-400 font-bold">+21.4% (吸筹)</span></span>
+            </div>
+          </div>
         </div>
 
         <!-- K线 Canvas 主图与副图容器 (蜡烛图完全显露，内部零遮挡) -->
@@ -4601,6 +4614,55 @@
       if (marginTag) marginTag.innerText = meta.margin || '100%';
       if (hoursTag) hoursTag.innerText = meta.hours || '交易时段';
       if (ruleTag) ruleTag.innerText = meta.rule || '依交易所法规执行';
+
+      // 异步刷新市场状态与微观 OFI 看板
+      syncRegimeAndMicrostructure(klineState.symbol);
+    }
+
+    let _lastRegimeSym = '';
+    async function syncRegimeAndMicrostructure(sym) {
+      if (_lastRegimeSym === sym || !window.location.protocol.startsWith('http')) return;
+      _lastRegimeSym = sym;
+      try {
+        const [regimeRes, flowRes] = await Promise.all([
+          fetch(`/api/regime/evaluate?symbol=${encodeURIComponent(sym)}`).then(r => r.ok ? r.json() : null),
+          fetch(`/api/microstructure/flow?symbol=${encodeURIComponent(sym)}`).then(r => r.ok ? r.json() : null)
+        ]);
+        if (regimeRes && regimeRes.regime) {
+          const rTag = document.getElementById('tickerRegimeTag');
+          const sTag = document.getElementById('tickerActiveStrategy');
+          if (rTag) {
+            rTag.innerText = `${regimeRes.regime.regime} (H=${regimeRes.regime.hurst_exponent})`;
+            rTag.className = regimeRes.regime.regime === 'EXTREME_VOLATILE'
+              ? 'px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-bold border border-rose-700 animate-pulse'
+              : 'px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold border border-cyan-800';
+          }
+          if (sTag && regimeRes.signal) {
+            const kw = regimeRes.meta_kelly_weights ? Math.round((regimeRes.meta_kelly_weights.trend_breakout_weight || regimeRes.meta_kelly_weights.mean_reversion_weight || 0.1) * 100) : 50;
+            sTag.innerText = `${regimeRes.signal.active_strategy} (Half-Kelly ${kw}%)`;
+          }
+        }
+        if (flowRes) {
+          const ofiTag = document.getElementById('tickerOfiVal');
+          const iceTag = document.getElementById('tickerIcebergVal');
+          const flowTag = document.getElementById('tickerMainFlowVal');
+          if (ofiTag && flowRes.ofi) {
+            const ofi = flowRes.ofi.ofi_net_value;
+            ofiTag.innerText = `${ofi > 0 ? '+' : ''}${ofi}手 (${flowRes.ofi.next_tick_momentum === 'UPWARD_PRESSURE' ? '向上' : flowRes.ofi.next_tick_momentum === 'DOWNWARD_PRESSURE' ? '向下' : '均衡'})`;
+            ofiTag.className = ofi > 0 ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold';
+          }
+          if (iceTag && flowRes.iceberg) {
+            iceTag.innerText = flowRes.iceberg.detected_type !== 'NONE' ? `${flowRes.iceberg.estimated_hidden_volume}手吸筹` : '未检出';
+          }
+          if (flowTag && flowRes.institutional_flow) {
+            const r = flowRes.institutional_flow.main_force_ratio_pct;
+            flowTag.innerText = `${r > 0 ? '+' : ''}${r}% (${flowRes.institutional_flow.signal_judgment})`;
+            flowTag.className = r > 0 ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold';
+          }
+        }
+      } catch (e) {
+        console.warn("syncRegimeAndMicrostructure error", e);
+      }
     }
 
     // ========================================================

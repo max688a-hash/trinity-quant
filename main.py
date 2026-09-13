@@ -36,9 +36,11 @@ from entropy_execution.real_money_service import (
     handle_real_money_order, handle_real_money_toggle, handle_real_money_unlock
 )
 from entropy_execution.battlefield_api_service import (
-    handle_get_alert_history, handle_get_supervisor_telemetry,
-    handle_get_vault_status, handle_run_reconciliation_audit,
-    handle_save_vault_credentials, handle_trigger_test_alert
+    handle_get_alert_history, handle_get_gateways_patrol,
+    handle_get_microstructure_flow, handle_get_regime_evaluation,
+    handle_get_supervisor_telemetry, handle_get_vault_status,
+    handle_run_reconciliation_audit, handle_save_vault_credentials,
+    handle_trigger_test_alert
 )
 from entropy_execution.system_quality_inspector import SystemQualityInspector
 from truth_kernel.pool_admission_auditor import PoolAdmissionAuditor
@@ -94,6 +96,13 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/vault/status": handle_get_vault_status,
             "/api/alert/history": handle_get_alert_history,
             "/api/supervisor/telemetry": handle_get_supervisor_telemetry,
+            "/api/gateways/patrol": handle_get_gateways_patrol,
+            "/api/regime/evaluate": lambda: handle_get_regime_evaluation(
+                parse_qs(parsed.query).get("symbol", [None])[0]
+            ),
+            "/api/microstructure/flow": lambda: handle_get_microstructure_flow(
+                parse_qs(parsed.query).get("symbol", [None])[0]
+            ),
             "/api/reconciliation/run": lambda: handle_run_reconciliation_audit(_GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK),
         }
         if parsed.path in api_map:

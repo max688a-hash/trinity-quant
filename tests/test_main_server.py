@@ -124,7 +124,8 @@ class TestMainServer(unittest.TestCase):
         from entropy_execution.battlefield_api_service import (
             handle_get_vault_status, handle_save_vault_credentials,
             handle_get_alert_history, handle_trigger_test_alert,
-            handle_get_supervisor_telemetry
+            handle_get_supervisor_telemetry, handle_get_gateways_patrol,
+            handle_get_regime_evaluation, handle_get_microstructure_flow
         )
         vault_res = handle_get_vault_status()
         self.assertIn("gateways", vault_res)
@@ -143,6 +144,22 @@ class TestMainServer(unittest.TestCase):
 
         telemetry = handle_get_supervisor_telemetry()
         self.assertIn("memory_rss_mb", telemetry)
+
+        # 验证网关巡检
+        gw_patrol = handle_get_gateways_patrol()
+        self.assertIn("gateways", gw_patrol)
+        self.assertGreaterEqual(len(gw_patrol["gateways"]), 1)
+
+        # 验证市场状态评估
+        regime_rep = handle_get_regime_evaluation("600519.SH")
+        self.assertIn("regime", regime_rep)
+        self.assertIn("meta_kelly_weights", regime_rep)
+
+        # 验证微观高频流
+        micro_rep = handle_get_microstructure_flow("600519.SH")
+        self.assertIn("ofi", micro_rep)
+        self.assertIn("iceberg", micro_rep)
+        self.assertIn("institutional_flow", micro_rep)
 
     def test_run_full_verification(self) -> None:
         """验证主检验脚本返回码为0"""
