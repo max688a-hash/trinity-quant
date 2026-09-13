@@ -40,19 +40,27 @@ def scan_python_file_lines(root_dir: str) -> List[Tuple[str, int]]:
     return violations
 
 
+def _get_python_bin(root_dir: str) -> str:
+    venv_py = os.path.join(root_dir, ".venv", "bin", "python3")
+    if os.path.exists(venv_py):
+        return venv_py
+    return sys.executable
+
+
 def verify_strict_constitution(root_dir: str) -> bool:
     """运行严格宪法全套测试并检查退出码"""
     test_files = [
         os.path.join(root_dir, "tests", "test_constitution_strict.py"),
         os.path.join(root_dir, "tests", "test_constitution_expansion.py"),
     ]
-    py_bin = sys.executable
+    py_bin = _get_python_bin(root_dir)
+    env = {**os.environ, "PYTHONPATH": root_dir}
     for tf in test_files:
         if not os.path.exists(tf):
             continue
         try:
             rel = os.path.relpath(tf, root_dir)
-            res = subprocess.run([py_bin, "-m", "unittest", rel], cwd=root_dir, capture_output=True, timeout=15)
+            res = subprocess.run([py_bin, "-m", "unittest", rel], cwd=root_dir, env=env, capture_output=True, timeout=15)
             if res.returncode != 0:
                 return False
         except Exception:
@@ -66,10 +74,12 @@ def verify_profit_integrity(root_dir: str) -> bool:
     if not os.path.exists(test_file):
         return True
     try:
-        py_bin = sys.executable
+        py_bin = _get_python_bin(root_dir)
+        env = {**os.environ, "PYTHONPATH": root_dir}
         res = subprocess.run(
             [py_bin, "-m", "unittest", "tests/test_profit_integrity_guard.py"],
             cwd=root_dir,
+            env=env,
             capture_output=True,
             timeout=15
         )
