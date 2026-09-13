@@ -63,3 +63,13 @@
 2. 标的入池宗卷与认知可追溯性：全系统展示的任何投资标的（A股、港股、外汇、期货），必须具备完整的 `AdmissionDocket` 科学入池宗卷，必须包含：入池评级（AAA/AA/A）、投资时钟定位（长期价值堡垒/中期反转套利/短期高弹动量）、不少于3条具体穿透深研理由与当前是否适合即刻建仓指引。
 3. 刚性动态排毒剔除条件：每个入池标的必须预先声明不少于2条明确具体的触发行情与财报恶化剔除门禁（如造血纯度跌破阈值、大股东突发减持、期货基差剧烈贴水翻转等），一旦触碰立即触发物理排毒剔除。
 4. 真实市场完整谱系与无缝联动：系统标的库必须真实覆盖国内四大期货交易所主流品种及各大市场代表板块，点击标的必须毫秒级平滑定位至关联行情与K线，严禁标的与走势割裂。
+
+## 9. 双轨 Superpowers 超级技能中枢 (.cursor/rules/ & .agents/skills/)
+Cursor 深度挂载 7 大量化专有与全领域通用超级技能模块：
+- `superpower_financial_audit.mdc`: 顶级真值财报穿透与现金流造血解构；
+- `superpower_adversarial_stress.mdc`: 黑天鹅极端市场对偶对抗打击；
+- `superpower_craftsmanship_guard.mdc`: 军工级防豆腐渣与极速解耦重构 (GRADE_AAA_FORTRESS)；
+- `superpower_universal_architect.mdc`: 第一性原理全领域系统架构与单文件<=300行解耦；
+- `superpower_universal_fuzzing.mdc`: 全领域极端边界与混沌压力打击；
+- `superpower_universal_ui_ux.mdc`: 小白通俗化降维与移动原生视网膜零盲区人机交互；
+- `superpower_universal_ci_cd.mdc`: GitHub Actions (GHA) 工业级自动化全链路云端卫士。

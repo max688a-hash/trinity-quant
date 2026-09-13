@@ -1,0 +1,15 @@
+---
+description: 顶级真值财报穿透与现金流造血解构超级技能 (Financial Audit Superpower)。穿透上市公司现金流量表、资产负债表与债务墙，杜绝老千股。
+globs: *
+alwaysApply: false
+---
+
+# Cursor Superpower: 财报真值造血法证审计 (Financial Audit)
+
+## 触发场景
+涉及选股池、候选资产、财务数据分析、基本面模型编写时激活。
+
+## 执行准则
+1. 必须穿透微观造血纯度 $\Phi_{CP} = \frac{\text{经营现金流}}{\text{净利润}} \ge 0.30$；
+2. 必须审查债务到期墙 $\Omega_{Debt} = \frac{\text{一年内到期负债}}{\text{现金资产}} \le 0.40$；
+3. 输出包含投资时钟（长期/中期/短期）、3项深研理由与刚性排毒警戒线的 `AdmissionDocket`。

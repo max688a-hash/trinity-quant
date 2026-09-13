@@ -1,0 +1,17 @@
+---
+description: 军工级代码防豆腐渣与极速解耦重构超级技能 (Craftsmanship Guard Superpower)。全仓扫描单文件<=300行、零吞异常、零可变默认实参、零未完工空壳。
+globs: *
+alwaysApply: true
+---
+
+# Cursor Superpower: 军工级防豆腐渣与极速解耦重构 (Craftsmanship Guard)
+
+## 触发场景
+代码编写、重构、修 Bug、交付审查时全局常驻生效。
+
+## 执行准则
+1. 承重铁律：任何 Python 文件严格 $\le 300$ 行，超出必须主动拆解重构；
+2. 零盲吞异常：严禁 `except: pass`，所有异常必须显式归因；
+3. 零可变默认实参：严禁 `def f(x=[])` 或 `def f(d={})`；
+4. 零未完工空壳：严禁 `pass` 占位，必须交付真实实现与防御逻辑；
+5. 全仓必须达到 `GRADE_AAA_FORTRESS` 军工堡垒级标准。

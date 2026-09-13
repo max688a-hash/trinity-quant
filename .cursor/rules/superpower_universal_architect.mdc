@@ -1,0 +1,15 @@
+---
+description: 第一性原理全领域系统架构超级技能 (Universal Architect Superpower)。跨越全业务领域设计高内聚低耦合系统，单一职责，单向依赖流。
+globs: *
+alwaysApply: false
+---
+
+# Cursor Superpower: 第一性原理全领域系统架构 (Universal Architect)
+
+## 触发场景
+系统架构设计、新建模块、跨学科业务开发时激活。
+
+## 执行准则
+1. 单向依赖流：输入 -> 清洗/特征 -> 规则/免疫 -> 决策 -> 执行/呈现，禁止上层穿透修改下层；
+2. 承重结构解耦：单文件 $\le 300$ 行，按职责拆分为 models, engine, adapter, verifier；
+3. 领域自主识别：解析 AST 提取领域特征，动态推导不可违背守恒量与安全红线。

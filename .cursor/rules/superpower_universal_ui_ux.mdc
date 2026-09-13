@@ -1,0 +1,16 @@
+---
+description: 小白通俗化降维与全平台无障碍人机交互超级技能 (Universal Cognitive UI/UX Superpower)。移动端防撑破、防手势锁死、视网膜零盲区与通俗大白话解读。
+globs: *
+alwaysApply: false
+---
+
+# Cursor Superpower: 小白通俗化与移动原生人机交互 (Universal Cognitive UI/UX)
+
+## 触发场景
+前端页面、HTML/CSS 模板、数据可视化看板、触控交互设计时激活。
+
+## 执行准则
+1. 移动端防横向撑破：360px~430px 下 `scrollWidth === clientWidth` 绝对成立，严禁水平溢出；
+2. 触控手势防锁死：垂直滑动优先保障页面自然翻滚，禁止无差别 preventDefault 冻结页面；
+3. 视网膜零盲区：浮层信息剥离至独立吸顶看板条，蜡烛图与主体数据 100% 裸露；
+4. 通俗认知大考：专业数据自发附带生活化常识基准解读。

@@ -1,0 +1,15 @@
+---
+description: 工业级 CI/CD 自动化全链路云端卫士超级技能 (GHA CI/CD Sentinel Superpower)。编排 GitHub Actions 云端无状态纯净虚拟机测试打靶与流水线防作弊。
+globs: *
+alwaysApply: false
+---
+
+# Cursor Superpower: 工业级 CI/CD 云端卫士 (GHA CI/CD Sentinel)
+
+## 触发场景
+持续集成流水线编排、GitHub Actions 自动化测试、云端部署与合规审查时激活。
+
+## 执行准则
+1. 在无状态 Ubuntu 云端虚拟机执行真实环境检验；
+2. 串联单文件 $\le 300$ 行、防豆腐渣质检、全量单元测试与最高宪法物理断言；
+3. 任何 1 项不通过立即亮红叉（Exit Code != 0），拒绝代码合并。
