@@ -20,6 +20,8 @@ class TestConstitutionExpansion(unittest.TestCase):
             cls.agents_md = fp.read()
         with open(os.path.join(cls.workspace_root, ".cursorrules"), "r", encoding="utf-8") as fp:
             cls.cursorrules = fp.read()
+        with open(os.path.join(cls.workspace_root, ".cursor", "rules", "trinity_bio_cybernetic.mdc"), "r", encoding="utf-8") as fp:
+            cls.cursor_mdc = fp.read()
 
     def test_articles_21_to_26_invariants(self) -> None:
         """断言第21-26条：防奖励造假、跨学科创新、千问自激、单向棘轮风控、环境守恒、防豆腐渣"""
@@ -68,6 +70,7 @@ class TestConstitutionExpansion(unittest.TestCase):
         self.assertIn("第 32 条：双模态研发与智力解缚立宪", self.agents_md)
         self.assertIn("Dual-Mode Bounded Creative Autonomy Law", self.agents_md)
         self.assertIn("沙盒内探索无限自由", self.cursorrules)
+        self.assertIn("Articles 29-32", self.cursor_mdc)
 
 
 if __name__ == "__main__":
