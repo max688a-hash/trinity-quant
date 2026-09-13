@@ -40,8 +40,12 @@ def scan_python_file_lines(root_dir: str) -> List[Tuple[str, int]]:
     return violations
 
 
+LAST_VERIFY_ERROR = ""
+
+
 def verify_strict_constitution(root_dir: str) -> bool:
     """运行严格宪法全套测试（进程内直接运行，免疫子进程沙盒阻断）"""
+    global LAST_VERIFY_ERROR
     if root_dir not in sys.path:
         sys.path.insert(0, root_dir)
     try:
@@ -56,10 +60,16 @@ def verify_strict_constitution(root_dir: str) -> bool:
         suite.addTests(loader.loadTestsFromModule(tce))
 
         stream = StringIO()
-        runner = unittest.TextTestRunner(stream=stream, verbosity=0)
+        runner = unittest.TextTestRunner(stream=stream, verbosity=2)
         res = runner.run(suite)
-        return res.wasSuccessful()
+        if not res.wasSuccessful():
+            err_items = [f"{test}: {err.strip()[:100]}" for test, err in (res.errors + res.failures)]
+            LAST_VERIFY_ERROR = " | ".join(err_items)
+            return False
+        LAST_VERIFY_ERROR = ""
+        return True
     except Exception as e:
+        LAST_VERIFY_ERROR = f"EXC: {e}"
         sys.stderr.write(f"[reflex_guard] Error in verify_strict_constitution: {e}\n")
         return False
 
@@ -97,9 +107,10 @@ def handle_stop_hook(payload: Dict[str, Any]) -> Dict[str, Any]:
         }
 
     if not verify_strict_constitution(WORKSPACE_ROOT):
+        err_msg = f" 详情: {LAST_VERIFY_ERROR}" if LAST_VERIFY_ERROR else ""
         return {
             "decision": "continue",
-            "reason": "【仿生脊髓反射拦截】宪法物理门禁断言测试未通过！禁止停机！必须自主自愈修复！"
+            "reason": f"【仿生脊髓反射拦截】宪法物理门禁断言测试未通过！禁止停机！必须自主自愈修复！{err_msg}"
         }
 
     if not verify_profit_integrity(WORKSPACE_ROOT):
