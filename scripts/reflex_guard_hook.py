@@ -41,21 +41,23 @@ def scan_python_file_lines(root_dir: str) -> List[Tuple[str, int]]:
 
 
 def verify_strict_constitution(root_dir: str) -> bool:
-    """运行严格宪法测试并检查退出码"""
-    test_file = os.path.join(root_dir, "tests", "test_constitution_strict.py")
-    if not os.path.exists(test_file):
-        return True
-    try:
-        py_bin = sys.executable
-        res = subprocess.run(
-            [py_bin, "-m", "unittest", "tests/test_constitution_strict.py"],
-            cwd=root_dir,
-            capture_output=True,
-            timeout=15
-        )
-        return res.returncode == 0
-    except Exception:
-        return False
+    """运行严格宪法全套测试并检查退出码"""
+    test_files = [
+        os.path.join(root_dir, "tests", "test_constitution_strict.py"),
+        os.path.join(root_dir, "tests", "test_constitution_expansion.py"),
+    ]
+    py_bin = sys.executable
+    for tf in test_files:
+        if not os.path.exists(tf):
+            continue
+        try:
+            rel = os.path.relpath(tf, root_dir)
+            res = subprocess.run([py_bin, "-m", "unittest", rel], cwd=root_dir, capture_output=True, timeout=15)
+            if res.returncode != 0:
+                return False
+        except Exception:
+            return False
+    return True
 
 
 def verify_profit_integrity(root_dir: str) -> bool:
