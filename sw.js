@@ -60,3 +60,36 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
+// 系统原生通知点击交互：唤醒或前台置顶 TRINITY QUANT
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url.includes('trinity_dashboard') && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow('/trinity_dashboard.html');
+      }
+    })
+  );
+});
+
+// 监听前台或后台分发的原生系统级锁屏通知
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SHOW_NOTIFICATION') {
+    const { title, body, icon, tag } = event.data;
+    self.registration.showNotification(title || 'TRINITY QUANT 顶级量化预警', {
+      body: body || '量化雷达捕捉到核心造血信号或风控异动',
+      icon: icon || '/data/icon-192.png',
+      badge: '/data/icon-192.png',
+      tag: tag || 'trinity-alert',
+      vibrate: [200, 100, 200],
+      requireInteraction: true,
+      data: { url: '/trinity_dashboard.html' }
+    });
+  }
+});

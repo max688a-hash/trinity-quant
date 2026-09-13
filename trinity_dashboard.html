@@ -47,6 +47,12 @@
     }
     .alert-pulse-emerald { animation: pulse-emerald 1.2s infinite; }
     .alert-strobe-rose { animation: strobe-rose 0.8s infinite; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    button:active, .mobile-nav-item:active, .cursor-pointer:active {
+      transform: scale(0.965);
+      transition: transform 0.08s cubic-bezier(0.4, 0, 0.2, 1);
+    }
   </style>
 </head>
 <body class="p-3 sm:p-4 md:p-8 pb-24 md:pb-8 min-h-screen text-slate-100 antialiased selection:bg-cyan-500 selection:text-black custom-scrollbar">
@@ -155,9 +161,9 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+    <div class="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-2 px-2 sm:mx-0 sm:px-0">
       <!-- 板块 1: A股股票 -->
-      <div onclick="selectGlobalMarket('CN_EQUITY', '600519.SH')" class="cursor-pointer group relative overflow-hidden bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-4 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10">
+      <div onclick="selectGlobalMarket('CN_EQUITY', '600519.SH')" class="min-w-[270px] sm:min-w-0 snap-start flex-1 shrink-0 cursor-pointer group relative overflow-hidden bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-4 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10">
         <div class="flex justify-between items-start mb-2">
           <div class="flex items-center gap-2">
             <span class="text-xl">🇨🇳</span>
@@ -191,7 +197,7 @@
       </div>
 
       <!-- 板块 2: 国内商品期货 -->
-      <div onclick="selectGlobalMarket('CN_FUTURE', 'SA')" class="cursor-pointer group relative overflow-hidden bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-4 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10">
+      <div onclick="selectGlobalMarket('CN_FUTURE', 'SA')" class="min-w-[270px] sm:min-w-0 snap-start flex-1 shrink-0 cursor-pointer group relative overflow-hidden bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-4 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10">
         <div class="flex justify-between items-start mb-2">
           <div class="flex items-center gap-2">
             <span class="text-xl">🌾</span>
@@ -214,18 +220,18 @@
             <span class="text-slate-300 font-mono text-[11px]">09:00-15:00 | 21:00-23:00</span>
           </div>
           <div class="flex justify-between items-center">
-            <span class="text-slate-400 text-[11px]">风控模型:</span>
-            <span class="text-cyan-400 font-mono text-[10px]">T+0 双向 · 海龟 N-Unit</span>
+            <span class="text-slate-400 text-[11px]">结算规则:</span>
+            <span class="text-emerald-400/90 font-mono text-[10px]">T+0 双向对冲 · 保证金制度</span>
           </div>
         </div>
         <div class="mt-2.5 pt-2 border-t border-slate-800/40 flex justify-between items-center text-[10px] text-cyan-400/80 font-medium">
-          <span>点击查看纯碱/玉米 K 线</span>
+          <span>点击查看多周期分形 K 线</span>
           <span>→</span>
         </div>
       </div>
 
       <!-- 板块 3: 全球外汇 -->
-      <div onclick="selectGlobalMarket('FOREX', 'USDCNH')" class="cursor-pointer group relative overflow-hidden bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-4 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10">
+      <div onclick="selectGlobalMarket('FOREX', 'USDCNH')" class="min-w-[270px] sm:min-w-0 snap-start flex-1 shrink-0 cursor-pointer group relative overflow-hidden bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-4 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10">
         <div class="flex justify-between items-start mb-2">
           <div class="flex items-center gap-2">
             <span class="text-xl">💱</span>
@@ -259,7 +265,7 @@
       </div>
 
       <!-- 板块 4: 全球加密数字资产 (24/7/365 开市) -->
-      <div onclick="selectGlobalMarket('CRYPTO', 'BTCUSDT')" class="cursor-pointer group relative overflow-hidden bg-gradient-to-b from-slate-900/90 to-emerald-950/20 hover:to-emerald-950/40 border border-emerald-800/60 hover:border-emerald-500 rounded-2xl p-4 transition-all duration-300 shadow-lg hover:shadow-emerald-500/20">
+      <div onclick="selectGlobalMarket('CRYPTO', 'BTCUSDT')" class="min-w-[270px] sm:min-w-0 snap-start flex-1 shrink-0 cursor-pointer group relative overflow-hidden bg-gradient-to-b from-slate-900/90 to-emerald-950/20 hover:to-emerald-950/40 border border-emerald-800/60 hover:border-emerald-500 rounded-2xl p-4 transition-all duration-300 shadow-lg hover:shadow-emerald-500/20">
         <div class="flex justify-between items-start mb-2">
           <div class="flex items-center gap-2">
             <span class="text-xl">🪙</span>
@@ -2481,6 +2487,19 @@
           </button>
         </div>
 
+        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+          <div class="text-xs font-bold text-cyan-400 flex items-center justify-between">
+            <span class="flex items-center gap-1.5"><span>📱</span> <span>手机系统级锁屏横幅通知 (Web Push)</span></span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-mono">原生无依赖</span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            激活手机原生通知后，即便浏览器退至后台或手机锁屏，量化建仓与危机警报也将直接在手机顶部弹窗！
+          </p>
+          <button id="nativeNotifyBtn" onclick="requestNativeNotificationPermission()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center justify-center gap-2 shadow-sm">
+            <span>🔔</span> <span>点击授权并开启手机系统原生锁屏通知</span>
+          </button>
+        </div>
+
         <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800/80 space-y-1.5 text-[11px] text-slate-300 leading-relaxed">
           <div class="font-bold text-cyan-400 flex items-center gap-1">
             <span>💡</span> 手机端运行与防漏报指南:
@@ -4219,9 +4238,23 @@
           osc1.stop(now + 0.65);
           osc2.stop(now + 0.65);
 
-          // 手机端物理触感轻微点震 (80ms)
+          // 手机端物理触觉：安卓硬件振动马达 / iOS 扬声器微冲激声学触感
           if (navigator.vibrate) {
             try { navigator.vibrate(80); } catch (ve) {}
+          } else {
+            try {
+              const hapticOsc = ctx.createOscillator();
+              const hapticGain = ctx.createGain();
+              hapticOsc.type = 'sine';
+              hapticOsc.frequency.setValueAtTime(120, now);
+              hapticOsc.frequency.exponentialRampToValueAtTime(40, now + 0.05);
+              hapticGain.gain.setValueAtTime(0.35, now);
+              hapticGain.gain.exponentialRampToValueAtTime(0.001, now + 0.055);
+              hapticOsc.connect(hapticGain);
+              hapticGain.connect(ctx.destination);
+              hapticOsc.start(now);
+              hapticOsc.stop(now + 0.06);
+            } catch (he) {}
           }
         } else if (toneType === 'CRISIS_ALARM') {
           // 220Hz 低频锯齿波双蜂鸣警报 (大股东抛售/熔断/黑天鹅)
@@ -4241,9 +4274,23 @@
           osc.start(now);
           osc.stop(now + 0.55);
 
-          // 手机端三段紧迫物理重震 (200ms震, 100ms停, 200ms震, 100ms停, 300ms长震)
+          // 手机端三段紧迫物理重震 (200ms震, 100ms停, 200ms震, 100ms停, 300ms长震) / iOS 强力双脉冲
           if (navigator.vibrate) {
             try { navigator.vibrate([200, 100, 200, 100, 300]); } catch (ve) {}
+          } else {
+            try {
+              const hapticOsc = ctx.createOscillator();
+              const hapticGain = ctx.createGain();
+              hapticOsc.type = 'sine';
+              hapticOsc.frequency.setValueAtTime(75, now);
+              hapticOsc.frequency.exponentialRampToValueAtTime(25, now + 0.08);
+              hapticGain.gain.setValueAtTime(0.5, now);
+              hapticGain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+              hapticOsc.connect(hapticGain);
+              hapticGain.connect(ctx.destination);
+              hapticOsc.start(now);
+              hapticOsc.stop(now + 0.1);
+            } catch (he) {}
           }
         } else if (toneType === 'CAUTION_BEEP') {
           const osc = ctx.createOscillator();
@@ -4285,11 +4332,74 @@
       if (modal) modal.classList.remove('hidden');
       const ctx = getAudioContext();
       if (ctx && ctx.state === 'suspended') ctx.resume();
+      if ('Notification' in window) {
+        updateNotificationBtnStatus(Notification.permission);
+      }
     }
 
     function closeSoundTestModal() {
       const modal = document.getElementById('soundTestModal');
       if (modal) modal.classList.add('hidden');
+    }
+
+    // ========================================================
+    // 系统原生锁屏 Web Push 通知通道 (Service Worker 联动)
+    // ========================================================
+    async function requestNativeNotificationPermission() {
+      if (!('Notification' in window)) {
+        alert("当前手机或浏览器环境不支持原生 Web Push 系统通知");
+        return;
+      }
+      try {
+        const perm = await Notification.requestPermission();
+        updateNotificationBtnStatus(perm);
+        if (perm === 'granted') {
+          dispatchNativePushNotification(
+            "🔔 TRINITY 顶级量化系统通知已激活",
+            "实盘战备雷达已接入系统底层，买点触发与极端黑天鹅危机将直接在锁屏横幅弹出！"
+          );
+          showGlobalAlert('SUCCESS', '原生锁屏通知已就绪', '已成功连接操作系统通知中枢', '🔔');
+        } else {
+          alert("通知权限未被允许。如需锁屏横幅，可在手机系统设置 > Safari/Chrome > 通知 中允许。");
+        }
+      } catch (e) {
+        console.warn("requestNativeNotificationPermission error:", e);
+      }
+    }
+
+    function updateNotificationBtnStatus(perm) {
+      const btn = document.getElementById('nativeNotifyBtn');
+      if (!btn) return;
+      if (perm === 'granted') {
+        btn.innerHTML = '<span>🔔</span> <span>系统锁屏通知: 已激活放行</span>';
+        btn.className = 'w-full py-2.5 rounded-xl text-xs font-bold bg-cyan-950 text-cyan-300 border border-cyan-700 transition flex items-center justify-center gap-2 shadow-sm';
+      } else {
+        btn.innerHTML = '<span>🔕</span> <span>点击开启手机系统原生锁屏通知 (Web Push)</span>';
+        btn.className = 'w-full py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center justify-center gap-2 shadow-sm';
+      }
+    }
+
+    function dispatchNativePushNotification(title, body, tag) {
+      if (!('Notification' in window) || Notification.permission !== 'granted') return;
+      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+          type: 'SHOW_NOTIFICATION',
+          title: title,
+          body: body,
+          icon: '/data/icon-192.png',
+          tag: tag || 'trinity-alert'
+        });
+      } else {
+        try {
+          new Notification(title, {
+            body: body,
+            icon: '/data/icon-192.png',
+            tag: tag || 'trinity-alert'
+          });
+        } catch (e) {
+          console.warn("Direct Notification error:", e);
+        }
+      }
     }
 
     // 移动端全域首触静默唤醒底层音频硬件 (绕过 iOS/Android 休眠墙)
@@ -4342,6 +4452,9 @@
       }
 
       banner.classList.remove('hidden');
+      if (type === 'CRITICAL' || type === 'SUCCESS') {
+        dispatchNativePushNotification(title, desc);
+      }
       alertTimeout = setTimeout(() => {
         dismissGlobalAlert();
       }, 5500);
