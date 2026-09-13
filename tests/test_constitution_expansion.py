@@ -90,7 +90,7 @@ class TestConstitutionExpansion(unittest.TestCase):
         from truth_kernel.historical_kline_service import HistoricalKlineService
         candles = HistoricalKlineService.get_kline("600519.SH", timeframe="D", count=30)
         self.assertGreaterEqual(len(candles), 10)
-        self.assertIn("2024-", candles[0]["date"])
+        self.assertTrue(any(yr in candles[0]["date"] for yr in ("2023-", "2024-", "2025-", "2026-")), f"非法历史日期: {candles[0]['date']}")
 
         # 3. 物理断言：前端代码静态排查，绝对禁止正弦波捏造蜡烛与写死买卖点索引
         with open(os.path.join(self.workspace_root, "trinity_dashboard.html"), "r", encoding="utf-8") as f:

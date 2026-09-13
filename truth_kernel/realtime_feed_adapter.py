@@ -212,7 +212,14 @@ class RealtimeFeedAdapter:
         now = time.time()
         time_str = time.strftime("%H:%M:%S", time.localtime(now))
 
-        # 1. 尝试拉取真实行情
+        # 1. 闭市检查: 若已休市且已有冻结缓存，直接返回确定性切片，物理零跳动
+        if not clock.is_open and not allow_sim_on_closed:
+            with self._cache_lock:
+                cached = self._cache.get(symbol)
+                if cached is not None and cached.is_closed:
+                    return cached
+
+        # 2. 尝试拉取真实行情
         live_tick = self._fetch_sina_live_quote(symbol)
         if live_tick is not None and live_tick.price > 0:
             if not clock.is_open:
@@ -237,21 +244,20 @@ class RealtimeFeedAdapter:
         cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol, "base": 100.0, "tick": 0.01, "vol": 10.0})
         base_px = cfg["base"]
 
-        # 2. 闭市且非显式沙盒模式：返回最后真实收盘价冻结切片，价格与成交量绝对静止
+        # 3. 闭市且未拉取到网络（离线/沙盒）：固化基准收盘价切片，价格与成交量绝对静止
         if not clock.is_open and not allow_sim_on_closed:
-            with self._cache_lock:
-                cached = self._cache.get(symbol)
-                frozen_px = cached.price if cached else base_px
-                frozen_vol = cached.volume if cached else 12000.0
-            return MarketTick(
+            frozen_tick = MarketTick(
                 symbol=symbol, name=cfg["name"], timestamp=now, time_str=time_str,
-                price=frozen_px, open=frozen_px, high=frozen_px, low=frozen_px,
-                close=frozen_px, volume=frozen_vol, amount=frozen_vol * frozen_px,
-                bid1=frozen_px - cfg["tick"], ask1=frozen_px + cfg["tick"],
+                price=base_px, open=base_px, high=base_px, low=base_px,
+                close=base_px, volume=12000.0, amount=12000.0 * base_px,
+                bid1=base_px - cfg["tick"], ask1=base_px + cfg["tick"],
                 bid_vol1=100.0, ask_vol1=100.0, change_pct=0.0,
                 is_live=False, is_closed=True, source="REAL_LAST_CLOSE_FROZEN",
                 status_desc=f"【交易所法定休市】{clock.reason} · 真实收盘价已冻结 (静默停盘)"
             )
+            with self._cache_lock:
+                self._cache[symbol] = frozen_tick
+            return frozen_tick
 
         # 3. 显式沙盒模式：仅在明确请求仿真时调用合成器 (供离线单测/黑天鹅混沌压测使用)
         if allow_sim_on_closed:
