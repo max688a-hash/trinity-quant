@@ -6,6 +6,7 @@ TRINITY QUANT 真金实战战场服务聚合中枢。
 严格遵守最高宪法：单文件不超过 300 行，强类型，零伪 Mock。
 """
 
+import secrets
 import threading
 import time
 import uuid
@@ -25,6 +26,7 @@ from entropy_execution.network_watchdog import (
     NetworkWatchdog,
 )
 from entropy_execution.real_money_risk_gateway import (
+    LIVE_COMBAT_SAFETY_KEY,
     RealMoneyRiskGateway,
     RiskVerdict,
 )
@@ -75,14 +77,22 @@ def get_real_money_status() -> Dict[str, Any]:
 
 
 def handle_real_money_toggle(payload: Dict[str, Any]) -> Dict[str, Any]:
-    """切换实战真金状态 (需具备安全授权确认)"""
+    """切换实战真金状态：点燃必须持有安全密钥，降级沙盒不要求密钥。"""
     enabled = bool(payload.get("enabled", False))
+    key = str(payload.get("safety_key", "") or "")
     with _REAL_MONEY_LOCK:
+        if enabled:
+            if not secrets.compare_digest(key, LIVE_COMBAT_SAFETY_KEY):
+                return {
+                    "success": False,
+                    "is_live_combat_mode": _REAL_BROKER_ROUTER.is_live_combat,
+                    "message": "安全密钥错误，拒绝点燃真金实盘",
+                }
         _REAL_BROKER_ROUTER.set_live_combat_mode(enabled)
         return {
             "success": True,
             "is_live_combat_mode": _REAL_BROKER_ROUTER.is_live_combat,
-            "message": "已切换至真金实盘战场执行模式 (LIVE COMBAT)" if enabled else "已降级回模拟沙盒演练模式 (SANDBOX)"
+            "message": "已切换至真金实盘战场执行模式 (LIVE COMBAT)" if enabled else "已降级回模拟沙盒演练模式 (SANDBOX)",
         }
 
 

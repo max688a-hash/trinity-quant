@@ -85,7 +85,7 @@ class TestMainServer(unittest.TestCase):
         })
         # 全仓 discover 会超过看门狗 3s 心跳窗口，必须先续心跳，否则误报断网冻结
         _NETWORK_WATCHDOG.restore_connection()
-        t_res = handle_real_money_toggle({"enabled": True})
+        t_res = handle_real_money_toggle({"enabled": True, "safety_key": "TRINITY_MASTER_OVERRIDE_SAFETY_KEY_2026"})
         self.assertTrue(t_res["is_live_combat_mode"])
         t_res_off = handle_real_money_toggle({"enabled": False})
         self.assertFalse(t_res_off["is_live_combat_mode"])
