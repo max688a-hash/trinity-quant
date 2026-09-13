@@ -1037,98 +1037,184 @@
   </div>
 
   <!-- 视图 8：仿生神经反射与多时间尺度分形中枢 (NEW Tab 8) -->
-  <div id="tab-reflex" class="hidden space-y-6">
-    <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 p-6 rounded-2xl border border-slate-800">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span class="h-2.5 w-2.5 rounded-full bg-cyan-400"></span>
-            仿生神经反射中枢与多时间尺度分形动力学
-          </h2>
-          <p class="text-xs text-slate-300 mt-1">
-            脊髓原始反射（零思考瞬间脱险）· 自主神经内稳态（随波幅呼吸）· 大周期定大势、小周期定买卖点
+  <div id="tab-reflex" class="hidden space-y-5">
+    
+    <!-- 一、顶级一体化专业 K 线实盘交易工作台 (THE HERO K-LINE WORKSTATION - 置于页面最顶端！) -->
+    <div class="bg-slate-900/90 rounded-2xl border border-slate-800 shadow-2xl p-3 sm:p-5 space-y-3.5">
+      
+      <!-- 1. 顶部六大专属金融市场板块导航 (A股 / 国内期货 / 港股 / 美股 / 外汇 / 加密) -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span class="text-amber-400">📊</span> 深度交互式专业实盘 K 线体系
+          </span>
+          <span class="text-[10px] px-2 py-0.5 rounded font-mono bg-cyan-950 text-cyan-300 border border-cyan-800">
+            商业终端标准
+          </span>
+        </div>
+
+        <div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1 max-w-full">
+          <button onclick="switchMarketSector('ashare', this)" class="market-sector-btn active px-3 py-1.5 rounded-xl text-xs font-bold bg-cyan-950 text-cyan-300 border border-cyan-800 whitespace-nowrap transition">🇨🇳 A股市场</button>
+          <button onclick="switchMarketSector('futures', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">🌾 国内期货</button>
+          <button onclick="switchMarketSector('hkstock', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">🇭🇰 港股市场</button>
+          <button onclick="switchMarketSector('usstock', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">🇺🇸 美股市场</button>
+          <button onclick="switchMarketSector('forex', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">💱 全球外汇</button>
+          <button onclick="switchMarketSector('crypto', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">🪙 加密资产(24/7)</button>
+        </div>
+      </div>
+
+      <!-- 2. 大盘基准快报与细分标的池药丸联动区 -->
+      <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80 space-y-2">
+        <div class="flex flex-wrap items-center justify-between text-xs gap-2 pb-1.5 border-b border-slate-800" id="marketBenchmarkBanner"></div>
+        <div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1 text-xs" id="marketSubCategoryFilter"></div>
+        <div class="flex flex-wrap items-center gap-1.5" id="marketAssetPool"></div>
+      </div>
+
+      <!-- 3. 顶部独立无遮挡行情看板条 (Top Ticker Bar) -->
+      <div id="klineTopTickerBar" class="bg-slate-950/95 rounded-xl border border-slate-800 p-3 text-xs font-mono text-slate-200 shadow-inner">
+        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 text-[11px] pb-1.5 border-b border-slate-800/80">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-bold text-white text-sm" id="tickerSymbolTag">600519.SH (贵州茅台)</span>
+            <span class="text-slate-400" id="tickerDateTag">2024-08-27</span>
+            <span class="text-cyan-400 font-sans" id="tickerMarketTag">[🇨🇳 A股市场]</span>
+            <span id="tickerLiveBadge" class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-950/90 text-emerald-300 border border-emerald-700/60 animate-pulse">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span id="tickerLiveSourceText">实时高频行情</span>
+            </span>
+            <button onclick="openAdmissionDocketModal()" class="px-2 py-0.5 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-700 text-[10px] font-sans hover:bg-cyan-900 transition flex items-center gap-1 shadow">
+              <span>📋</span> 入池深研依据
+            </button>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-[11px] font-mono text-slate-400 hidden sm:inline" id="tickerOrderBookDepth">
+              买一: <span id="tickerBid1" class="text-rose-400 font-bold">-</span>(<span id="tickerBidVol1" class="text-slate-400">-</span>) | 卖一: <span id="tickerAsk1" class="text-emerald-400 font-bold">-</span>(<span id="tickerAskVol1" class="text-slate-400">-</span>)
+            </span>
+            <span class="font-bold text-emerald-400 text-sm" id="tickerChangeTag">涨跌: +1.99%</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-[11px] pt-1.5 font-mono text-slate-300">
+          <div><span class="text-slate-500">开:</span> <span id="tickerOpen" class="text-white font-bold">1829.08</span></div>
+          <div><span class="text-slate-500">高:</span> <span id="tickerHigh" class="text-emerald-300 font-bold">1869.43</span></div>
+          <div><span class="text-slate-500">低:</span> <span id="tickerLow" class="text-rose-300 font-bold">1817.37</span></div>
+          <div><span class="text-slate-500">收:</span> <span id="tickerClose" class="text-emerald-400 font-bold">1865.52</span></div>
+          <div><span class="text-slate-500">量:</span> <span id="tickerVol" class="text-slate-300">188,946</span></div>
+          <div><span class="text-amber-400">MA5:</span> <span id="tickerMA5">1801.65</span></div>
+        </div>
+      </div>
+
+      <!-- 4. K线核心控制栏 (紧贴 Canvas 正上方，零距离触控！) -->
+      <div class="bg-slate-900/95 px-3 py-2 rounded-t-xl border-t border-x border-slate-800 flex flex-wrap items-center justify-between gap-2.5">
+        <div class="flex items-center gap-1.5">
+          <span class="text-[10px] text-slate-400 font-bold hidden sm:inline uppercase tracking-wider">周期:</span>
+          <div class="flex rounded-lg bg-slate-950 p-0.5 border border-slate-800 text-xs font-mono">
+            <button onclick="setKlineTimeframe('D', this)" class="kline-tf-btn active px-2.5 py-1 rounded bg-slate-800 text-cyan-400 font-bold transition">日线 (D)</button>
+            <button onclick="setKlineTimeframe('1H', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">1小时 (1H)</button>
+            <button onclick="setKlineTimeframe('15M', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">15分 (15M)</button>
+            <button onclick="setKlineTimeframe('5M', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">5分 (5M)</button>
+            <button onclick="setKlineTimeframe('TICK', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">分时 (Tick)</button>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1 bg-slate-950 px-1.5 py-0.5 rounded-lg border border-slate-800 text-xs font-mono">
+          <button onclick="zoomKline(1.25)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-cyan-300 font-bold transition" title="放大">🔍+</button>
+          <button onclick="zoomKline(0.8)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-cyan-300 font-bold transition" title="缩小">🔍-</button>
+          <button onclick="panKline(60)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold transition" title="左移">◀</button>
+          <button onclick="panKline(-60)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold transition" title="右移">▶</button>
+          <button onclick="resetKlineZoom()" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-amber-300 font-bold transition" title="还原全览">↺ 全览</button>
+        </div>
+
+        <div class="flex items-center gap-3 text-xs">
+          <div class="flex items-center gap-2 sm:gap-3 text-[11px]">
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="checkMA5" checked onchange="drawKlineChart()" class="accent-amber-400 rounded">
+              <span class="text-amber-400 font-mono font-bold">MA5</span>
+            </label>
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="checkMA10" checked onchange="drawKlineChart()" class="accent-purple-400 rounded">
+              <span class="text-purple-400 font-mono font-bold">MA10</span>
+            </label>
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="checkMA20" checked onchange="drawKlineChart()" class="accent-cyan-400 rounded">
+              <span class="text-cyan-400 font-mono font-bold">MA20</span>
+            </label>
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="checkMA60" checked onchange="drawKlineChart()" class="accent-orange-400 rounded">
+              <span class="text-orange-400 font-mono font-bold">MA60</span>
+            </label>
+          </div>
+          <div class="hidden sm:flex items-center gap-1.5">
+            <button onclick="triggerEntryDingAlert()" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-700 hover:bg-emerald-600 text-white transition flex items-center gap-1">
+              <span>🔔</span> 叮
+            </button>
+            <button onclick="triggerCrisisAlarmAlert()" class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-700 hover:bg-rose-600 text-white transition flex items-center gap-1">
+              <span>🚨</span> 警报
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. K线 Canvas 主图与副图容器 (紧连操控条，零距离，即操即见！) -->
+      <div class="relative bg-slate-950 p-1 sm:p-2 border-x border-slate-800 overflow-hidden" id="klineCanvasWrapper">
+        <canvas id="klineCanvas" class="w-full h-[360px] sm:h-[420px] block cursor-crosshair touch-none"></canvas>
+        <div id="klineTooltip" class="hidden" style="display: none !important;"></div>
+      </div>
+
+      <!-- 6. 底部图例与触控指引栏 -->
+      <div class="bg-slate-950 px-3 py-1.5 rounded-b-xl border border-slate-800 flex flex-wrap items-center justify-between text-[11px] text-slate-400 gap-2">
+        <div class="flex items-center gap-2">
+          <span>💡 <strong>触控操控：</strong>单指横向平移 · 双指捏合缩放 · 触碰显十字线</span>
+          <span class="font-mono text-cyan-400 ml-2" id="klineSymbolHeaderTag">600519.SH (贵州茅台)</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> 🟢 建仓点</span>
+          <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-rose-400"></span> 🔴 动态止损</span>
+          <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-amber-400"></span> ⛔ 诱多否决</span>
+          <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-purple-400"></span> 🚨 股东抛售</span>
+        </div>
+      </div>
+
+      <!-- 7. K线图下方的深度法证与微观研报看板 (契约规则、OFI资金流、大白话解读按部就班向下展开) -->
+      <div class="space-y-3 pt-1">
+        <!-- 真实的微观社会交易契约与风控规则看板 -->
+        <div id="tickerMicroSpecBar" class="p-3 rounded-xl border border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-sans text-slate-300 bg-slate-900/70">
+          <div><span class="text-slate-500">🏛️ 交易场所:</span> <span id="specExchange" class="text-cyan-300 font-mono font-bold">上海证券交易所 (SSE)</span></div>
+          <div><span class="text-slate-500">📏 交易单位:</span> <span id="specMultiplier" class="text-amber-300 font-mono font-bold">100股/手 (股票)</span></div>
+          <div><span class="text-slate-500">🎯 最小变动:</span> <span id="specTick" class="text-emerald-300 font-mono font-bold">0.01元</span></div>
+          <div><span class="text-slate-500">🛡️ 杠杆/保证金:</span> <span id="specMargin" class="text-rose-300 font-mono font-bold">100% (全额无杠杆)</span></div>
+          <div class="col-span-2"><span class="text-slate-500">⏰ 真实交易时段:</span> <span id="specHours" class="text-slate-300 font-mono">09:30-11:30, 13:00-15:00</span></div>
+          <div class="col-span-2"><span class="text-cyan-400 font-bold">⚖️ 物理规则/法条风控:</span> <span id="specLegalRule" class="text-amber-200 font-mono">A股T+1现货交收 · 卖出计提0.05%印花税 · 10%跌停硬熔断 · 自然人客户禁止进入交割月</span></div>
+        </div>
+
+        <!-- 市场状态机与微观 OFI 高频 Alpha 看板 -->
+        <div id="tickerRegimeAlphaBar" class="p-3 rounded-xl border border-slate-800/80 flex flex-wrap items-center justify-between gap-2 max-w-full text-[10px] font-sans text-slate-300 bg-slate-900/70 break-words">
+          <div class="flex flex-wrap items-center gap-1.5 min-w-0">
+            <span class="text-amber-400 font-bold shrink-0">🧠 市场状态/策略:</span>
+            <span id="tickerRegimeTag" class="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold border border-cyan-800 text-[10px] break-all">🌊 宽幅震荡洗盘 (均值回归)</span>
+            <span id="tickerActiveStrategy" class="text-emerald-400 font-bold text-[10px] break-all">🎯 统计网格高抛低吸 · 🛡️安全仓位15%</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-[10px]">
+            <span class="shrink-0">🔬 OFI推力: <span id="tickerOfiVal" class="text-emerald-400 font-bold">+850手 (向上推)</span></span>
+            <span class="shrink-0">🧊 冰山单: <span id="tickerIcebergVal" class="text-cyan-300 font-bold">950手吸筹</span></span>
+            <span class="shrink-0">🏛️ 主力真金: <span id="tickerMainFlowVal" class="text-rose-400 font-bold">+21.4% (吸筹)</span></span>
+          </div>
+        </div>
+
+        <!-- 小白通俗大白话解读卡 -->
+        <div id="tickerToddlerExplanation" class="p-3 rounded-xl bg-cyan-950/30 border border-cyan-800/40 text-[11px] leading-relaxed text-slate-300">
+          <div class="flex items-center gap-1 text-cyan-400 font-bold mb-0.5">
+            <span>💡 【大白话通俗解读】</span>
+            <span class="text-[10px] text-slate-400 font-normal">小白3秒看懂当前量化系统正在做什么</span>
+          </div>
+          <p id="tickerToddlerText" class="text-slate-300 text-[11px]">
+            当前处于宽幅震荡洗盘行情。大白话：股票价格在区间内来回弹跳，没有单边大涨大跌。量化系统自动切换至【统计网格高抛低吸策略】，以 15% 严谨安全底仓在跌出价值洼地时低吸、冲高时及时止盈，绝不追高，杜绝坐过山车！
           </p>
         </div>
-        <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-purple-950 text-purple-300 border border-purple-800">
-          四级神经反应弧架构
-        </span>
       </div>
     </div>
 
-    <!-- 仿生四级神经反射卡片 Bento -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-slate-900/60 p-5 rounded-2xl border border-rose-900/40 hover:border-rose-700/60 transition">
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
-            <span>⚡</span> Level 1: 脊髓弧原始反射
-          </span>
-          <span class="text-[10px] font-mono text-slate-500">延迟 &lt; 2ms</span>
-        </div>
-        <div class="text-sm font-bold text-white">本能触火缩手 · 零思考物理熔断</div>
-        <p class="text-xs text-slate-400 mt-2">
-          盘口突发闪崩（&gt;7%）、一字跌停封死或数据物理污染时，直接越过大脑皮层思考中枢，强制毫秒级拔插头清仓，绝不抱任何侥幸心理。
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between text-[11px]">
-          <span class="text-slate-400">当前反射状态:</span>
-          <span class="text-emerald-400 font-mono font-bold">● 神经完好待命中</span>
-        </div>
-      </div>
-
-      <div class="bg-slate-900/60 p-5 rounded-2xl border border-amber-900/40 hover:border-amber-700/60 transition">
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-            <span>🫀</span> Level 2: 自主神经内稳态
-          </span>
-          <span class="text-[10px] font-mono text-slate-500">延迟 10~50ms</span>
-        </div>
-        <div class="text-sm font-bold text-white">随波幅动态呼吸 · 阶梯单向锁利</div>
-        <p class="text-xs text-slate-400 mt-2">
-          交感与副交感神经实时维持生理内稳态：当品种波动率扩大时自动收缩仓位；当持仓浮盈自峰值回撤达 8% 时，条件反射式启动单向棘轮平仓锁利。
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between text-[11px]">
-          <span class="text-slate-400">内稳态心跳:</span>
-          <span class="text-emerald-400 font-mono font-bold">NORMAL (内稳平衡)</span>
-        </div>
-      </div>
-
-      <div class="bg-slate-900/60 p-5 rounded-2xl border border-indigo-900/40 hover:border-indigo-700/60 transition">
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
-            <span>🧠</span> Level 3: 大脑前额叶高级认知
-          </span>
-          <span class="text-[10px] font-mono text-slate-500">耗时 500ms~2s</span>
-        </div>
-        <div class="text-sm font-bold text-white">商业去季节性 · 产业库存周期</div>
-        <p class="text-xs text-slate-400 mt-2">
-          穿透深层商业逻辑：用同比 YoY 破解棉被夏亏冬赚的季节性假象；识别被动补库存与存货暴雷周期；测算宏观大盘股债利差 (ERP) 决定战略仓位。
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between text-[11px]">
-          <span class="text-slate-400">认知深度:</span>
-          <span class="text-indigo-300 font-mono font-bold">561期财报全量穿透</span>
-        </div>
-      </div>
-
-      <div class="bg-slate-900/60 p-5 rounded-2xl border border-emerald-900/40 hover:border-emerald-700/60 transition">
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-            <span>🧬</span> Level 4: 跨学科自律神经中枢
-          </span>
-          <span class="text-[10px] font-mono text-slate-500">毫秒级自激</span>
-        </div>
-        <div class="text-sm font-bold text-white">食物唾液自激 · 空间防盲 · 公理联觉</div>
-        <p class="text-xs text-slate-400 mt-2">
-          模拟消化系统自律反射：数据进入自激基准锚定与大白话防伪打假；视网膜射线剥离画布遮挡；跨学科守恒（财务借贷Δ=0、生理极限、心理阻断）无条件守卫。
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between text-[11px]">
-          <span class="text-slate-400">神经突触脉冲:</span>
-          <span id="bioSynapsePulseTag" class="text-emerald-400 font-mono font-bold">● ACTIVE (0.12ms)</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 多时间尺度分形共振交互演示区 -->
-    <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-5">
+    <!-- 二、多时间尺度分形共振实盘透镜 (PLACED BELOW THE K-LINE CHART) -->
+    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80 space-y-4">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h3 class="text-sm font-bold text-white flex items-center gap-2">
             <span class="text-cyan-400">📐</span> 多时间尺度分形共振实盘透镜
@@ -1136,7 +1222,7 @@
           <p class="text-xs text-slate-400 mt-0.5">大周期看趋势，中周期看结构，小周期定买卖点（严禁逆大势追反弹）</p>
         </div>
         <div class="flex items-center gap-3">
-          <label class="text-xs text-slate-300">切换分析标的:</label>
+          <label class="text-xs text-slate-300">分形标的:</label>
           <select id="fractalStockSelect" onchange="updateFractalView()" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
             <option value="600519.SH" selected>贵州茅台 (主升浪三级全共振)</option>
             <option value="600900.SH">长江电力 (大周期防御稳健)</option>
@@ -1145,7 +1231,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-5">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
           <span class="text-[11px] text-slate-400 uppercase tracking-wider block mb-1">大周期 (日线/周线)</span>
           <div class="text-base font-bold font-mono text-cyan-400" id="fracMacroTrend">多头上升期 (BULLISH)</div>
@@ -1172,195 +1258,94 @@
       </div>
 
       <!-- 分形深度解说通知框 -->
-      <div id="fracVerdictNotice" class="p-4 rounded-xl border bg-emerald-950/40 border-emerald-800/60 text-emerald-300 text-xs mb-6">
+      <div id="fracVerdictNotice" class="p-4 rounded-xl border bg-emerald-950/40 border-emerald-800/60 text-emerald-300 text-xs">
         <strong>分形共振实战解析：</strong>
         <span id="fracThesisText">大周期日线多头 + 中周期结构向上抬升 + 分时共振走强，主升浪三位一体确认，系统全额下达买入执行指令。</span>
       </div>
+    </div>
 
-      <!-- 深度交互式专业多周期 K 线体系与买卖操作信号走势图 (NEW K-Line Component) -->
-      <div class="bg-slate-950/70 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-4">
-        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
-          <div>
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <span class="text-amber-400">📊</span> 深度交互式实盘 K 线图 · 多周期与买卖操作信号标定
-            </h3>
-            <p class="text-xs text-slate-400 mt-0.5">
-              日线/1H/15M/5M/分时全周期切换 · 支持触控手势 · 盘中多空与熔断信号精准在图标记
-            </p>
+    <!-- 三、仿生四级神经反应弧体系架构 (DEEP BIONIC FOUNDATION) -->
+    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80 space-y-4">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="text-purple-400">🧬</span> 仿生四级神经反射中枢与控制论架构
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">
+            脊髓原始反射（零思考瞬间脱险）· 自主神经内稳态（随波幅呼吸）· 大周期定大势、小周期定买卖点
+          </p>
+        </div>
+        <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-purple-950 text-purple-300 border border-purple-800">
+          四级神经反应弧架构
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-rose-900/40 hover:border-rose-700/60 transition">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
+              <span>⚡</span> Level 1: 脊髓弧原始反射
+            </span>
+            <span class="text-[10px] font-mono text-slate-500">延迟 &lt; 2ms</span>
           </div>
-
-          <!-- 六大专属金融市场大板块导航 (A股 / 国内期货 / 港股 / 美股 / 外汇 / 加密) -->
-          <div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1 max-w-full">
-            <button onclick="switchMarketSector('ashare', this)" class="market-sector-btn active px-3 py-1.5 rounded-xl text-xs font-bold bg-cyan-950 text-cyan-300 border border-cyan-800 whitespace-nowrap transition">🇨🇳 A股市场</button>
-            <button onclick="switchMarketSector('futures', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">🌾 国内期货</button>
-            <button onclick="switchMarketSector('hkstock', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">🇭🇰 港股市场</button>
-            <button onclick="switchMarketSector('usstock', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">🇺🇸 美股市场</button>
-            <button onclick="switchMarketSector('forex', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">💱 全球外汇</button>
-            <button onclick="switchMarketSector('crypto', this)" class="market-sector-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-900 border border-slate-800 whitespace-nowrap transition">🪙 加密资产(24/7)</button>
+          <div class="text-sm font-bold text-white">本能触火缩手 · 零思考物理熔断</div>
+          <p class="text-xs text-slate-400 mt-2">
+            盘口突发闪崩（&gt;7%）、一字跌停封死或数据物理污染时，直接越过大脑皮层思考中枢，强制毫秒级拔插头清仓，绝不抱任何侥幸心理。
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between text-[11px]">
+            <span class="text-slate-400">当前反射状态:</span>
+            <span class="text-emerald-400 font-mono font-bold">● 神经完好待命中</span>
           </div>
         </div>
 
-        <!-- 二级：大盘基准快报与全谱系分类标的池联动区 -->
-        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800/80 space-y-2.5">
-          <!-- 市场大盘基准指数栏 (上证/沪深300/恒指/标普500/南华商品等) -->
-          <div class="flex flex-wrap items-center justify-between text-xs gap-2 pb-2 border-b border-slate-800" id="marketBenchmarkBanner">
-            <!-- 动态渲染当前大盘指数 -->
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-amber-900/40 hover:border-amber-700/60 transition">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+              <span>🫀</span> Level 2: 自主神经内稳态
+            </span>
+            <span class="text-[10px] font-mono text-slate-500">延迟 10~50ms</span>
           </div>
-          <!-- 细分子品类二级筛选栏 (针对国内期货五大子板块等) -->
-          <div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1 text-xs" id="marketSubCategoryFilter">
-            <!-- 动态渲染子品类药丸按钮: 全部 / 🏛️ 金融国债 / 🏗️ 黑色建材 / 🥇 有色新能源 / 🛢️ 能化能源 / 🌾 农产品软商品 -->
-          </div>
-          <!-- 市场全谱系投资标的池 -->
-          <div class="flex flex-wrap items-center gap-1.5" id="marketAssetPool">
-            <!-- 动态渲染当前市场下核心主力标的药丸按钮 -->
-          </div>
-        </div>
-
-        <!-- 顶级一体化专业 K 线交易工作台 (Tightly Integrated Professional Trading Station) -->
-        <div class="bg-slate-900/90 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden space-y-0">
-          
-          <!-- 1. 顶部独立无遮挡行情看板条 (Top Ticker Bar) -->
-          <div id="klineTopTickerBar" class="bg-slate-950/95 border-b border-slate-800 p-3 text-xs font-mono text-slate-200">
-            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 text-[11px] pb-1.5 border-b border-slate-800/80">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="font-bold text-white text-sm" id="tickerSymbolTag">600519.SH (贵州茅台)</span>
-                <span class="text-slate-400" id="tickerDateTag">2024-08-27</span>
-                <span class="text-cyan-400 font-sans" id="tickerMarketTag">[🇨🇳 A股市场]</span>
-                <span id="tickerLiveBadge" class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-950/90 text-emerald-300 border border-emerald-700/60 animate-pulse">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  <span id="tickerLiveSourceText">实时高频行情</span>
-                </span>
-                <button onclick="openAdmissionDocketModal()" class="px-2 py-0.5 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-700 text-[10px] font-sans hover:bg-cyan-900 transition flex items-center gap-1 shadow">
-                  <span>📋</span> 入池深研依据
-                </button>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-[11px] font-mono text-slate-400 hidden sm:inline" id="tickerOrderBookDepth">
-                  买一: <span id="tickerBid1" class="text-rose-400 font-bold">-</span>(<span id="tickerBidVol1" class="text-slate-400">-</span>) | 卖一: <span id="tickerAsk1" class="text-emerald-400 font-bold">-</span>(<span id="tickerAskVol1" class="text-slate-400">-</span>)
-                </span>
-                <span class="font-bold text-emerald-400 text-sm" id="tickerChangeTag">涨跌: +1.99%</span>
-              </div>
-            </div>
-            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-[11px] pt-1.5 font-mono text-slate-300">
-              <div><span class="text-slate-500">开:</span> <span id="tickerOpen" class="text-white font-bold">1829.08</span></div>
-              <div><span class="text-slate-500">高:</span> <span id="tickerHigh" class="text-emerald-300 font-bold">1869.43</span></div>
-              <div><span class="text-slate-500">低:</span> <span id="tickerLow" class="text-rose-300 font-bold">1817.37</span></div>
-              <div><span class="text-slate-500">收:</span> <span id="tickerClose" class="text-emerald-400 font-bold">1865.52</span></div>
-              <div><span class="text-slate-500">量:</span> <span id="tickerVol" class="text-slate-300">188,946</span></div>
-              <div><span class="text-amber-400">MA5:</span> <span id="tickerMA5">1801.65</span></div>
-            </div>
-          </div>
-
-          <!-- 2. K线核心控制栏 (紧贴 Canvas 正上方，零距离触控！) -->
-          <div class="bg-slate-900 px-3 py-2 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2.5">
-            <!-- 周期按钮：紧贴K线图，即点即看！ -->
-            <div class="flex items-center gap-1.5">
-              <span class="text-[10px] text-slate-400 font-bold hidden sm:inline uppercase tracking-wider">周期:</span>
-              <div class="flex rounded-lg bg-slate-950 p-0.5 border border-slate-800 text-xs font-mono">
-                <button onclick="setKlineTimeframe('D', this)" class="kline-tf-btn active px-2.5 py-1 rounded bg-slate-800 text-cyan-400 font-bold transition">日线 (D)</button>
-                <button onclick="setKlineTimeframe('1H', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">1小时 (1H)</button>
-                <button onclick="setKlineTimeframe('15M', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">15分 (15M)</button>
-                <button onclick="setKlineTimeframe('5M', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">5分 (5M)</button>
-                <button onclick="setKlineTimeframe('TICK', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">分时 (Tick)</button>
-              </div>
-            </div>
-
-            <!-- 缩放与平移微调条：紧贴K线图！ -->
-            <div class="flex items-center gap-1 bg-slate-950 px-1.5 py-0.5 rounded-lg border border-slate-800 text-xs font-mono">
-              <button onclick="zoomKline(1.25)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-cyan-300 font-bold transition" title="放大">🔍+</button>
-              <button onclick="zoomKline(0.8)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-cyan-300 font-bold transition" title="缩小">🔍-</button>
-              <button onclick="panKline(60)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold transition" title="左移">◀</button>
-              <button onclick="panKline(-60)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold transition" title="右移">▶</button>
-              <button onclick="resetKlineZoom()" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-amber-300 font-bold transition" title="还原全览">↺ 全览</button>
-            </div>
-
-            <!-- 均线开关控制与警报测试 -->
-            <div class="flex items-center gap-3 text-xs">
-              <div class="flex items-center gap-2 sm:gap-3 text-[11px]">
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="checkMA5" checked onchange="drawKlineChart()" class="accent-amber-400 rounded">
-                  <span class="text-amber-400 font-mono font-bold">MA5</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="checkMA10" checked onchange="drawKlineChart()" class="accent-purple-400 rounded">
-                  <span class="text-purple-400 font-mono font-bold">MA10</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="checkMA20" checked onchange="drawKlineChart()" class="accent-cyan-400 rounded">
-                  <span class="text-cyan-400 font-mono font-bold">MA20</span>
-                </label>
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input type="checkbox" id="checkMA60" checked onchange="drawKlineChart()" class="accent-orange-400 rounded">
-                  <span class="text-orange-400 font-mono font-bold">MA60</span>
-                </label>
-              </div>
-              <div class="hidden sm:flex items-center gap-1.5">
-                <button onclick="triggerEntryDingAlert()" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-700 hover:bg-emerald-600 text-white transition flex items-center gap-1">
-                  <span>🔔</span> 叮
-                </button>
-                <button onclick="triggerCrisisAlarmAlert()" class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-700 hover:bg-rose-600 text-white transition flex items-center gap-1">
-                  <span>🚨</span> 警报
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 3. K线 Canvas 主图与副图容器 (紧连操控条，零距离，即操即见！) -->
-          <div class="relative bg-slate-950 p-1 sm:p-2 overflow-hidden" id="klineCanvasWrapper">
-            <canvas id="klineCanvas" class="w-full h-[380px] sm:h-[420px] block cursor-crosshair touch-none"></canvas>
-            <div id="klineTooltip" class="hidden" style="display: none !important;"></div>
-          </div>
-
-          <!-- 4. 底部图例与触控指引栏 -->
-          <div class="bg-slate-950 px-3 py-1.5 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-[11px] text-slate-400 gap-2">
-            <div class="flex items-center gap-2">
-              <span>💡 <strong>触控操控：</strong>单指横向平移 · 双指捏合缩放 · 触碰显十字线</span>
-              <span class="font-mono text-cyan-400 ml-2" id="klineSymbolHeaderTag">600519.SH (贵州茅台)</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> 🟢 建仓点</span>
-              <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-rose-400"></span> 🔴 动态止损</span>
-              <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-amber-400"></span> ⛔ 诱多否决</span>
-              <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-purple-400"></span> 🚨 股东抛售</span>
-            </div>
+          <div class="text-sm font-bold text-white">随波幅动态呼吸 · 阶梯单向锁利</div>
+          <p class="text-xs text-slate-400 mt-2">
+            交感与副交感神经实时维持生理内稳态：当品种波动率扩大时自动收缩仓位；当持仓浮盈自峰值回撤达 8% 时，条件反射式启动单向棘轮平仓锁利。
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between text-[11px]">
+            <span class="text-slate-400">内稳态心跳:</span>
+            <span class="text-emerald-400 font-mono font-bold">NORMAL (内稳平衡)</span>
           </div>
         </div>
 
-        <!-- 5. K线图下方的深度法证与微观研报看板 (契约规则、OFI资金流、大白话解读按部就班向下展开) -->
-        <div class="space-y-3 pt-2">
-          <!-- 真实的微观社会交易契约与风控规则看板 (Grounding to Sociotechnical Reality) -->
-          <div id="tickerMicroSpecBar" class="p-3 rounded-xl border border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-sans text-slate-300 bg-slate-900/70">
-            <div><span class="text-slate-500">🏛️ 交易场所:</span> <span id="specExchange" class="text-cyan-300 font-mono font-bold">上海证券交易所 (SSE)</span></div>
-            <div><span class="text-slate-500">📏 交易单位:</span> <span id="specMultiplier" class="text-amber-300 font-mono font-bold">100股/手 (股票)</span></div>
-            <div><span class="text-slate-500">🎯 最小变动:</span> <span id="specTick" class="text-emerald-300 font-mono font-bold">0.01元</span></div>
-            <div><span class="text-slate-500">🛡️ 杠杆/保证金:</span> <span id="specMargin" class="text-rose-300 font-mono font-bold">100% (全额无杠杆)</span></div>
-            <div class="col-span-2"><span class="text-slate-500">⏰ 真实交易时段:</span> <span id="specHours" class="text-slate-300 font-mono">09:30-11:30, 13:00-15:00</span></div>
-            <div class="col-span-2"><span class="text-cyan-400 font-bold">⚖️ 物理规则/法条风控:</span> <span id="specLegalRule" class="text-amber-200 font-mono">A股T+1现货交收 · 卖出计提0.05%印花税 · 10%跌停硬熔断 · 自然人客户禁止进入交割月</span></div>
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-indigo-900/40 hover:border-indigo-700/60 transition">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
+              <span>🧠</span> Level 3: 大脑前额叶高级认知
+            </span>
+            <span class="text-[10px] font-mono text-slate-500">耗时 500ms~2s</span>
           </div>
-
-          <!-- 市场状态机与微观 OFI 高频 Alpha 看板 (防横向撑破与纯中文通俗化) -->
-          <div id="tickerRegimeAlphaBar" class="p-3 rounded-xl border border-slate-800/80 flex flex-wrap items-center justify-between gap-2 max-w-full text-[10px] font-sans text-slate-300 bg-slate-900/70 break-words">
-            <div class="flex flex-wrap items-center gap-1.5 min-w-0">
-              <span class="text-amber-400 font-bold shrink-0">🧠 市场状态/策略:</span>
-              <span id="tickerRegimeTag" class="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold border border-cyan-800 text-[10px] break-all">🌊 宽幅震荡洗盘 (均值回归)</span>
-              <span id="tickerActiveStrategy" class="text-emerald-400 font-bold text-[10px] break-all">🎯 统计网格高抛低吸 · 🛡️安全仓位15%</span>
-            </div>
-            <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-[10px]">
-              <span class="shrink-0">🔬 OFI推力: <span id="tickerOfiVal" class="text-emerald-400 font-bold">+850手 (向上推)</span></span>
-              <span class="shrink-0">🧊 冰山单: <span id="tickerIcebergVal" class="text-cyan-300 font-bold">950手吸筹</span></span>
-              <span class="shrink-0">🏛️ 主力真金: <span id="tickerMainFlowVal" class="text-rose-400 font-bold">+21.4% (吸筹)</span></span>
-            </div>
+          <div class="text-sm font-bold text-white">商业去季节性 · 产业库存周期</div>
+          <p class="text-xs text-slate-400 mt-2">
+            穿透深层商业逻辑：用同比 YoY 破解棉被夏亏冬赚的季节性假象；识别被动补库存与存货暴雷周期；测算宏观大盘股债利差 (ERP) 决定战略仓位。
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between text-[11px]">
+            <span class="text-slate-400">认知深度:</span>
+            <span class="text-indigo-300 font-mono font-bold">561期财报全量穿透</span>
           </div>
+        </div>
 
-          <!-- 小白通俗大白话解读卡 (Toddler-Comprehensible Plain Chinese Card) -->
-          <div id="tickerToddlerExplanation" class="p-3 rounded-xl bg-cyan-950/30 border border-cyan-800/40 text-[11px] leading-relaxed text-slate-300">
-            <div class="flex items-center gap-1 text-cyan-400 font-bold mb-0.5">
-              <span>💡 【大白话通俗解读】</span>
-              <span class="text-[10px] text-slate-400 font-normal">小白3秒看懂当前量化系统正在做什么</span>
-            </div>
-            <p id="tickerToddlerText" class="text-slate-300 text-[11px]">
-              当前处于宽幅震荡洗盘行情。大白话：股票价格在区间内来回弹跳，没有单边大涨大跌。量化系统自动切换至【统计网格高抛低吸策略】，以 15% 严谨安全底仓在跌出价值洼地时低吸、冲高时及时止盈，绝不追高，杜绝坐过山车！
-            </p>
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-emerald-900/40 hover:border-emerald-700/60 transition">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+              <span>🧬</span> Level 4: 跨学科自律神经中枢
+            </span>
+            <span class="text-[10px] font-mono text-slate-500">毫秒级自激</span>
+          </div>
+          <div class="text-sm font-bold text-white">食物唾液自激 · 空间防盲 · 公理联觉</div>
+          <p class="text-xs text-slate-400 mt-2">
+            模拟消化系统自律反射：数据进入自激基准锚定与大白话防伪打假；视网膜射线剥离画布遮挡；跨学科守恒（财务借贷Δ=0、生理极限、心理阻断）无条件守卫。
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between text-[11px]">
+            <span class="text-slate-400">神经突触脉冲:</span>
+            <span id="bioSynapsePulseTag" class="text-emerald-400 font-mono font-bold">● ACTIVE (0.12ms)</span>
           </div>
         </div>
       </div>
@@ -2803,6 +2788,7 @@
     }
 
     function switchTab(tabId) {
+      window.scrollTo(0, 0);
       closeAllActiveModals();
       ['tab-backtest', 'tab-valuation', 'tab-screener', 'tab-autopsy', 'tab-pit', 'tab-calculator', 'tab-multiasset', 'tab-reflex', 'tab-paper'].forEach(id => {
         const el = document.getElementById(id);
@@ -4915,6 +4901,18 @@
       updateTopTickerWithLatest();
       drawKlineChart();
       playQuantAlert('CAUTION_BEEP');
+
+      // 联动同步下方多时间尺度分形透镜标的
+      const fracSel = document.getElementById('fractalStockSelect');
+      if (fracSel) {
+        for (let i = 0; i < fracSel.options.length; i++) {
+          if (fracSel.options[i].value === sym) {
+            fracSel.selectedIndex = i;
+            updateFractalView();
+            break;
+          }
+        }
+      }
 
       // 触控即刻平滑跳转至K线图视野 + 呼吸高亮反馈 (解决手机端垂直视口过深脱离真实环境体验)
       if (shouldScroll) {
