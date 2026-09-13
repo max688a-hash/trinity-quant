@@ -33,6 +33,8 @@ alwaysApply: true
 - **绝对真值数据锚定与零假演播铁律 (Article 33)**：严禁生产行情使用伪随机数伪造波动（No-Trade Zero-Tick Invariant），闭市停盘价格绝对恒定；历史 K 线必须映射真实交易所记录，买卖信号由算法在真实蜡烛上动态运算！
 - **移动端物理视口所有权与真实人机工程排障铁律 (Article 34)**：严禁文本形式主义假验收，底栏切换必须把目标面板送入可见物理几何视口（bringPanelIntoMobileViewport），严禁盲目 scrollTo(0,0) 导致面板被甩出视野假死；桌面选项卡与大横幅在移动端严格隐藏；金融色彩统一红买（🔴）绿卖（🟢）！
 - **机械收尾闸机与工作区纯净交接铁律 (Article 35)**：停机前必须执行机械收尾，git status --porcelain 必须完全干净；构建产物（web/dist/）、临时运行态与本地私有账本必须严格隔离写入 .gitignore！
+- **目的牵引物理质检与反浅层验收铁律 (Article 36)**：严禁形式主义字串假绿，所有指标必须绑定用户终极目的并执行自动化物理度量（measure_cmd），exit=0；
+- **浮层弹窗防死锁与组件视觉邻近铁律 (Article 37)**：模态弹窗必须支持空白背景轻触即灭（Backdrop Tap Dismissal），严禁锁死底栏导航；K 线控制元器件必须直接贴合挂载在图表视口容器顶部，严禁跨屏割裂！
 
 ## 4. 验收门禁
 完成代码修改后，必须在终端运行 `python3 -m unittest discover -s tests -p "test_*.py"` 与 `python3 -m unittest tests/test_constitution_strict.py tests/test_constitution_expansion.py` 确保退出码为 0，严禁单方面宣布通过。

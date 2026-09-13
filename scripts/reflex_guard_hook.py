@@ -116,7 +116,7 @@ def verify_closeout_hygiene(root_dir: str) -> Tuple[bool, str]:
     """验证工作区机械收尾卫生（第35条）"""
     try:
         cmd = ["git", "status", "--porcelain"]
-        env = dict(os.environ, HOME="/tmp")
+        env = dict(os.environ, HOME="/tmp", GIT_CONFIG_GLOBAL="/dev/null", GIT_CONFIG_SYSTEM="/dev/null")
         res = subprocess.run(cmd, cwd=root_dir, capture_output=True, text=True, timeout=3, env=env)
         if res.returncode == 0:
             lines = [l.strip() for l in res.stdout.splitlines() if l.strip()]
@@ -126,6 +126,7 @@ def verify_closeout_hygiene(root_dir: str) -> Tuple[bool, str]:
         return True, ""
     except Exception:
         return True, ""
+
 
 
 def handle_stop_hook(payload: Dict[str, Any]) -> Dict[str, Any]:
@@ -231,12 +232,10 @@ def handle_pre_invocation(payload: Dict[str, Any]) -> Dict[str, Any]:
         "injectSteps": [
             {
                 "ephemeralMessage": (
-                    "【仿生多重神经反射提醒】恪守单文件 <= 300 行；严禁为迎合盈利而放宽风控参数（单向棘轮只严不宽）；"
-                    "严禁 AI 奖励造假与隐匿下行风险；严禁黑箱伪造标的池（第27条入池法证与排毒警戒线必查）；"
-                    "严禁未经实证调研轻率下结论（第28条客观调研必先行）；"
-                    "严禁反智谄媚与选择性报喜（第29-30条独立求真与全息披露）；算法O(N)抗压大数据（第31条）；"
-                    "沙盒探索自由与生产刚性准入（第32条双模态智力解缚）；"
-                    "激活食物-唾液自激与有毒蘑菇绝对阻断；常态化 1000 维自审；视网膜零遮挡与全摩擦计提；测试退出码严格为 0。"
+                    "【仿生多重神经反射提醒】恪守单文件 <= 300 行；严禁为迎合盈利放宽风控参数（单向棘轮只严不宽）；"
+                    "严禁 AI 奖励造假；严禁黑箱伪造标的池；客观调研必先行；独立求真与全息披露；算法 O(N) 抗压大数据；"
+                    "绝对真值零伪造心跳（第33条）；移动视口所有权（第34条）；机械收尾干净交接（第35条）；"
+                    "目的牵引物理质检拒绝文本字串假绿（第36条）；弹窗防死锁与组件视觉邻近（第37条）；测试退出码严格为 0。"
                 )
             }
         ]

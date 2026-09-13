@@ -119,7 +119,38 @@ class TestConstitutionExpansion(unittest.TestCase):
         self.assertIn("web/dist/", gitignore, "构建产物 web/dist/ 必须写入 .gitignore！")
         self.assertIn(".kiro/gates/state/", gitignore, "运行态 .kiro/gates/state/ 必须写入 .gitignore！")
 
+    def test_article_36_purpose_driven_verification(self) -> None:
+        """断言第36条：目的牵引物理质检与反浅层验收宪法"""
+        self.assertIn("第 36 条：目的牵引物理质检与反浅层验收宪法", self.agents_md)
+        self.assertIn("Purpose-Driven Physical Verification", self.agents_md)
+        self.assertIn("目的牵引物理质检", self.cursorrules)
+        # 验证 .kiro/purpose.json 的真实性与物理可执行性
+        purpose_file = os.path.join(self.workspace_root, ".kiro", "purpose.json")
+        self.assertTrue(os.path.exists(purpose_file), "缺失 .kiro/purpose.json 目的指标定义！")
+        import json
+        with open(purpose_file, "r", encoding="utf-8") as fp:
+            purpose_data = json.load(fp)
+        self.assertIn("软件目的", purpose_data)
+        self.assertIn("目的指标", purpose_data)
+        for item in purpose_data["目的指标"]:
+            self.assertIsNotNone(item.get("measure_cmd"))
+
+    def test_article_37_modal_anti_deadlock_and_visual_proximity(self) -> None:
+        """断言第37条：浮层弹窗防死锁与组件视觉邻近铁律"""
+        self.assertIn("第 37 条：浮层弹窗防死锁与组件视觉邻近铁律", self.agents_md)
+        self.assertIn("Backdrop Tap Dismissal", self.agents_md)
+        self.assertIn("Visual Proximity Law", self.agents_md)
+        self.assertIn("浮层弹窗防死锁", self.cursorrules)
+        self.assertIn("组件视觉邻近", self.cursorrules)
+        # 验证技能库中已固化防死锁与视觉邻近规范
+        ui_skill_path = os.path.join(self.workspace_root, ".agents", "skills", "superpowers-universal-ui-ux", "SKILL.md")
+        with open(ui_skill_path, "r", encoding="utf-8") as fp:
+            ui_skill = fp.read()
+        self.assertIn("弹窗与浮层防死锁", ui_skill)
+        self.assertIn("组件视觉邻近律", ui_skill)
+
 
 if __name__ == "__main__":
     unittest.main()
+
 
