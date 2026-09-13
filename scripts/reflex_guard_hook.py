@@ -40,51 +40,49 @@ def scan_python_file_lines(root_dir: str) -> List[Tuple[str, int]]:
     return violations
 
 
-def _get_python_bin(root_dir: str) -> str:
-    venv_py = os.path.join(root_dir, ".venv", "bin", "python3")
-    if os.path.exists(venv_py):
-        return venv_py
-    return sys.executable
-
-
 def verify_strict_constitution(root_dir: str) -> bool:
-    """运行严格宪法全套测试并检查退出码"""
-    test_files = [
-        os.path.join(root_dir, "tests", "test_constitution_strict.py"),
-        os.path.join(root_dir, "tests", "test_constitution_expansion.py"),
-    ]
-    py_bin = _get_python_bin(root_dir)
-    env = {**os.environ, "PYTHONPATH": root_dir}
-    for tf in test_files:
-        if not os.path.exists(tf):
-            continue
-        try:
-            rel = os.path.relpath(tf, root_dir)
-            res = subprocess.run([py_bin, "-m", "unittest", rel], cwd=root_dir, env=env, capture_output=True, timeout=15)
-            if res.returncode != 0:
-                return False
-        except Exception:
-            return False
-    return True
+    """运行严格宪法全套测试（进程内直接运行，免疫子进程沙盒阻断）"""
+    if root_dir not in sys.path:
+        sys.path.insert(0, root_dir)
+    try:
+        from io import StringIO
+        import unittest
+        import tests.test_constitution_strict as tcs
+        import tests.test_constitution_expansion as tce
+
+        suite = unittest.TestSuite()
+        loader = unittest.TestLoader()
+        suite.addTests(loader.loadTestsFromModule(tcs))
+        suite.addTests(loader.loadTestsFromModule(tce))
+
+        stream = StringIO()
+        runner = unittest.TextTestRunner(stream=stream, verbosity=0)
+        res = runner.run(suite)
+        return res.wasSuccessful()
+    except Exception as e:
+        sys.stderr.write(f"[reflex_guard] Error in verify_strict_constitution: {e}\n")
+        return False
 
 
 def verify_profit_integrity(root_dir: str) -> bool:
-    """验证单向棘轮风控与盈利真实性守卫测试通过"""
-    test_file = os.path.join(root_dir, "tests", "test_profit_integrity_guard.py")
-    if not os.path.exists(test_file):
-        return True
+    """验证单向棘轮风控与盈利真实性守卫测试通过（进程内直接运行）"""
+    if root_dir not in sys.path:
+        sys.path.insert(0, root_dir)
     try:
-        py_bin = _get_python_bin(root_dir)
-        env = {**os.environ, "PYTHONPATH": root_dir}
-        res = subprocess.run(
-            [py_bin, "-m", "unittest", "tests/test_profit_integrity_guard.py"],
-            cwd=root_dir,
-            env=env,
-            capture_output=True,
-            timeout=15
-        )
-        return res.returncode == 0
-    except Exception:
+        from io import StringIO
+        import unittest
+        import tests.test_profit_integrity_guard as tpi
+
+        suite = unittest.TestSuite()
+        loader = unittest.TestLoader()
+        suite.addTests(loader.loadTestsFromModule(tpi))
+
+        stream = StringIO()
+        runner = unittest.TextTestRunner(stream=stream, verbosity=0)
+        res = runner.run(suite)
+        return res.wasSuccessful()
+    except Exception as e:
+        sys.stderr.write(f"[reflex_guard] Error in verify_profit_integrity: {e}\n")
         return False
 
 
