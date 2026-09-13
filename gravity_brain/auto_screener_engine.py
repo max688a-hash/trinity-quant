@@ -9,8 +9,14 @@ gravity_brain/auto_screener_engine.py
 3. 联动声音与变色提示：达到建仓标准时触发清脆"叮(Ping)"声与翡翠绿高亮。
 """
 
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from dataclasses import dataclass
+import logging
+import math
+from typing import Any, Dict, List, Optional
+
+from gravity_brain.screener_audit_universe import load_default_screener_universe
+
+_LOG = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -91,61 +97,73 @@ class AutoScreenerEngine:
 
     def run_screening(self, universe: Optional[List[dict]] = None) -> List[AutoScreeningCandidate]:
         """
-        执行一键智能选股过滤与深度研报装载
+        执行一键智能选股。默认宇宙来自真实财报体检/估值档案，禁止写死 Φ/Ω。
         """
         if universe is None:
-            universe = [
-                {"symbol": "600519.SH", "name": "贵州茅台", "phi_cp": 1.05, "omega_debt": 0.0, "alpha": 1.45, "gravity_val": 1820.0},
-                {"symbol": "600900.SH", "name": "长江电力", "phi_cp": 0.98, "omega_debt": 0.42, "alpha": 1.15, "gravity_val": 32.5},
-                {"symbol": "002594.SZ", "name": "比亚迪", "phi_cp": 0.92, "omega_debt": 0.65, "alpha": 1.25, "gravity_val": 310.0}
-            ]
-        qualified: List[AutoScreeningCandidate] = []
+            universe = load_default_screener_universe()
+        results: List[AutoScreeningCandidate] = []
         for item in universe:
-            sym = str(item.get("symbol", "")).split(".")[0]
-            name = str(item.get("name", sym))
-            phi = float(item.get("phi_cp", 0.0))
-            omega = float(item.get("omega_debt", 99.0))
-            alpha = float(item.get("alpha", 0.0))
-            gv = float(item.get("gravity_val", 0.0))
+            candidate = self._evaluate_item(item)
+            if candidate is not None:
+                results.append(candidate)
+        return results
 
-            # 严格按照真值引力与排毒双指标审核
-            is_ok = (phi >= self._min_phi) and (omega <= self._max_omega) and (alpha >= self._min_alpha)
+    def _as_finite(self, value: Any, fallback: float) -> float:
+        try:
+            num = float(value)
+        except (TypeError, ValueError) as exc:
+            _LOG.warning("选股指标无法解析: %s", exc)
+            return fallback
+        if not math.isfinite(num):
+            return fallback
+        return num
 
-            kb = self.KNOWLEDGE_BASE.get(sym, {
-                "name": name,
-                "industry": "未知制造业/商贸",
-                "core_business": f"{name}主营业务与供应链制造。",
-                "seasonality_profile": "常态季节分布，需关注行业补库与去库周期。",
-                "moat_rating": "STANDARD (通用竞争格局)",
-                "capex_health": "适度健康",
-                "anti_cycle_grade": "A",
-                "recommended_action": "WATCHLIST"
-            })
+    def _evaluate_item(self, item: dict) -> Optional[AutoScreeningCandidate]:
+        if not isinstance(item, dict):
+            return None
+        sym = str(item.get("symbol", "")).split(".")[0].strip().upper()
+        if not sym:
+            return None
+        name = str(item.get("name", sym))
+        phi = self._as_finite(item.get("phi_cp"), 0.0)
+        omega = self._as_finite(item.get("omega_debt"), 99.0)
+        alpha = self._as_finite(item.get("alpha"), 0.0)
+        gv = self._as_finite(item.get("gravity_val"), 0.0)
+        is_ok = (phi >= self._min_phi) and (omega <= self._max_omega) and (alpha >= self._min_alpha)
+        if "is_admitted" in item and not bool(item.get("is_admitted")):
+            is_ok = False
 
-            dossier = CompanyDeepDossier(
-                symbol=sym,
-                name=kb["name"],
-                industry=kb["industry"],
-                core_business=kb["core_business"],
-                seasonality_profile=kb["seasonality_profile"],
-                moat_rating=kb["moat_rating"],
-                capex_health=kb["capex_health"],
-                anti_cycle_grade=kb["anti_cycle_grade"],
-                recommended_action=kb["recommended_action"]
-            )
-
-            if is_ok:
-                qualified.append(AutoScreeningCandidate(
-                    symbol=sym,
-                    name=name,
-                    phi_cp=phi,
-                    omega_debt=omega,
-                    alpha=alpha,
-                    gravity_value=gv,
-                    is_qualified=True,
-                    audio_chime="ENTRY_PING",
-                    color_indicator="badge-glow-green",
-                    deep_dossier=dossier
-                ))
-
-        return qualified
+        kb = self.KNOWLEDGE_BASE.get(sym, {
+            "name": name,
+            "industry": "未知制造业/商贸",
+            "core_business": f"{name}主营业务与供应链制造。",
+            "seasonality_profile": "常态季节分布，需关注行业补库与去库周期。",
+            "moat_rating": "STANDARD (通用竞争格局)",
+            "capex_health": "适度健康",
+            "anti_cycle_grade": "A",
+            "recommended_action": "WATCHLIST"
+        })
+        action = kb["recommended_action"] if is_ok else "VETO (法证否决，禁止当作可买)"
+        dossier = CompanyDeepDossier(
+            symbol=sym,
+            name=kb["name"],
+            industry=kb["industry"],
+            core_business=kb["core_business"],
+            seasonality_profile=kb["seasonality_profile"],
+            moat_rating=kb["moat_rating"],
+            capex_health=kb["capex_health"],
+            anti_cycle_grade=kb["anti_cycle_grade"],
+            recommended_action=action
+        )
+        return AutoScreeningCandidate(
+            symbol=sym,
+            name=name,
+            phi_cp=phi,
+            omega_debt=omega,
+            alpha=alpha,
+            gravity_value=gv,
+            is_qualified=is_ok,
+            audio_chime="ENTRY_PING" if is_ok else "NONE",
+            color_indicator="badge-glow-green" if is_ok else "badge-glow-red",
+            deep_dossier=dossier
+        )

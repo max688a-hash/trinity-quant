@@ -50,7 +50,7 @@ class TestDesktopPanelsSingleTruth(unittest.TestCase):
         self.assertNotIn("债务猝死否决", self.panels)
         self.assertIn("DATA_UNAVAILABLE", self.panels)
 
-    def test_yangtze_screener_admits_autopsy_excludes(self) -> None:
+    def test_yangtze_screener_and_autopsy_share_audit_veto(self) -> None:
         from entropy_execution.http_api_dispatcher import HttpApiDispatcher
         from entropy_execution.forensic_autopsy_service import list_forensic_autopsy
 
@@ -60,8 +60,8 @@ class TestDesktopPanelsSingleTruth(unittest.TestCase):
             for item in screener["candidates"]
             if "600900" in str(item.get("symbol", "")) or "长江" in str(item.get("name", ""))
         ]
-        self.assertTrue(yangtze, "选股引擎必须仍覆盖长江电力，否则本刀无法对齐真源")
-        self.assertTrue(yangtze[0]["is_qualified"], "长江电力在选股引擎中必须是准入")
+        qualified_yangtze = [item for item in yangtze if item.get("is_qualified")]
+        self.assertEqual(qualified_yangtze, [], "体检否决后引力/选股不得再把长江电力标可买")
 
         autopsy = list_forensic_autopsy()
         self.assertEqual(autopsy.get("status"), "OK")
@@ -69,8 +69,8 @@ class TestDesktopPanelsSingleTruth(unittest.TestCase):
             f"{case.get('symbol', '')} {case.get('name', '')}"
             for case in autopsy.get("cases", [])
         )
-        self.assertNotIn("600900", joined)
-        self.assertNotIn("长江电力", joined)
+        self.assertIn("600900", joined)
+        self.assertIn("长江电力", joined)
         self.assertIn("300104", joined)
         self.assertIn("600518", joined)
         self.assertIn("乐视", joined)

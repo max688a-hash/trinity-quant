@@ -50,16 +50,20 @@ class TestScreenerUiEnginePool(unittest.TestCase):
 
         payload = HttpApiDispatcher.get_screener_results()
         self.assertGreaterEqual(payload["count"], 1)
+        qualified = [item for item in payload["candidates"] if item.get("is_qualified")]
+        self.assertGreaterEqual(len(qualified), 1)
         joined = " ".join(
             f"{item.get('symbol', '')} {item.get('name', '')}"
-            for item in payload["candidates"]
+            for item in qualified
         )
         self.assertNotIn("300104", joined)
         self.assertNotIn("600518", joined)
         self.assertNotIn("乐视", joined)
         self.assertNotIn("康美", joined)
         for item in payload["candidates"]:
-            self.assertTrue(item["is_qualified"])
+            blob = f"{item.get('symbol', '')} {item.get('name', '')}"
+            if "300104" in blob or "600518" in blob or "乐视" in blob or "康美" in blob:
+                self.assertFalse(item.get("is_qualified"))
 
     def test_letv_kangmei_remain_vetoed(self) -> None:
         from tests.test_immune_system import TestImmuneSystem

@@ -79,13 +79,14 @@ class TestInsiderAndScreener(unittest.TestCase):
         ]
         candidates = self.screener.run_screening(mock_universe)
         # 茅台与比亚迪应入选，乐视网必须被淘汰
-        symbols = [c.symbol for c in candidates]
+        qualified = [c for c in candidates if c.is_qualified]
+        symbols = [c.symbol for c in qualified]
         self.assertIn("600519", symbols)
         self.assertIn("002594", symbols)
         self.assertNotIn("300104", symbols)
 
         # 检查茅台深研档案完整性
-        moutai = next(c for c in candidates if c.symbol == "600519")
+        moutai = next(c for c in qualified if c.symbol == "600519")
         self.assertEqual(moutai.audio_chime, "ENTRY_PING")
         self.assertEqual(moutai.color_indicator, "badge-glow-green")
         self.assertIn("飞天茅台", moutai.deep_dossier.core_business)
