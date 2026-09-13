@@ -48,12 +48,12 @@ class AutoPilotLearningDaemon:
         self._stop_event = threading.Event()
         self._lock = threading.Lock()
 
-        # 监控资产池
+        # 监控资产池 (纯真实标的代码，实时行情由 RealtimeFeedAdapter 动态注入)
         self.asset_universe: List[Dict[str, Any]] = [
-            {"symbol": "BTCUSDT", "base_price": 65200.0, "is_replay": False},
-            {"symbol": "600519.SH", "base_price": 1550.0, "is_replay": False},
-            {"symbol": "SA", "base_price": 1580.0, "is_replay": False},
-            {"symbol": "ETHUSDT", "base_price": 3480.0, "is_replay": False},
+            {"symbol": "BTCUSDT", "name": "比特币现货", "is_replay": False},
+            {"symbol": "600519.SH", "name": "贵州茅台A股", "is_replay": False},
+            {"symbol": "SA", "name": "纯碱期货主力", "is_replay": False},
+            {"symbol": "ETHUSDT", "name": "以太坊现货", "is_replay": False},
         ]
         self._asset_index: int = 0
 
