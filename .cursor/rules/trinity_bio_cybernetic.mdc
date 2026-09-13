@@ -36,6 +36,8 @@ alwaysApply: true
 - **目的牵引物理质检与反浅层验收铁律 (Article 36)**：严禁形式主义字串假绿，所有指标必须绑定用户终极目的并执行自动化物理度量（measure_cmd），exit=0；
 - **浮层弹窗防死锁与组件视觉邻近铁律 (Article 37)**：模态弹窗必须支持空白背景轻触即灭（Backdrop Tap Dismissal），严禁锁死底栏导航；K 线控制元器件必须直接贴合挂载在图表视口容器顶部，严禁跨屏割裂！
 
+- **禁止埋地雷与已知缺陷零遗留铁律 (第 38 条)**：严禁把已知缺陷当诚实遗留；公开行情能接必须接；双轨 Hook 不得用对端 touched 列表放行脏工作区！
+
 ## 4. 验收门禁
 完成代码修改后，必须在终端运行 `python3 -m unittest discover -s tests -p "test_*.py"` 与 `python3 -m unittest tests/test_constitution_strict.py tests/test_constitution_expansion.py` 确保退出码为 0，严禁单方面宣布通过。
 

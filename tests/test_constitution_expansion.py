@@ -171,6 +171,12 @@ class TestConstitutionExpansion(unittest.TestCase):
         self.assertIn("弹窗与浮层防死锁", ui_skill)
         self.assertIn("组件视觉邻近律", ui_skill)
 
+    def test_article_38_anti_landmine_zero_leftover(self) -> None:
+        """断言第38条：禁止埋地雷与已知缺陷零遗留"""
+        self.assertIn("第 38 条：禁止埋地雷与已知缺陷零遗留宪法", self.agents_md)
+        self.assertIn("Anti-Landmine", self.agents_md)
+        self.assertIn("禁止埋地雷", self.cursorrules)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
 """
 scripts/reflex_guard_hook.py
-============================
-TRINITY QUANT & UIQC v3.0 本地仿生神经反射生命周期 Hook 物理守卫程序。
-严格遵循 Antigravity Lifecycle Hook 规范 (hooks.json) 与最高宪法:
-1. 自动适配 Stop, PreToolUse, PreInvocation 事件;
-2. 物理扫描单文件不超过 300 行 (Single-File <= 300 Lines Law);
-3. 动态验证宪法物理门禁与单元测试状态;
-4. 违规时物理强制拦截 (decision="continue") 并指令 AI 自愈。
+TRINITY QUANT 本地仿生神经反射生命周期 Hook。
+Stop / PreToolUse / PreInvocation；单文件 <= 300 行；第38条禁止埋地雷。
 """
 
-import ast
 import json
 import os
-import subprocess
 import sys
 from typing import Any, Dict, List, Tuple
 
 WORKSPACE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_SCRIPTS = os.path.dirname(os.path.abspath(__file__))
+if _SCRIPTS not in sys.path:
+    sys.path.insert(0, _SCRIPTS)
+from reflex_landmine import (  # noqa: E402
+    content_has_landmine,
+    scan_workspace_landmines,
+    verify_closeout_hygiene,
+)
+
+LAST_VERIFY_ERROR = ""
 
 
 def scan_python_file_lines(root_dir: str) -> List[Tuple[str, int]]:
@@ -35,12 +38,10 @@ def scan_python_file_lines(root_dir: str) -> List[Tuple[str, int]]:
                     if lines > 300:
                         rel = os.path.relpath(fpath, root_dir)
                         violations.append((rel, lines))
-                except (OSError, UnicodeDecodeError):
+                except (OSError, UnicodeDecodeError) as exc:
+                    sys.stderr.write(f"[reflex_guard] line scan skip {fpath}: {exc}\n")
                     continue
     return violations
-
-
-LAST_VERIFY_ERROR = ""
 
 
 def verify_strict_constitution(root_dir: str) -> bool:
@@ -58,24 +59,22 @@ def verify_strict_constitution(root_dir: str) -> bool:
         loader = unittest.TestLoader()
         suite.addTests(loader.loadTestsFromModule(tcs))
         suite.addTests(loader.loadTestsFromModule(tce))
-
         stream = StringIO()
-        runner = unittest.TextTestRunner(stream=stream, verbosity=2)
-        res = runner.run(suite)
+        res = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
         if not res.wasSuccessful():
             err_items = [f"{test}: {err.strip()[:100]}" for test, err in (res.errors + res.failures)]
             LAST_VERIFY_ERROR = " | ".join(err_items)
             return False
         LAST_VERIFY_ERROR = ""
         return True
-    except Exception as e:
-        LAST_VERIFY_ERROR = f"EXC: {e}"
-        sys.stderr.write(f"[reflex_guard] Error in verify_strict_constitution: {e}\n")
+    except Exception as exc:
+        LAST_VERIFY_ERROR = f"EXC: {exc}"
+        sys.stderr.write(f"[reflex_guard] Error in verify_strict_constitution: {exc}\n")
         return False
 
 
 def verify_profit_integrity(root_dir: str) -> bool:
-    """验证单向棘轮风控与盈利真实性守卫测试通过（进程内直接运行）"""
+    """验证单向棘轮风控与盈利真实性守卫测试通过"""
     if root_dir not in sys.path:
         sys.path.insert(0, root_dir)
     try:
@@ -83,16 +82,10 @@ def verify_profit_integrity(root_dir: str) -> bool:
         import unittest
         import tests.test_profit_integrity_guard as tpi
 
-        suite = unittest.TestSuite()
-        loader = unittest.TestLoader()
-        suite.addTests(loader.loadTestsFromModule(tpi))
-
-        stream = StringIO()
-        runner = unittest.TextTestRunner(stream=stream, verbosity=0)
-        res = runner.run(suite)
-        return res.wasSuccessful()
-    except Exception as e:
-        sys.stderr.write(f"[reflex_guard] Error in verify_profit_integrity: {e}\n")
+        suite = unittest.TestLoader().loadTestsFromModule(tpi)
+        return unittest.TextTestRunner(stream=StringIO(), verbosity=0).run(suite).wasSuccessful()
+    except Exception as exc:
+        sys.stderr.write(f"[reflex_guard] Error in verify_profit_integrity: {exc}\n")
         return False
 
 
@@ -107,36 +100,9 @@ def verify_mobile_viewport_gate(root_dir: str) -> bool:
 
         suite = unittest.TestLoader().loadTestsFromModule(tmn)
         return unittest.TextTestRunner(stream=StringIO(), verbosity=0).run(suite).wasSuccessful()
-    except Exception as e:
-        sys.stderr.write(f"[reflex_guard] Error in verify_mobile_viewport_gate: {e}\n")
-        return False
-
-
-def verify_closeout_hygiene(root_dir: str) -> Tuple[bool, str]:
-    """验证工作区机械收尾卫生（第35条）。支持双轨协作隔离，不强抢对端未完成文件"""
-    try:
-        cmd = ["git", "status", "--porcelain"]
-        env = dict(os.environ, HOME="/tmp", GIT_CONFIG_GLOBAL="/dev/null", GIT_CONFIG_SYSTEM="/dev/null")
-        res = subprocess.run(cmd, cwd=root_dir, capture_output=True, text=True, timeout=3, env=env)
-        if res.returncode == 0:
-            lines = [l.strip() for l in res.stdout.splitlines() if l.strip()]
-            unclean = [l for l in lines if not l.endswith("real_money_ledger.db")]
-            if unclean:
-                tf_path = "/tmp/.antigravity_touched_files.json"
-                if os.path.exists(tf_path):
-                    try:
-                        with open(tf_path, "r", encoding="utf-8") as tf:
-                            touched = set(json.load(tf))
-                        my_dirty = [l for l in unclean if any(t in l for t in touched)]
-                        if my_dirty:
-                            return False, f"未收尾脏文件: {', '.join(my_dirty[:3])}"
-                    except Exception as exc:
-                        sys.stderr.write(f"[reflex_guard] Error reading touched files: {exc}\n")
-                return True, ""
-        return True, ""
     except Exception as exc:
-        sys.stderr.write(f"[reflex_guard] Error checking git status: {exc}\n")
-        return True, ""
+        sys.stderr.write(f"[reflex_guard] Error in verify_mobile_viewport_gate: {exc}\n")
+        return False
 
 
 def handle_stop_hook(payload: Dict[str, Any]) -> Dict[str, Any]:
@@ -148,33 +114,34 @@ def handle_stop_hook(payload: Dict[str, Any]) -> Dict[str, Any]:
             "decision": "continue",
             "reason": f"【仿生脊髓反射拦截】宪法单文件 <= 300 行铁律违规：发现超限文件 {bad_files}，禁止停机！必须自主重构拆解！"
         }
-
     if not verify_strict_constitution(WORKSPACE_ROOT):
         err_msg = f" 详情: {LAST_VERIFY_ERROR}" if LAST_VERIFY_ERROR else ""
         return {
             "decision": "continue",
             "reason": f"【仿生脊髓反射拦截】宪法物理门禁断言测试未通过！禁止停机！必须自主自愈修复！{err_msg}"
         }
-
     if not verify_profit_integrity(WORKSPACE_ROOT):
         return {
             "decision": "continue",
             "reason": "【仿生脊髓反射拦截】第24条盈利真实性与单向棘轮风控守卫测试未通过！禁止停机！必须自主自愈修复！"
         }
-
     if not verify_mobile_viewport_gate(WORKSPACE_ROOT):
         return {
             "decision": "continue",
             "reason": "【仿生脊髓反射拦截】第34条移动端物理视口所有权门禁测试未通过！严禁形式主义假全绿，必须自主自愈！"
         }
-
     is_clean, dirty_info = verify_closeout_hygiene(WORKSPACE_ROOT)
     if not is_clean:
         return {
             "decision": "continue",
             "reason": f"【仿生脊髓反射拦截】第35条机械收尾闸机违规：{dirty_info}。必须执行干净收尾方准停机！"
         }
-
+    mines = scan_workspace_landmines(WORKSPACE_ROOT)
+    if mines:
+        return {
+            "decision": "continue",
+            "reason": f"【第38条埋地雷拦截】生产源码含假底价/合成器/遗留话术: {', '.join(mines[:3])}"
+        }
     return {
         "decision": "allow",
         "reason": "仿生多重神经突触质检全绿，视口所有权与单向棘轮风控守恒，准予安全停机。"
@@ -182,63 +149,55 @@ def handle_stop_hook(payload: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def handle_pre_tool_use(payload: Dict[str, Any]) -> Dict[str, Any]:
-    """处理 PreToolUse 事件: 仓内常规任务自动放行，破坏性删除或跨目录访问强制单次弹窗授权"""
+    """处理 PreToolUse：行数、埋雷词元、破坏性命令。"""
     tool_call = payload.get("toolCall", {})
     name = tool_call.get("name", "")
     args = tool_call.get("args", {})
-
-    # 1. 代码文件行数刚性门禁 (<= 300行) 及防放宽风控篡改扫描
     if name in ("write_to_file", "replace_file_content"):
         code_content = args.get("CodeContent", "") or args.get("ReplacementContent", "")
         target_file = args.get("TargetFile", "")
-        if target_file and target_file.endswith(".py") and code_content:
-            line_count = len(code_content.splitlines())
+        if content_has_landmine(str(code_content)):
+            return {
+                "decision": "deny",
+                "reason": "【第38条埋地雷拦截】严禁写入合成器、休市偷跑开关、写死加密底价或遗留话术！"
+            }
+        if target_file and str(target_file).endswith(".py") and code_content:
+            line_count = len(str(code_content).splitlines())
             if line_count > 300:
                 return {
                     "decision": "deny",
-                    "reason": f"【宪法物理拦截】写入文件 {os.path.basename(target_file)} 行数达 {line_count} 行，严禁超过 300 行！"
+                    "reason": f"【宪法物理拦截】写入文件 {os.path.basename(str(target_file))} 行数达 {line_count} 行，严禁超过 300 行！"
                 }
-
-            # 恶意放宽风控或伪造行情与假种子历史拦截 (第24/33条)
             bad_tokens = [
                 "byp" + "ass_risk=True", "allow_" + "toxic=True", "min_blood_" + "purity = 0.0",
                 "allow_sim_" + "on_closed=True", "pn" + "l=3000.0", "0.95 + 0.0" + "02 * i"
             ]
-            if any(k in code_content for k in bad_tokens):
+            if any(k in str(code_content) for k in bad_tokens):
                 return {
                     "decision": "deny",
                     "reason": "【最高宪法第24/33条物理拦截】严禁放宽风控参数或在代码中伪造行情跳动、假种子历史！"
                 }
-
-    # 2. 终端命令危险操作与跨工作区拦截
     if name == "run_command":
         cmd = args.get("CommandLine", "").strip()
         cwd = args.get("Cwd", "").strip()
-
-        # 破坏性高危命令: 强制弹窗人工授权
         destructive_keywords = ["rm -rf", "rm -r /", "dd if=", "mkfs", "format", ":(){ :|:& };:"]
         if any(k in cmd for k in destructive_keywords):
             return {
                 "decision": "force_ask",
                 "reason": f"【重大高危操作安全拦截】检测到潜在破坏性命令: `{cmd}`，必须由人工确认授权！"
             }
-
-        # 跨工作区非开发目录访问: 强制弹窗人工授权
         if cwd and not cwd.startswith(WORKSPACE_ROOT):
             return {
                 "decision": "force_ask",
                 "reason": f"【跨工作区访问拦截】命令试图在仓外目录 `{cwd}` 执行，涉及隐私与越权，必须由人工单次授权！"
             }
-
-        # 仓内常规开发命令: 零弹窗自动放行自主执行
         return {"decision": "allow"}
-
     return {"decision": "allow"}
 
 
 def handle_pre_invocation(payload: Dict[str, Any]) -> Dict[str, Any]:
-    """处理 PreInvocation 事件: 注入仿生神经反射记忆与防AI造假守卫"""
-    msg = "【仿生反射】恪守单文件<=300行；单向棘轮只严不宽；绝对真值零伪造；机械收尾干净交接；测试退出码为0。"
+    """处理 PreInvocation 事件: 注入仿生神经反射记忆与防埋雷守卫"""
+    msg = "【仿生反射】单文件<=300行；禁止埋地雷；公开源能接必须接；porcelain 非空不准停；测试退出码为0。"
     return {"injectSteps": [{"ephemeralMessage": msg}]}
 
 
@@ -255,23 +214,20 @@ def main() -> None:
             sys.exit(1)
         print("🟢 [PASS] All physical guards and constitutional assertions cleared (Exit 0).")
         sys.exit(0)
-
-    # 读取 stdin
     input_str = ""
     if not sys.stdin.isatty():
         try:
             input_str = sys.stdin.read()
-        except Exception:
+        except Exception as exc:
+            sys.stderr.write(f"[reflex_guard] stdin read failed: {exc}\n")
             input_str = ""
-
     payload: Dict[str, Any] = {}
     if input_str.strip():
         try:
             payload = json.loads(input_str)
-        except Exception:
+        except json.JSONDecodeError as exc:
+            sys.stderr.write(f"[reflex_guard] JSON parse failed: {exc}\n")
             payload = {}
-
-    # 自动识别 Hook 类型
     if "terminationReason" in payload or "fullyIdle" in payload:
         resp = handle_stop_hook(payload)
     elif "toolCall" in payload:
@@ -279,9 +235,7 @@ def main() -> None:
     elif "invocationNum" in payload:
         resp = handle_pre_invocation(payload)
     else:
-        # 默认执行 Stop 校验
         resp = handle_stop_hook(payload)
-
     print(json.dumps(resp, ensure_ascii=False))
 
 

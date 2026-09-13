@@ -1,0 +1,12 @@
+---
+description: 禁止把已知缺陷当诚实遗留；公开行情能接必须接；双轨 Hook 不得放水收尾。
+globs: *
+alwaysApply: true
+---
+
+# 第 38 条：禁止埋地雷（Anti-Landmine）
+
+- 发现假价、分路行情、死基准、借券 K 线、收尾闸放水，必须当场接线或标 `DATA_UNAVAILABLE`。严禁「诚实遗留」「先挂着」「不说修就不修」。
+- Binance 等公开源成功则真实价 + `BINANCE`；失败只能 `price=0` / `DATA_UNAVAILABLE`。严禁静态底价冒充成交价。
+- `git status --porcelain` 非空一律禁止停机。严禁用对端 touched 列表把脏树当干净。
+- 写入合成器、`allow_sim_on_closed`、写死加密底价：Hook 必须 deny。

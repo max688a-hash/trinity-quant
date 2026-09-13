@@ -18,4 +18,4 @@ alwaysApply: true
 6. 机械收尾闸机（Article 35）：交接或停机前必须执行机械收尾，`git status --porcelain` 必须为完全干净状态；构建产物（web/dist/）、运行态与私有账本隔离写入 .gitignore；
 7. 目的牵引物理质检（Article 36）：严禁文本形式主义字串假绿；必须绑定用户目的指标并执行真实物理测度命令（measure_cmd），退出码 exit=0；
 8. 全仓必须达到 `GRADE_AAA_FORTRESS` 军工堡垒级标准。
-
+9. 禁止埋地雷（第 38 条）：已知缺陷必须当场修复或标 DATA_UNAVAILABLE；严禁诚实遗留；收尾闸不得放水。

@@ -203,8 +203,8 @@
    - 编写并执行物理守卫脚本 `scripts/reflex_guard_hook.py`，接收标准 JSON stdin 并输出标准 JSON stdout；
    - 当 AI 智能体企图结束任务（`Stop`）时，Hook 自动执行代码规范扫描（单文件 $\le 300$ 行）、宪法物理断言与单元测试；若有任何未通过项，Hook 物理强制拦截停机并下发自愈指令：`{"decision": "continue", "reason": "【仿生脊髓反射拦截】物理质检门禁未全绿，存在放水或未完成验证，必须自主自愈修复！"}`。
 2. **Cursor（光标）智能体规则无缝对齐**：
-   - 必须在工作区根目录部署 `.cursorrules` 以及 `.cursor/rules/trinity_bio_cybernetic.mdc`；
-   - 将最高宪法红线、单文件 $\le 300$ 行限制、零伪 Mock 与五大多重神经突触思维定势固化为 Cursor 强制规则，实现 Google Antigravity 与 Cursor 双轨生态的最高法治统一与全自动闭环。
+   - 必须在工作区根目录部署 `.cursorrules`、`.cursor/rules/trinity_bio_cybernetic.mdc` 与 `.cursor/hooks.json`（`stop` / `preToolUse` 对齐 `scripts/reflex_guard_hook.py`）；
+   - 将最高宪法红线、单文件 $\le 300$ 行限制、零伪 Mock、禁止埋地雷与五大多重神经突触思维定势固化为 Cursor 强制规则，实现 Google Antigravity 与 Cursor 双轨生态的最高法治统一与全自动闭环。
 
 ---
 
@@ -348,4 +348,9 @@
    - 控制元器件（如 K 线周期日线/小时/15分/5分切换、缩放按钮、指标图层开关）必须与对应的数据可视化主体（K 线图表画布）保持零距离物理紧密贴合（挂载在图表容器顶部或工具栏内）；
    - 严禁将周期切换等高频控制按钮与主体画布跨屏分离（如隔着多张卡片或相距数百像素），杜绝反人机工学的割裂布局。
 
+### 第 38 条：禁止埋地雷与已知缺陷零遗留宪法 (Anti-Landmine & Zero-Honest-Leftover Law)
+1. **已知缺陷必须当场修复**：生产路径一旦出现假价、分路行情、死基准、借券 K 线或收尾闸放水，必须立即接线或诚实标 `DATA_UNAVAILABLE`。严禁写成「诚实遗留」「先挂着」「不说修复就不修」。
+2. **公开源能接必须接**：看板已接通的公开行情（如 Binance `BTCUSDT`），逐笔、K 线与多资产 μ 必须同源；失败只能 `price=0` / `DATA_UNAVAILABLE`，严禁用静态底价或茅台日 K 冒充。
+3. **双轨智能体不得互相放水**：Antigravity 与 Cursor 均不得改写 Stop/收尾 Hook，使脏工作区或对端改动被当作干净；`git status --porcelain` 非空一律拦截停机。
+4. **Hook 物理落地**：`.agents/hooks.json` 与 `.cursor/hooks.json` 必须在 Stop / preToolUse 扫描埋雷词元并否决写入合成器、休市偷跑开关与写死加密底价。
 
