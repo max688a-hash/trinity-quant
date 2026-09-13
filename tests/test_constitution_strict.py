@@ -281,6 +281,15 @@ class TestConstitutionStrict(unittest.TestCase):
         with open(os.path.join(self.workspace_root, ".cursor", "rules", "trinity_bio_cybernetic.mdc"), "r", encoding="utf-8") as f:
             self.assertIn("Article 27", f.read())
 
+    def test_article_28_mandatory_empirical_due_diligence(self) -> None:
+        """宪法第28条：依据客观现实、未经实证调研严禁妄下结论"""
+        with open(os.path.join(self.workspace_root, "AGENTS.md"), "r", encoding="utf-8") as fp:
+            self.assertIn("第 28 条：依据客观现实、未经实证调研严禁妄下结论宪法", fp.read())
+        with open(os.path.join(self.workspace_root, ".cursorrules"), "r", encoding="utf-8") as f:
+            self.assertIn("Article 28 Rules", f.read())
+        with open(os.path.join(self.workspace_root, ".cursor", "rules", "trinity_bio_cybernetic.mdc"), "r", encoding="utf-8") as f:
+            self.assertIn("Article 28", f.read())
+
 
 if __name__ == "__main__":
     unittest.main()

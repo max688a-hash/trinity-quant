@@ -37,12 +37,12 @@ def check_vault_integrity() -> Tuple[bool, List[str]]:
         try:
             with open(full_path, "r", encoding="utf-8") as f:
                 content = f.read()
-            if "AGENTS.md" in rel_path and "第 27 条" not in content:
-                missing_or_corrupted.append(f"条款缺失: {rel_path} 缺失第27条")
-            elif ".cursorrules" in rel_path and "Article 27 Rules" not in content:
-                missing_or_corrupted.append(f"条款缺失: {rel_path} 缺失第27条")
-            elif "trinity_bio_cybernetic.mdc" in rel_path and "Article 27" not in content:
-                missing_or_corrupted.append(f"条款缺失: {rel_path} 缺失第27条")
+            if "AGENTS.md" in rel_path and ("第 27 条" not in content or "第 28 条" not in content):
+                missing_or_corrupted.append(f"条款缺失: {rel_path} 缺失第27/28条")
+            elif ".cursorrules" in rel_path and ("Article 27 Rules" not in content or "Article 28 Rules" not in content):
+                missing_or_corrupted.append(f"条款缺失: {rel_path} 缺失第27/28条")
+            elif "trinity_bio_cybernetic.mdc" in rel_path and ("Article 27" not in content or "Article 28" not in content):
+                missing_or_corrupted.append(f"条款缺失: {rel_path} 缺失第27/28条")
         except Exception as e:
             missing_or_corrupted.append(f"读取异常: {rel_path} ({e})")
 
