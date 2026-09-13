@@ -115,8 +115,8 @@ class MarketSessionClock:
         # 3. 国内期货市场 (CN_FUTURE) - 如 SA (纯碱), C (玉米), RB (螺纹钢)
         is_future = any(sym.startswith(p) for p in ("SA", "C", "RB", "AG", "IF", "M", "P"))
         if is_future:
-            # 周末完全闭市
-            if weekday == 6:  # 周日
+            # 周日完全闭市
+            if weekday == 6:
                 return MarketClockCheckResult(
                     symbol=sym,
                     venue="CN_FUTURE",
@@ -126,7 +126,8 @@ class MarketSessionClock:
                     reason="国内期货市场周日全天休市！严禁在休盘时段产生虚假成交！",
                     can_execute_live=False
                 )
-            if weekday == 5 and cur_t >= dtime(2, 30):  # 周六凌晨2:30后
+            # 周六凌晨 02:30 之后进入周末休市
+            if weekday == 5 and cur_t > dtime(2, 30):
                 return MarketClockCheckResult(
                     symbol=sym,
                     venue="CN_FUTURE",
@@ -136,14 +137,26 @@ class MarketSessionClock:
                     reason="国内期货市场周末休市，下周一 09:00 开盘",
                     can_execute_live=False
                 )
+            # 周一早间 09:00 前无夜盘
+            if weekday == 0 and cur_t < dtime(9, 0):
+                return MarketClockCheckResult(
+                    symbol=sym,
+                    venue="CN_FUTURE",
+                    is_open=False,
+                    status=MarketSessionStatus.CLOSED_NIGHT,
+                    current_beijing_time=time_str,
+                    reason="国内期货周一早盘未开市，开盘时间为 09:00",
+                    can_execute_live=False
+                )
 
-            # 周一至周五常规时段检查
+            # 周一至周五常规日盘
             in_day_1 = dtime(9, 0) <= cur_t <= dtime(10, 15)
             in_day_2 = dtime(10, 30) <= cur_t <= dtime(11, 30)
             in_day_3 = dtime(13, 30) <= cur_t <= dtime(15, 0)
-            in_night = cur_t >= dtime(21, 0) or cur_t <= dtime(2, 30)
+            # 正确夜盘: 周一至周五 21:00-24:00, 周二至周六 00:00-02:30
+            in_night = (cur_t >= dtime(21, 0) and weekday in (0, 1, 2, 3, 4)) or (cur_t <= dtime(2, 30) and weekday in (1, 2, 3, 4, 5))
 
-            if in_day_1 or in_day_2 or in_day_3 or (in_night and weekday < 5):
+            if in_day_1 or in_day_2 or in_day_3 or in_night:
                 return MarketClockCheckResult(
                     symbol=sym,
                     venue="CN_FUTURE",
@@ -163,6 +176,21 @@ class MarketSessionClock:
                     reason="国内期货非交易时段 (休盘中)，开市时间: 09:00 / 21:00",
                     can_execute_live=False
                 )
+
+        # 4. 美股股票市场 (US_EQUITY)
+        is_us_stock = ".US" in sym or sym in ("AAPL", "TSLA", "NVDA", "MSFT", "GOOGL", "AMZN", "META")
+        if is_us_stock:
+            if weekday == 6:
+                return MarketClockCheckResult(sym, "US_EQUITY", False, MarketSessionStatus.CLOSED_WEEKEND, time_str, "美股市场周末休市", False)
+            if weekday == 5 and cur_t > dtime(4, 0):
+                return MarketClockCheckResult(sym, "US_EQUITY", False, MarketSessionStatus.CLOSED_WEEKEND, time_str, "美股周末休市中", False)
+            if weekday == 0 and cur_t < dtime(21, 30):
+                return MarketClockCheckResult(sym, "US_EQUITY", False, MarketSessionStatus.CLOSED_NIGHT, time_str, "美股未开市，开盘时间为北京时间 21:30", False)
+            in_us = (cur_t >= dtime(21, 30) and weekday in (0, 1, 2, 3, 4)) or (cur_t <= dtime(4, 0) and weekday in (1, 2, 3, 4, 5))
+            if in_us:
+                return MarketClockCheckResult(sym, "US_EQUITY", True, MarketSessionStatus.OPEN, time_str, "美股连续竞价交易中 (纽约开盘)", True)
+            else:
+                return MarketClockCheckResult(sym, "US_EQUITY", False, MarketSessionStatus.CLOSED_NIGHT, time_str, "美股日间闭市中，开盘时间为北京时间 21:30", False)
 
         # 4. A 股股票市场 (CN_EQUITY) - 默认股票
         if weekday in (5, 6):  # 周六周日

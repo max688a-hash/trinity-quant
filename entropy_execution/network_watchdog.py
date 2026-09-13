@@ -14,6 +14,7 @@ TRINITY QUANT 网络物理链路看门狗与报单死循环防爆中枢。
 
 from dataclasses import dataclass
 from enum import Enum
+import math
 import threading
 import time
 from typing import Any, Dict, List, Optional, Set, Tuple
@@ -38,6 +39,8 @@ class WatchdogAuditResult:
 class NetworkWatchdog:
     """实盘网络看门狗与死循环防爆引擎"""
 
+    MAX_TRACKED_ORDERS: int = 10_000
+
     def __init__(
         self,
         max_latency_ms: float = 800.0,
@@ -54,6 +57,7 @@ class NetworkWatchdog:
         self._last_ping_latency_ms = 12.5
         self._recent_order_signatures: Dict[str, float] = {}   # sig -> epoch
         self._executed_cl_ord_ids: Set[str] = set()
+        self._executed_order_queue: List[str] = []
 
     def record_heartbeat(self, latency_ms: float) -> None:
         """记录外部柜台或网络探测成功心跳"""
@@ -111,6 +115,19 @@ class NetworkWatchdog:
                     )
                 )
 
+            # 0. 数学防爆与非法数值防御
+            if (
+                math.isnan(quantity) or math.isnan(price) or
+                math.isinf(quantity) or math.isinf(price) or
+                quantity <= 0 or price <= 0
+            ):
+                return WatchdogAuditResult(
+                    is_safe=False,
+                    status=self._link_status,
+                    latency_ms=self._last_ping_latency_ms,
+                    rejection_reason=f"⛔ 非法报单参数拦截 (含NaN/Inf/非正数): qty={quantity}, px={price}"
+                )
+
             # 2. 幂等性校验：严禁同一客户单号重复撮合
             if cl_ord_id in self._executed_cl_ord_ids:
                 return WatchdogAuditResult(
@@ -134,9 +151,13 @@ class NetworkWatchdog:
                     )
                 )
 
-            # 4. 登记特征与单号
+            # 4. 登记特征与单号 (有界队列淘汰，杜绝 24/7 生产内存泄漏)
             self._recent_order_signatures[sig] = t_now
+            if len(self._executed_cl_ord_ids) >= self.MAX_TRACKED_ORDERS and self._executed_order_queue:
+                oldest = self._executed_order_queue.pop(0)
+                self._executed_cl_ord_ids.discard(oldest)
             self._executed_cl_ord_ids.add(cl_ord_id)
+            self._executed_order_queue.append(cl_ord_id)
 
             # 清理过期的特征缓存（保持轻量）
             cutoff = t_now - 10.0

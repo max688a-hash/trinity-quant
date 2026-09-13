@@ -144,7 +144,7 @@ class RealOrderLedger:
                         old_qty = pos["quantity"]
                         old_cost = pos["cost_basis"]
                         new_qty = old_qty + executed_quantity
-                        new_cost = (old_qty * old_cost + executed_quantity * executed_price) / max(1.0, new_qty)
+                        new_cost = (old_qty * old_cost + executed_quantity * executed_price) / max(1e-8, new_qty)
                         frozen = pos["shares_frozen_t1"] + executed_quantity
                         conn.execute("""
                         UPDATE real_positions SET quantity = ?, cost_basis = ?, shares_frozen_t1 = ?, last_reconciled_at = ?
@@ -158,7 +158,12 @@ class RealOrderLedger:
                 else:
                     if pos:
                         new_qty = max(0.0, pos["quantity"] - executed_quantity)
-                        conn.execute("UPDATE real_positions SET quantity = ?, last_reconciled_at = ? WHERE symbol = ?", (new_qty, now, sym))
+                        new_frozen = min(new_qty, pos["shares_frozen_t1"])
+                        new_cost = pos["cost_basis"] if new_qty > 0 else 0.0
+                        conn.execute("""
+                        UPDATE real_positions SET quantity = ?, cost_basis = ?, shares_frozen_t1 = ?, last_reconciled_at = ?
+                        WHERE symbol = ?
+                        """, (new_qty, new_cost, new_frozen, now, sym))
                 conn.commit()
 
     def record_order_rejected(self, cl_ord_id: str, reason: str) -> None:
@@ -212,3 +217,11 @@ class RealOrderLedger:
                     conn.execute("UPDATE real_positions SET last_reconciled_at = ?", (now,))
                     conn.commit()
         return is_matched, mismatches
+
+    def rollover_trading_day(self) -> None:
+        """T+1 交易日终/开盘隔夜解冻与持仓结转"""
+        now = self._now_str()
+        with self._lock:
+            with self._get_connection() as conn:
+                conn.execute("UPDATE real_positions SET shares_frozen_t1 = 0.0, last_reconciled_at = ?", (now,))
+                conn.commit()

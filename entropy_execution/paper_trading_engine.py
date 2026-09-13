@@ -95,6 +95,13 @@ class PaperTradingEngine:
         """
         接收行情推入，动态盯市并自动触发追踪止损平仓
         """
+        if (
+            current_price <= 0 or current_atr <= 0 or
+            math.isnan(current_price) or math.isnan(current_atr) or
+            math.isinf(current_price) or math.isinf(current_atr)
+        ):
+            return []
+
         sym = symbol.upper()
         auto_receipts: List[PaperExecutionReceipt] = []
         if sym in self._positions:
@@ -147,8 +154,12 @@ class PaperTradingEngine:
         执行仿真撮合 (含开闭市时钟严格拦截、全摩擦扣减、T+1/T+0 制度与极端涨跌停流动性枯竭防御)
         """
         sym = symbol.upper()
-        if quantity <= 0 or market_price <= 0:
-            return PaperExecutionReceipt(sym, is_buy, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, False, "非法价格或数量")
+        if (
+            quantity <= 0 or market_price <= 0 or
+            math.isnan(quantity) or math.isnan(market_price) or
+            math.isinf(quantity) or math.isinf(market_price)
+        ):
+            return PaperExecutionReceipt(sym, is_buy, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, False, "非法价格或数量异常(含NaN/Inf)")
 
         # 物理交易所真实开闭市时钟防火墙 (杜绝非交易时段与周末偷跑假成交)
         if self.enforce_trading_hours and (not is_replay_mode):

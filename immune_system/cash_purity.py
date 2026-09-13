@@ -98,6 +98,10 @@ class CashPurityEngine:
                 f"{self.max_receivables_ratio*100:.1f}% (资金严重滞留欠条)"
             )
 
+        if net_profit < 0:
+            is_warning = True
+            reasons.append(f"单期净利润发生实质性亏损 ({net_profit/1e8:.2f}亿)，企业主营造血承压")
+
         if not is_veto and phi_cp < self.warning_threshold:
             is_warning = True
             reasons.append(f"造血纯度 Φ_CP={phi_cp:.3f} 进入观察预警区间 [{self.veto_threshold:.2f}, {self.warning_threshold:.2f}]")

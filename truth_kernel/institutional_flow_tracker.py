@@ -9,6 +9,7 @@ truth_kernel/institutional_flow_tracker.py
 """
 
 from dataclasses import dataclass
+import math
 from typing import Dict, List
 
 
@@ -51,6 +52,12 @@ class InstitutionalFlowTracker:
         total_amount = 0.0
 
         for t in trades:
+            if (
+                t.price <= 0 or t.volume <= 0 or
+                math.isnan(t.price) or math.isnan(t.volume) or
+                math.isinf(t.price) or math.isinf(t.volume)
+            ):
+                continue
             amt = t.price * t.volume
             total_amount += amt
             # 主动买入为正 (+)，主动卖出为负 (-)

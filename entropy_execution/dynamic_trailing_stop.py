@@ -12,6 +12,7 @@ TRINITY QUANT 动态自适应跟踪止盈止损与高危仓位平仓引擎。
 
 from dataclasses import dataclass
 from enum import Enum
+import math
 from typing import Optional
 
 
@@ -77,8 +78,13 @@ class DynamicTrailingStopEngine:
         :param is_emergency_toxic_flag: 是否检测到突发庄家陷阱或基本面债务暴雷
         """
         sym = symbol.upper()
-        if entry_price <= 0 or current_price <= 0 or current_atr <= 0:
-            raise ValueError("价格与ATR必须大于0")
+        if (
+            math.isnan(entry_price) or math.isnan(current_price) or math.isnan(current_atr) or
+            math.isnan(highest_price_since_entry) or math.isnan(previous_stop_price) or
+            math.isinf(entry_price) or math.isinf(current_price) or math.isinf(current_atr) or
+            entry_price <= 0 or current_price <= 0 or current_atr <= 0
+        ):
+            raise ValueError("价格与ATR必须为大于0的有效实数")
 
         # 1. 突发高危紧急清仓 (Emergency Exit)
         if is_emergency_toxic_flag:
@@ -95,9 +101,10 @@ class DynamicTrailingStopEngine:
                 explanation="检测到突发庄家出货陷阱或基本面债务毒性爆雷，一票强制即刻平仓避险！"
             )
 
-        # 2. 浮动盈亏与峰值盈亏
+        # 2. 动态修正历史峰值与浮动盈亏
+        effective_highest = max(highest_price_since_entry, current_price)
         floating_pnl = (current_price - entry_price) / entry_price
-        peak_pnl = (highest_price_since_entry - entry_price) / entry_price
+        peak_pnl = (effective_highest - entry_price) / entry_price
 
         # 3. 动态确定当前 ATR 缓冲带宽 (随着利润扩大动态收紧，锁定收益)
         if peak_pnl >= self._profit_lock_thresh:
@@ -106,7 +113,7 @@ class DynamicTrailingStopEngine:
             atr_mult = self._base_mult
 
         # 4. 计算当前候选止损线 (吊灯出场价 = 峰值最高价 - k * ATR)
-        candidate_stop = highest_price_since_entry - (atr_mult * current_atr)
+        candidate_stop = effective_highest - (atr_mult * current_atr)
 
         # 5. 单向向上锁利棘轮机制 (Ratchet: 绝不允许向下松动调低止损线)
         new_stop = max(previous_stop_price, candidate_stop)
