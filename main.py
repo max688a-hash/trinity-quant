@@ -23,6 +23,7 @@ from typing import Any, Dict, List, Optional
 from urllib.parse import parse_qs, urlparse
 
 WORKSPACE_ROOT = os.path.dirname(os.path.abspath(__file__))
+SPA_DIST = os.path.join(WORKSPACE_ROOT, "web", "dist")
 sys.path.insert(0, WORKSPACE_ROOT)
 
 from entropy_execution.autopilot_learning_daemon import AutoPilotLearningDaemon
@@ -59,13 +60,13 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         self.workspace_root = WORKSPACE_ROOT
-        super().__init__(*args, directory=WORKSPACE_ROOT, **kwargs)
+        super().__init__(*args, directory=SPA_DIST, **kwargs)
 
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
         clean = parsed.path.strip()
         if clean in ("", "/", "/index.html") or any(x in clean for x in ("%60", "*", "`")) or clean.startswith("/%"):
-            self.path = "/trinity_dashboard.html"
+            self.path = "/index.html"
             return super().do_GET()
         if clean == "/favicon.ico":
             self.send_response(204)
@@ -114,8 +115,10 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
         if parsed.path in api_map:
             self._send_json(api_map[parsed.path]())
         else:
-            if not os.path.exists(os.path.join(self.workspace_root, parsed.path.lstrip("/"))):
-                self.path = "/trinity_dashboard.html"
+            rel = parsed.path.lstrip("/")
+            spa_file = os.path.join(SPA_DIST, rel)
+            if not os.path.exists(spa_file):
+                self.path = "/index.html"
             return super().do_GET()
 
     def do_POST(self) -> None:

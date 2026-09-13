@@ -6,6 +6,8 @@ import re
 import unittest
 from typing import List, Tuple
 
+from tests.ui_corpus import load_ui_corpus
+
 
 class TestConstitutionStrict(unittest.TestCase):
     """最高开发宪法物理级严格断言门禁"""
@@ -13,15 +15,13 @@ class TestConstitutionStrict(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-        cls.html_path = os.path.join(cls.workspace_root, "trinity_dashboard.html")
-        with open(cls.html_path, "r", encoding="utf-8") as fp:
-            cls.html_content = fp.read()
+        cls.html_content = load_ui_corpus(cls.workspace_root)
 
     def test_code_files_line_count_strict(self) -> None:
         """宪法第3条第3款：全量Python文件行数必须严格<=300行"""
         violations: List[Tuple[str, int]] = []
         for root, _, files in os.walk(self.workspace_root):
-            if any(x in root for x in (".venv", ".git", "__pycache__", ".chrome")):
+            if any(x in root for x in (".venv", ".git", "__pycache__", ".chrome", "node_modules")):
                 continue
             for f in files:
                 if f.endswith(".py"):
@@ -52,13 +52,12 @@ class TestConstitutionStrict(unittest.TestCase):
     def test_financial_color_semantics_consistency(self) -> None:
         """宪法第12条：全站金融买卖色彩必须全局一致（红买绿卖），严禁同屏冲突"""
         # 严禁出现“绿买红卖”
-        self.assertNotIn('option value="BUY">🟢', self.html_content,
+        self.assertNotIn('value="BUY">🟢', self.html_content,
                          "色彩违宪：买入方向赫然使用绿色，违背国内金融证券标准！")
-        self.assertNotIn('option value="SELL">🔴', self.html_content,
+        self.assertNotIn('value="SELL">🔴', self.html_content,
                          "色彩违宪：卖出方向赫然使用红色，违背国内金融证券标准！")
-        # 必须正确标记
-        self.assertIn('option value="BUY">🔴', self.html_content, "买入必须标注红色！")
-        self.assertIn('option value="SELL">🟢', self.html_content, "卖出必须标注绿色！")
+        self.assertIn('value="BUY">🔴', self.html_content, "买入必须标注红色！")
+        self.assertIn('value="SELL">🟢', self.html_content, "卖出必须标注绿色！")
 
     def test_multidevice_state_atomicity(self) -> None:
         """宪法第11条第1款：双端导航状态机必须通过data-tab原子对齐"""
@@ -74,8 +73,12 @@ class TestConstitutionStrict(unittest.TestCase):
 
     def test_modal_backdrop_dismissal(self) -> None:
         """宪法第13条：弹窗遮罩层必须支持背景盲操点击即刻关闭"""
-        self.assertIn('onclick="if(event.target===this) closeModal()"', self.html_content,
-                      "移动端违宪：模态弹窗未实装遮罩层点击秒关！")
+        self.assertIn("closeModal", self.html_content, "缺失 closeModal 关闭函数！")
+        self.assertTrue(
+            ("onPointerDownOutside" in self.html_content)
+            or ("if(event.target===this) closeModal()" in self.html_content),
+            "移动端违宪：模态弹窗未实装遮罩层点击秒关！",
+        )
 
     def test_kline_redraw_on_tab_switch(self) -> None:
         """宪法第7条第3款：切Tab必须触发requestAnimationFrame重绘K线防模糊失真"""

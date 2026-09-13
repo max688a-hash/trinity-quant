@@ -1,0 +1,33 @@
+{
+  "软件目的": [
+    "盈利",
+    "识别投资陷阱",
+    "规避风险"
+  ],
+  "目的指标": [
+    {
+      "目的": "盈利",
+      "指标": "带全额摩擦的回测净值面板是否在手机视口内可见",
+      "measure_cmd": "python3 -m unittest tests.test_mobile_nav_viewport",
+      "value_path": null,
+      "目标": "exit=0",
+      "出处": "手机底栏净值回测必须进入真实摩擦回测，禁止空壳占位"
+    },
+    {
+      "目的": "识别投资陷阱",
+      "指标": "排毒大屏面板是否绑定真实 tab-screener 而非仅 data-tab 字符串",
+      "measure_cmd": "python3 -m unittest tests.test_mobile_nav_viewport.TestMobileNavViewport.test_five_mobile_tabs_bind_real_panel_ids",
+      "value_path": null,
+      "目标": "exit=0",
+      "出处": "毒蘑菇必须能在手机上一票否决看见，不能点了没反应"
+    },
+    {
+      "目的": "规避风险",
+      "指标": "底栏切页不得 scrollTo 页顶把风控面板藏到视口外",
+      "measure_cmd": "python3 -m unittest tests.test_mobile_nav_viewport.TestMobileNavViewport.test_set_mobile_tab_scrolls_panel_not_page_top",
+      "value_path": null,
+      "目标": "exit=0",
+      "出处": "看不见止损与排毒面板等于没规避风险"
+    }
+  ]
+}

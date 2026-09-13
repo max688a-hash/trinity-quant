@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0e141b;
+  --color-foreground: #e6edf3;
+  --color-card: #19232f;
+  --color-card-alt: #1f2b39;
+  --color-muted: #8593a3;
+  --color-muted-foreground: #9fb0c0;
+  --color-border: #2a3848;
+  --color-ring: #4f8df7;
+  --color-primary: #4f8df7;
+  --color-primary-deep: #3a6fd8;
+  --color-buy: #d9756b;
+  --color-buy-deep: #be4a40;
+  --color-sell: #3fb984;
+  --color-sell-deep: #2f9a6c;
+  --color-warn: #e0a458;
+  --font-sans: "PingFang SC", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  padding-bottom: 5.5rem;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

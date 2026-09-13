@@ -93,8 +93,8 @@ class TestConstitutionExpansion(unittest.TestCase):
         self.assertTrue(any(yr in candles[0]["date"] for yr in ("2023-", "2024-", "2025-", "2026-")), f"非法历史日期: {candles[0]['date']}")
 
         # 3. 物理断言：前端代码静态排查，绝对禁止正弦波捏造蜡烛与写死买卖点索引
-        with open(os.path.join(self.workspace_root, "trinity_dashboard.html"), "r", encoding="utf-8") as f:
-            html = f.read()
+        from tests.ui_corpus import load_ui_corpus
+        html = load_ui_corpus(self.workspace_root)
         self.assertNotIn("Math.sin(i * 0.55)", html, "违宪：前端仍在使用正弦波伪造K线！")
         self.assertNotIn("candles[10].signal = { type: 'BUY'", html, "违宪：前端仍在使用固定索引硬编码信号点！")
         self.assertIn("loadRealKlineData", html, "缺失真实K线加载器！")

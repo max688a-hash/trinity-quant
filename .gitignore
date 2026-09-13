@@ -13,3 +13,10 @@ data/*.enc.json
 *.enc.json
 *.db-shm
 *.db-wal
+_runtime/
+web/node_modules/
+web/dist/
+.kiro/gates/state/
+
+# Accidental nested empty repo created when a window opened the wrong folder
+/顶级量化/

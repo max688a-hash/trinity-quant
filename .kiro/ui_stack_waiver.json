@@ -1,0 +1,5 @@
+{
+  "reason": "F-062 迁移期冻结存量裸 HTML 仪表盘 trinity_dashboard.html；生产入口已切到 web/dist SPA，禁止再用后端字串交差。",
+  "scope": ["trinity_dashboard.html"],
+  "until": "2026-12-31"
+}

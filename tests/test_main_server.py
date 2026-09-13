@@ -8,10 +8,12 @@ import json
 import unittest
 
 from entropy_execution.real_money_service import (
+    _NETWORK_WATCHDOG,
     get_real_money_orders,
     get_real_money_status,
     handle_real_money_order,
     handle_real_money_toggle,
+    handle_real_money_unlock,
 )
 from main import TrinityRequestHandler, run_full_verification
 
@@ -78,17 +80,25 @@ class TestMainServer(unittest.TestCase):
         self.assertIn("is_live_combat_mode", status)
         self.assertIn("circuit_breaker_limit_pct", status)
 
-        # 切换实战模式测试
+        handle_real_money_unlock({
+            "safety_key": "TRINITY_MASTER_OVERRIDE_SAFETY_KEY_2026"
+        })
+        # 全仓 discover 会超过看门狗 3s 心跳窗口，必须先续心跳，否则误报断网冻结
+        _NETWORK_WATCHDOG.restore_connection()
         t_res = handle_real_money_toggle({"enabled": True})
         self.assertTrue(t_res["is_live_combat_mode"])
         t_res_off = handle_real_money_toggle({"enabled": False})
         self.assertFalse(t_res_off["is_live_combat_mode"])
 
-        # 真实报单与账本查询测试 (使用微量加密资产避免多次运行后触发20%集中度硬风控)
+        # 真实报单与账本查询：用微量 SOL 避免与全仓其它用例累积的 BTC 持仓撞上 20% 集中度硬风控
         o_res = handle_real_money_order({
-            "symbol": "BTCUSDT", "action": "BUY", "quantity": 0.01, "price": 65000.0, "market_price": 65000.0
+            "symbol": "SOLUSDT",
+            "action": "BUY",
+            "quantity": 0.01,
+            "price": 150.0,
+            "market_price": 150.0,
         })
-        self.assertTrue(o_res["success"])
+        self.assertTrue(o_res.get("success"), msg=str(o_res))
         orders = get_real_money_orders(10)
         self.assertGreaterEqual(orders["count"], 1)
 

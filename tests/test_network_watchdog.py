@@ -108,6 +108,9 @@ class TestNetworkWatchdog(unittest.TestCase):
         })
         self.assertTrue(order_res2["success"])
 
+    def tearDown(self) -> None:
+        _NETWORK_WATCHDOG.restore_connection()
+
 
 if __name__ == "__main__":
     unittest.main()
