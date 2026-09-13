@@ -1216,112 +1216,130 @@
           </div>
         </div>
 
-        <!-- 周期切换与操作按钮 -->
-        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/80">
-          <!-- 周期按钮 -->
-          <div class="flex rounded-xl bg-slate-900 p-1 border border-slate-800 text-xs font-mono">
-            <button onclick="setKlineTimeframe('D', this)" class="kline-tf-btn active px-2.5 py-1 rounded-lg bg-slate-800 text-cyan-400 font-bold">日线 (D)</button>
-            <button onclick="setKlineTimeframe('1H', this)" class="kline-tf-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">1小时 (1H)</button>
-            <button onclick="setKlineTimeframe('15M', this)" class="kline-tf-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">15分 (15M)</button>
-            <button onclick="setKlineTimeframe('5M', this)" class="kline-tf-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">5分 (5M)</button>
-            <button onclick="setKlineTimeframe('TICK', this)" class="kline-tf-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">分时 (Tick)</button>
+        <!-- 顶级一体化专业 K 线交易工作台 (Tightly Integrated Professional Trading Station) -->
+        <div class="bg-slate-900/90 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden space-y-0">
+          
+          <!-- 1. 顶部独立无遮挡行情看板条 (Top Ticker Bar) -->
+          <div id="klineTopTickerBar" class="bg-slate-950/95 border-b border-slate-800 p-3 text-xs font-mono text-slate-200">
+            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 text-[11px] pb-1.5 border-b border-slate-800/80">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-bold text-white text-sm" id="tickerSymbolTag">600519.SH (贵州茅台)</span>
+                <span class="text-slate-400" id="tickerDateTag">2024-08-27</span>
+                <span class="text-cyan-400 font-sans" id="tickerMarketTag">[🇨🇳 A股市场]</span>
+                <span id="tickerLiveBadge" class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-950/90 text-emerald-300 border border-emerald-700/60 animate-pulse">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span id="tickerLiveSourceText">实时高频行情</span>
+                </span>
+                <button onclick="openAdmissionDocketModal()" class="px-2 py-0.5 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-700 text-[10px] font-sans hover:bg-cyan-900 transition flex items-center gap-1 shadow">
+                  <span>📋</span> 入池深研依据
+                </button>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-[11px] font-mono text-slate-400 hidden sm:inline" id="tickerOrderBookDepth">
+                  买一: <span id="tickerBid1" class="text-rose-400 font-bold">-</span>(<span id="tickerBidVol1" class="text-slate-400">-</span>) | 卖一: <span id="tickerAsk1" class="text-emerald-400 font-bold">-</span>(<span id="tickerAskVol1" class="text-slate-400">-</span>)
+                </span>
+                <span class="font-bold text-emerald-400 text-sm" id="tickerChangeTag">涨跌: +1.99%</span>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-[11px] pt-1.5 font-mono text-slate-300">
+              <div><span class="text-slate-500">开:</span> <span id="tickerOpen" class="text-white font-bold">1829.08</span></div>
+              <div><span class="text-slate-500">高:</span> <span id="tickerHigh" class="text-emerald-300 font-bold">1869.43</span></div>
+              <div><span class="text-slate-500">低:</span> <span id="tickerLow" class="text-rose-300 font-bold">1817.37</span></div>
+              <div><span class="text-slate-500">收:</span> <span id="tickerClose" class="text-emerald-400 font-bold">1865.52</span></div>
+              <div><span class="text-slate-500">量:</span> <span id="tickerVol" class="text-slate-300">188,946</span></div>
+              <div><span class="text-amber-400">MA5:</span> <span id="tickerMA5">1801.65</span></div>
+            </div>
           </div>
 
-          <!-- 触控与手势缩放控制条 -->
-          <div class="flex items-center gap-1 bg-slate-900 px-2 py-1 rounded-xl border border-slate-800 text-xs">
-            <button onclick="zoomKline(1.25)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold" title="放大">🔍+</button>
-            <button onclick="zoomKline(0.8)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold" title="缩小">🔍-</button>
-            <button onclick="panKline(60)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold" title="左移">◀</button>
-            <button onclick="panKline(-60)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold" title="右移">▶</button>
-            <button onclick="resetKlineZoom()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold" title="还原全览">↺ 全览</button>
+          <!-- 2. K线核心控制栏 (紧贴 Canvas 正上方，零距离触控！) -->
+          <div class="bg-slate-900 px-3 py-2 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2.5">
+            <!-- 周期按钮：紧贴K线图，即点即看！ -->
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] text-slate-400 font-bold hidden sm:inline uppercase tracking-wider">周期:</span>
+              <div class="flex rounded-lg bg-slate-950 p-0.5 border border-slate-800 text-xs font-mono">
+                <button onclick="setKlineTimeframe('D', this)" class="kline-tf-btn active px-2.5 py-1 rounded bg-slate-800 text-cyan-400 font-bold transition">日线 (D)</button>
+                <button onclick="setKlineTimeframe('1H', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">1小时 (1H)</button>
+                <button onclick="setKlineTimeframe('15M', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">15分 (15M)</button>
+                <button onclick="setKlineTimeframe('5M', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">5分 (5M)</button>
+                <button onclick="setKlineTimeframe('TICK', this)" class="kline-tf-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">分时 (Tick)</button>
+              </div>
+            </div>
+
+            <!-- 缩放与平移微调条：紧贴K线图！ -->
+            <div class="flex items-center gap-1 bg-slate-950 px-1.5 py-0.5 rounded-lg border border-slate-800 text-xs font-mono">
+              <button onclick="zoomKline(1.25)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-cyan-300 font-bold transition" title="放大">🔍+</button>
+              <button onclick="zoomKline(0.8)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-cyan-300 font-bold transition" title="缩小">🔍-</button>
+              <button onclick="panKline(60)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold transition" title="左移">◀</button>
+              <button onclick="panKline(-60)" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold transition" title="右移">▶</button>
+              <button onclick="resetKlineZoom()" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-amber-300 font-bold transition" title="还原全览">↺ 全览</button>
+            </div>
+
+            <!-- 均线开关控制与警报测试 -->
+            <div class="flex items-center gap-3 text-xs">
+              <div class="flex items-center gap-2 sm:gap-3 text-[11px]">
+                <label class="flex items-center gap-1 cursor-pointer">
+                  <input type="checkbox" id="checkMA5" checked onchange="drawKlineChart()" class="accent-amber-400 rounded">
+                  <span class="text-amber-400 font-mono font-bold">MA5</span>
+                </label>
+                <label class="flex items-center gap-1 cursor-pointer">
+                  <input type="checkbox" id="checkMA10" checked onchange="drawKlineChart()" class="accent-purple-400 rounded">
+                  <span class="text-purple-400 font-mono font-bold">MA10</span>
+                </label>
+                <label class="flex items-center gap-1 cursor-pointer">
+                  <input type="checkbox" id="checkMA20" checked onchange="drawKlineChart()" class="accent-cyan-400 rounded">
+                  <span class="text-cyan-400 font-mono font-bold">MA20</span>
+                </label>
+                <label class="flex items-center gap-1 cursor-pointer">
+                  <input type="checkbox" id="checkMA60" checked onchange="drawKlineChart()" class="accent-orange-400 rounded">
+                  <span class="text-orange-400 font-mono font-bold">MA60</span>
+                </label>
+              </div>
+              <div class="hidden sm:flex items-center gap-1.5">
+                <button onclick="triggerEntryDingAlert()" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-700 hover:bg-emerald-600 text-white transition flex items-center gap-1">
+                  <span>🔔</span> 叮
+                </button>
+                <button onclick="triggerCrisisAlarmAlert()" class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-700 hover:bg-rose-600 text-white transition flex items-center gap-1">
+                  <span>🚨</span> 警报
+                </button>
+              </div>
+            </div>
           </div>
 
-          <!-- 声音与变色警报模拟测试 -->
-          <div class="flex items-center gap-2">
-            <button onclick="triggerEntryDingAlert()" class="px-2.5 py-1 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-sm flex items-center gap-1">
-              <span>🔔</span> 建仓达标(叮)
-            </button>
-            <button onclick="triggerCrisisAlarmAlert()" class="px-2.5 py-1 rounded-xl text-xs font-bold bg-rose-700 hover:bg-rose-600 text-white transition shadow-sm flex items-center gap-1">
-              <span>🚨</span> 大股东甩卖警报
-            </button>
+          <!-- 3. K线 Canvas 主图与副图容器 (紧连操控条，零距离，即操即见！) -->
+          <div class="relative bg-slate-950 p-1 sm:p-2 overflow-hidden" id="klineCanvasWrapper">
+            <canvas id="klineCanvas" class="w-full h-[380px] sm:h-[420px] block cursor-crosshair touch-none"></canvas>
+            <div id="klineTooltip" class="hidden" style="display: none !important;"></div>
           </div>
-        </div>
 
-        <!-- 均线与图例勾选 -->
-        <div class="flex flex-wrap items-center justify-between text-xs text-slate-300 py-1.5 border-y border-slate-800/80 gap-2">
-          <div class="flex flex-wrap items-center gap-3 sm:gap-4">
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="checkbox" id="checkMA5" checked onchange="drawKlineChart()" class="accent-amber-400 rounded">
-              <span class="text-amber-400 font-mono font-bold">MA5</span>
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="checkbox" id="checkMA10" checked onchange="drawKlineChart()" class="accent-purple-400 rounded">
-              <span class="text-purple-400 font-mono font-bold">MA10</span>
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="checkbox" id="checkMA20" checked onchange="drawKlineChart()" class="accent-cyan-400 rounded">
-              <span class="text-cyan-400 font-mono font-bold">MA20 (布林中轨)</span>
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="checkbox" id="checkMA60" checked onchange="drawKlineChart()" class="accent-orange-400 rounded">
-              <span class="text-orange-400 font-mono font-bold">MA60 (生命线)</span>
-            </label>
-          </div>
-          <div class="flex flex-wrap items-center gap-2.5 text-[11px] text-slate-400">
-            <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> 🟢 建仓点</span>
-            <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-rose-400"></span> 🔴 动态止损</span>
-            <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-amber-400"></span> ⛔ 诱多否决</span>
-            <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-purple-400"></span> 🚨 股东抛售</span>
-          </div>
-        </div>
-
-        <!-- 手机触控交互指引提示条 -->
-        <div class="px-3 py-1.5 rounded-lg bg-slate-900/60 border border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
-          <span>💡 <strong>手机触控：</strong>单指横向平移历史 · 双指捏合无级缩放 · 触摸十字光标随动（顶部看板实时透视）</span>
-          <span class="font-mono text-cyan-400" id="klineSymbolHeaderTag">600519.SH (贵州茅台)</span>
-        </div>
-
-        <!-- 顶部独立无遮挡行情看板条 (Top Ticker Bar) 与微观社会交易契约风控看板 -->
-        <div id="klineTopTickerBar" class="bg-slate-900/95 border border-slate-800 p-2.5 rounded-xl text-xs font-mono text-slate-200 shadow-lg transition-all duration-300">
-          <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[11px] pb-1.5 border-b border-slate-800">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="font-bold text-white text-xs" id="tickerSymbolTag">600519.SH (贵州茅台)</span>
-              <span class="text-slate-400" id="tickerDateTag">2024-08-27</span>
-              <span class="text-cyan-400 font-sans" id="tickerMarketTag">[🇨🇳 A股市场]</span>
-              <span id="tickerLiveBadge" class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-950/90 text-emerald-300 border border-emerald-700/60 animate-pulse">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                <span id="tickerLiveSourceText">实时高频跳动流 1000ms</span>
-              </span>
-              <button onclick="openAdmissionDocketModal()" class="px-2 py-0.5 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-700 text-[10px] font-sans hover:bg-cyan-900 transition flex items-center gap-1 shadow">
-                <span>📋</span> 入池深研依据与产业链
-              </button>
+          <!-- 4. 底部图例与触控指引栏 -->
+          <div class="bg-slate-950 px-3 py-1.5 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-[11px] text-slate-400 gap-2">
+            <div class="flex items-center gap-2">
+              <span>💡 <strong>触控操控：</strong>单指横向平移 · 双指捏合缩放 · 触碰显十字线</span>
+              <span class="font-mono text-cyan-400 ml-2" id="klineSymbolHeaderTag">600519.SH (贵州茅台)</span>
             </div>
             <div class="flex items-center gap-3">
-              <span class="text-[11px] font-mono text-slate-400 hidden sm:inline" id="tickerOrderBookDepth">
-                买一: <span id="tickerBid1" class="text-rose-400 font-bold">-</span>(<span id="tickerBidVol1" class="text-slate-400">-</span>) | 卖一: <span id="tickerAsk1" class="text-emerald-400 font-bold">-</span>(<span id="tickerAskVol1" class="text-slate-400">-</span>)
-              </span>
-              <span class="font-bold text-emerald-400" id="tickerChangeTag">涨跌: +1.99%</span>
+              <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> 🟢 建仓点</span>
+              <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-rose-400"></span> 🔴 动态止损</span>
+              <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-amber-400"></span> ⛔ 诱多否决</span>
+              <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-purple-400"></span> 🚨 股东抛售</span>
             </div>
           </div>
-          <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-[11px] pt-1.5 font-mono text-slate-300">
-            <div><span class="text-slate-500">开:</span> <span id="tickerOpen" class="text-white font-bold">1829.08</span></div>
-            <div><span class="text-slate-500">高:</span> <span id="tickerHigh" class="text-emerald-300 font-bold">1869.43</span></div>
-            <div><span class="text-slate-500">低:</span> <span id="tickerLow" class="text-rose-300 font-bold">1817.37</span></div>
-            <div><span class="text-slate-500">收:</span> <span id="tickerClose" class="text-emerald-400 font-bold">1865.52</span></div>
-            <div><span class="text-slate-500">量:</span> <span id="tickerVol" class="text-slate-300">188,946</span></div>
-            <div><span class="text-amber-400">MA5:</span> <span id="tickerMA5">1801.65</span></div>
-          </div>
+        </div>
+
+        <!-- 5. K线图下方的深度法证与微观研报看板 (契约规则、OFI资金流、大白话解读按部就班向下展开) -->
+        <div class="space-y-3 pt-2">
           <!-- 真实的微观社会交易契约与风控规则看板 (Grounding to Sociotechnical Reality) -->
-          <div id="tickerMicroSpecBar" class="mt-2 pt-2 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-sans text-slate-300 bg-slate-950/60 p-2 rounded-lg">
+          <div id="tickerMicroSpecBar" class="p-3 rounded-xl border border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-sans text-slate-300 bg-slate-900/70">
             <div><span class="text-slate-500">🏛️ 交易场所:</span> <span id="specExchange" class="text-cyan-300 font-mono font-bold">上海证券交易所 (SSE)</span></div>
             <div><span class="text-slate-500">📏 交易单位:</span> <span id="specMultiplier" class="text-amber-300 font-mono font-bold">100股/手 (股票)</span></div>
             <div><span class="text-slate-500">🎯 最小变动:</span> <span id="specTick" class="text-emerald-300 font-mono font-bold">0.01元</span></div>
             <div><span class="text-slate-500">🛡️ 杠杆/保证金:</span> <span id="specMargin" class="text-rose-300 font-mono font-bold">100% (全额无杠杆)</span></div>
             <div class="col-span-2"><span class="text-slate-500">⏰ 真实交易时段:</span> <span id="specHours" class="text-slate-300 font-mono">09:30-11:30, 13:00-15:00</span></div>
-            <div class="col-span-2"><span class="text-cyan-400 font-bold">⚖️ 物理规则/法条风控:</span> <span id="specLegalRule" class="text-amber-200 font-mono">A股T+1现货交收 · 卖出计提0.05%印花税 · 10%跌停硬熔断</span></div>
+            <div class="col-span-2"><span class="text-cyan-400 font-bold">⚖️ 物理规则/法条风控:</span> <span id="specLegalRule" class="text-amber-200 font-mono">A股T+1现货交收 · 卖出计提0.05%印花税 · 10%跌停硬熔断 · 自然人客户禁止进入交割月</span></div>
           </div>
+
           <!-- 市场状态机与微观 OFI 高频 Alpha 看板 (防横向撑破与纯中文通俗化) -->
-          <div id="tickerRegimeAlphaBar" class="mt-2 pt-2 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 max-w-full text-[10px] font-sans text-slate-300 bg-slate-950/80 p-2 rounded-lg break-words">
+          <div id="tickerRegimeAlphaBar" class="p-3 rounded-xl border border-slate-800/80 flex flex-wrap items-center justify-between gap-2 max-w-full text-[10px] font-sans text-slate-300 bg-slate-900/70 break-words">
             <div class="flex flex-wrap items-center gap-1.5 min-w-0">
               <span class="text-amber-400 font-bold shrink-0">🧠 市场状态/策略:</span>
               <span id="tickerRegimeTag" class="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold border border-cyan-800 text-[10px] break-all">🌊 宽幅震荡洗盘 (均值回归)</span>
@@ -1335,7 +1353,7 @@
           </div>
 
           <!-- 小白通俗大白话解读卡 (Toddler-Comprehensible Plain Chinese Card) -->
-          <div id="tickerToddlerExplanation" class="mt-1.5 p-2 rounded-lg bg-cyan-950/30 border border-cyan-800/40 text-[11px] leading-relaxed text-slate-300">
+          <div id="tickerToddlerExplanation" class="p-3 rounded-xl bg-cyan-950/30 border border-cyan-800/40 text-[11px] leading-relaxed text-slate-300">
             <div class="flex items-center gap-1 text-cyan-400 font-bold mb-0.5">
               <span>💡 【大白话通俗解读】</span>
               <span class="text-[10px] text-slate-400 font-normal">小白3秒看懂当前量化系统正在做什么</span>
@@ -1344,12 +1362,6 @@
               当前处于宽幅震荡洗盘行情。大白话：股票价格在区间内来回弹跳，没有单边大涨大跌。量化系统自动切换至【统计网格高抛低吸策略】，以 15% 严谨安全底仓在跌出价值洼地时低吸、冲高时及时止盈，绝不追高，杜绝坐过山车！
             </p>
           </div>
-        </div>
-
-        <!-- K线 Canvas 主图与副图容器 (蜡烛图完全显露，内部零遮挡) -->
-        <div class="relative bg-slate-950 rounded-xl p-1 sm:p-2 border border-slate-800 overflow-hidden" id="klineCanvasWrapper">
-          <canvas id="klineCanvas" class="w-full h-[380px] sm:h-[420px] block cursor-crosshair touch-none"></canvas>
-          <div id="klineTooltip" class="hidden" style="display: none !important;"></div>
         </div>
       </div>
     </div>
