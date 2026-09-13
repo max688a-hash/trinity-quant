@@ -9,12 +9,13 @@ TRINITY QUANT 真实券商/期货柜台实盘交易网关适配器与智能路�
 2. QMTStockGateway: A股券商迅投 QMT / XtQuant 实装桥接；
 3. CryptoBinanceGateway: 全球加密数字资产 24/7/365 REST/WS 实装桥接；
 4. RealBrokerRouter: 跨市场多网关统一智能分发与订单状态机（ClOrdID 闭环）。
+协议壳不得在无 SDK 会话时本地伪成交（宪法第 33 条）。
 """
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 import uuid
 import time
 import math
@@ -63,6 +64,33 @@ class RealOrderResponse:
     is_live_combat: bool = True          # 是否为真实真金实战执行
 
 
+# ref: AGENTS.md 第 33 条 无新成交即零跳动；空 dict / 字符串账号不是柜台会话
+NO_LIVE_SESSION_REASON = "无真实柜台会话，禁止本地伪成交"
+
+
+def refuse_unauthenticated_connect(credentials: Dict[str, Any]) -> bool:
+    """协议壳永不把字符串凭据当成已握手会话。# evidence:ok 无 SDK 句柄 → False"""
+    if not isinstance(credentials, dict):
+        return False
+    # live_session 即使出现在字典里，本适配器也没有 CTP/xtquant/ccxt 句柄可绑定
+    _ = credentials.get("live_session")
+    return False
+
+
+def reject_without_live_session(req: RealOrderRequest) -> RealOrderResponse:
+    """未会话一律 REJECTED，严禁本地 FILLED。"""
+    return RealOrderResponse(
+        cl_ord_id=req.cl_ord_id,
+        broker_order_id="",
+        status=RealOrderStatus.REJECTED,
+        executed_price=0.0,
+        executed_quantity=0.0,
+        friction_cost=0.0,
+        rejection_reason=NO_LIVE_SESSION_REASON,
+        is_live_combat=False,
+    )
+
+
 class AbstractBrokerGateway(ABC):
     """券商/期货柜台网关抽象基类"""
 
@@ -73,168 +101,112 @@ class AbstractBrokerGateway(ABC):
     @abstractmethod
     def connect(self, credentials: Dict[str, Any]) -> bool:
         """连接柜台并完成身份鉴权认证"""
-        pass
+        pass  # # 动尺理由: ABC @abstractmethod 语法体，不是业务空壳
 
     @abstractmethod
     def disconnect(self) -> None:
         """断开连接"""
-        pass
+        pass  # # 动尺理由: ABC @abstractmethod 语法体，不是业务空壳
 
     @abstractmethod
     def submit_order(self, req: RealOrderRequest) -> RealOrderResponse:
         """向柜台提交真实委托"""
-        pass
+        pass  # # 动尺理由: ABC @abstractmethod 语法体，不是业务空壳
 
     @abstractmethod
     def cancel_order(self, cl_ord_id: str) -> bool:
         """撤销真实在途委托"""
-        pass
+        pass  # # 动尺理由: ABC @abstractmethod 语法体，不是业务空壳
 
     @abstractmethod
     def query_account(self) -> Dict[str, float]:
         """查询柜台资金状态"""
-        pass
+        pass  # # 动尺理由: ABC @abstractmethod 语法体，不是业务空壳
 
 
 class CTPFuturesGateway(AbstractBrokerGateway):
-    """国内商品/金融期货 CTP 柜台网关适配器"""
+    """国内商品/金融期货 CTP 柜台网关适配器（无 SDK 会话则保持 OFFLINE）"""
 
     def __init__(self) -> None:
         super().__init__(BrokerGatewayType.CTP_FUTURES)
 
     def connect(self, credentials: Dict[str, Any]) -> bool:
-        # CTP 登录规范: BrokerID, InvestorID, Password, AppID, AuthCode
-        self.is_connected = True
-        return True
+        self.is_connected = refuse_unauthenticated_connect(credentials)
+        return self.is_connected
 
     def disconnect(self) -> None:
         self.is_connected = False
 
     def submit_order(self, req: RealOrderRequest) -> RealOrderResponse:
-        if not self.is_connected:
-            return RealOrderResponse(
-                cl_ord_id=req.cl_ord_id, broker_order_id="",
-                status=RealOrderStatus.REJECTED, executed_price=0.0,
-                executed_quantity=0.0, friction_cost=0.0,
-                rejection_reason="CTP 柜台未连接或网络断开", is_live_combat=True
-            )
-        # 计提期货交易所标准佣金
-        comm = req.quantity * 2.5
-        return RealOrderResponse(
-            cl_ord_id=req.cl_ord_id,
-            broker_order_id=f"CTP_{int(time.time() * 1000)}",
-            status=RealOrderStatus.FILLED,
-            executed_price=req.price,
-            executed_quantity=req.quantity,
-            friction_cost=comm,
-            is_live_combat=True
-        )
+        return reject_without_live_session(req)
 
     def cancel_order(self, cl_ord_id: str) -> bool:
-        return True
+        _ = cl_ord_id
+        return False
 
     def query_account(self) -> Dict[str, float]:
-        return {"balance": 10_000_000.0, "available": 8_500_000.0, "margin": 1_500_000.0}
+        return {"balance": 0.0, "available": 0.0, "margin": 0.0}
 
 
 class QMTStockGateway(AbstractBrokerGateway):
-    """A股券商迅投 QMT / XtQuant 实盘网关适配器"""
+    """A股券商迅投 QMT / XtQuant 实盘网关适配器（无 SDK 会话则保持 OFFLINE）"""
 
     def __init__(self) -> None:
         super().__init__(BrokerGatewayType.QMT_STOCK)
 
     def connect(self, credentials: Dict[str, Any]) -> bool:
-        # QMT 登录规范: mini_qmt 路径, 资金账号, 券商代码
-        self.is_connected = True
-        return True
+        self.is_connected = refuse_unauthenticated_connect(credentials)
+        return self.is_connected
 
     def disconnect(self) -> None:
         self.is_connected = False
 
     def submit_order(self, req: RealOrderRequest) -> RealOrderResponse:
-        if not self.is_connected:
-            return RealOrderResponse(
-                cl_ord_id=req.cl_ord_id, broker_order_id="",
-                status=RealOrderStatus.REJECTED, executed_price=0.0,
-                executed_quantity=0.0, friction_cost=0.0,
-                rejection_reason="QMT 终端未连接", is_live_combat=True
-            )
-        amount = req.quantity * req.price
-        tax = (amount * 0.0005) if (not req.is_buy) else 0.0
-        comm = max(5.0, amount * 0.0002)
-        return RealOrderResponse(
-            cl_ord_id=req.cl_ord_id,
-            broker_order_id=f"QMT_{int(time.time() * 1000)}",
-            status=RealOrderStatus.FILLED,
-            executed_price=req.price,
-            executed_quantity=req.quantity,
-            friction_cost=round(tax + comm, 2),
-            is_live_combat=True
-        )
+        return reject_without_live_session(req)
 
     def cancel_order(self, cl_ord_id: str) -> bool:
-        return True
+        _ = cl_ord_id
+        return False
 
     def query_account(self) -> Dict[str, float]:
-        return {"total_asset": 10_000_000.0, "cash": 8_478_500.0, "market_value": 1_521_500.0}
+        return {"total_asset": 0.0, "cash": 0.0, "market_value": 0.0}
 
 
 class CryptoBinanceGateway(AbstractBrokerGateway):
-    """全球加密数字资产 24/7/365 实盘网关适配器"""
+    """全球加密数字资产 24/7/365 实盘网关适配器（无 SDK 会话则保持 OFFLINE）"""
 
     def __init__(self) -> None:
         super().__init__(BrokerGatewayType.BINANCE_CRYPTO)
 
     def connect(self, credentials: Dict[str, Any]) -> bool:
-        # 币安实盘规范: API_KEY, API_SECRET, BASE_URL
-        self.is_connected = True
-        return True
+        self.is_connected = refuse_unauthenticated_connect(credentials)
+        return self.is_connected
 
     def disconnect(self) -> None:
         self.is_connected = False
 
     def submit_order(self, req: RealOrderRequest) -> RealOrderResponse:
-        if not self.is_connected:
-            return RealOrderResponse(
-                cl_ord_id=req.cl_ord_id, broker_order_id="",
-                status=RealOrderStatus.REJECTED, executed_price=0.0,
-                executed_quantity=0.0, friction_cost=0.0,
-                rejection_reason="加密实盘网关离线", is_live_combat=True
-            )
-        amount = req.quantity * req.price
-        comm = amount * 0.00075  # 币安 BNB 抵扣手续费 0.075%
-        return RealOrderResponse(
-            cl_ord_id=req.cl_ord_id,
-            broker_order_id=f"BINANCE_{int(time.time() * 1000)}",
-            status=RealOrderStatus.FILLED,
-            executed_price=req.price,
-            executed_quantity=req.quantity,
-            friction_cost=round(comm, 4),
-            is_live_combat=True
-        )
+        return reject_without_live_session(req)
 
     def cancel_order(self, cl_ord_id: str) -> bool:
-        return True
+        _ = cl_ord_id
+        return False
 
     def query_account(self) -> Dict[str, float]:
-        return {"total_wallet_usd": 100_000.0, "available_usd": 85_000.0}
+        return {"total_wallet_usd": 0.0, "available_usd": 0.0}
 
 
 class RealBrokerRouter:
-    """跨市场实盘柜台智能路由器"""
+    """跨市场实盘柜台智能路由器 — 默认全部 OFFLINE，禁止空 connect 点亮。"""
 
     def __init__(self, is_live_combat: bool = False) -> None:
         self.is_live_combat: bool = bool(is_live_combat)
         self.ctp_gateway = CTPFuturesGateway()
         self.qmt_gateway = QMTStockGateway()
         self.binance_gateway = CryptoBinanceGateway()
-        # 默认连接就绪状态
-        self.ctp_gateway.connect({})
-        self.qmt_gateway.connect({})
-        self.binance_gateway.connect({})
 
     def set_live_combat_mode(self, enabled: bool) -> None:
-        """切换实战真金状态"""
+        """切换实战真金状态；无会话时标志可开，但路由仍拒单。"""
         self.is_live_combat = bool(enabled)
 
     def resolve_gateway_type(self, symbol: str) -> BrokerGatewayType:
@@ -268,7 +240,7 @@ class RealBrokerRouter:
                 cl_ord_id=ord_id, broker_order_id="", status=RealOrderStatus.REJECTED,
                 executed_price=0.0, executed_quantity=0.0, friction_cost=0.0,
                 rejection_reason=f"非法报单参数拦截: qty={quantity}, px={price}",
-                is_live_combat=self.is_live_combat
+                is_live_combat=False
             )
         gw_type = self.resolve_gateway_type(symbol)
         req = RealOrderRequest(
@@ -276,11 +248,10 @@ class RealBrokerRouter:
             quantity=quantity, price=price, gateway_type=gw_type
         )
         gw = self.get_gateway(gw_type)
-        resp = gw.submit_order(req)
-        return resp
+        return gw.submit_order(req)
 
     def get_system_health(self) -> Dict[str, Any]:
-        """获取全实盘网关健康度"""
+        """获取全实盘网关健康度 — 无会话必须报 OFFLINE。"""
         return {
             "is_live_combat_mode": self.is_live_combat,
             "gateways": {

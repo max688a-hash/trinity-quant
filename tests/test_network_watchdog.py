@@ -106,7 +106,11 @@ class TestNetworkWatchdog(unittest.TestCase):
             "quantity": 500,
             "price": 10.50
         })
-        self.assertTrue(order_res2["success"])
+        # 看门狗已放行，但无真实柜台会话仍必须拒单，禁止本地伪成交
+        self.assertFalse(order_res2["success"])
+        self.assertNotEqual(order_res2.get("verdict"), "NETWORK_WATCHDOG_FREEZE")
+        self.assertEqual(order_res2.get("status"), "REJECTED")
+        self.assertIn("会话", str(order_res2.get("rejection_reason") or ""))
 
     def tearDown(self) -> None:
         _NETWORK_WATCHDOG.restore_connection()

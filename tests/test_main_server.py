@@ -98,7 +98,9 @@ class TestMainServer(unittest.TestCase):
             "price": 150.0,
             "market_price": 150.0,
         })
-        self.assertTrue(o_res.get("success"), msg=str(o_res))
+        self.assertFalse(o_res.get("success"), msg=str(o_res))
+        self.assertNotEqual(o_res.get("status"), "FILLED")
+        self.assertIn("会话", str(o_res.get("rejection_reason") or o_res.get("reason") or ""))
         orders = get_real_money_orders(10)
         self.assertGreaterEqual(orders["count"], 1)
 

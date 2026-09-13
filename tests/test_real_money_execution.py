@@ -124,29 +124,28 @@ class TestBrokerGateways(unittest.TestCase):
 
     def test_qmt_stock_gateway(self) -> None:
         gw = QMTStockGateway()
-        gw.connect({})
+        self.assertFalse(gw.connect({}))
         req = RealOrderRequest("ORD_QMT_1", "600519.SH", is_buy=False, quantity=100.0, price=1550.0)
         resp = gw.submit_order(req)
-        self.assertEqual(resp.status, RealOrderStatus.FILLED)
-        self.assertEqual(resp.executed_price, 1550.0)
-        # 计提卖点评花税 0.05% (77.5) + 佣金 (31.0) = 108.5
-        self.assertGreater(resp.friction_cost, 100.0)
+        self.assertEqual(resp.status, RealOrderStatus.REJECTED)
+        self.assertEqual(resp.executed_quantity, 0.0)
+        self.assertIn("会话", resp.rejection_reason)
 
     def test_ctp_futures_gateway(self) -> None:
         gw = CTPFuturesGateway()
-        gw.connect({})
+        self.assertFalse(gw.connect({}))
         req = RealOrderRequest("ORD_CTP_1", "SA2409", is_buy=True, quantity=10.0, price=1800.0)
         resp = gw.submit_order(req)
-        self.assertEqual(resp.status, RealOrderStatus.FILLED)
-        self.assertEqual(resp.friction_cost, 25.0)
+        self.assertEqual(resp.status, RealOrderStatus.REJECTED)
+        self.assertEqual(resp.friction_cost, 0.0)
 
     def test_binance_crypto_gateway(self) -> None:
         gw = CryptoBinanceGateway()
-        gw.connect({})
+        self.assertFalse(gw.connect({}))
         req = RealOrderRequest("ORD_BIN_1", "BTCUSDT", is_buy=True, quantity=0.5, price=65000.0)
         resp = gw.submit_order(req)
-        self.assertEqual(resp.status, RealOrderStatus.FILLED)
-        self.assertGreater(resp.friction_cost, 0.0)
+        self.assertEqual(resp.status, RealOrderStatus.REJECTED)
+        self.assertEqual(resp.executed_quantity, 0.0)
 
     def test_real_broker_router(self) -> None:
         router = RealBrokerRouter(is_live_combat=True)
@@ -157,8 +156,8 @@ class TestBrokerGateways(unittest.TestCase):
         self.assertEqual(router.resolve_gateway_type("SA2409"), BrokerGatewayType.CTP_FUTURES)
 
         resp = router.route_and_execute("600519.SH", is_buy=True, quantity=100.0, price=1550.0)
-        self.assertEqual(resp.status, RealOrderStatus.FILLED)
-        self.assertTrue(resp.is_live_combat)
+        self.assertEqual(resp.status, RealOrderStatus.REJECTED)
+        self.assertFalse(resp.is_live_combat)
 
 
 class TestAlgorithmicOrderSlicer(unittest.TestCase):
