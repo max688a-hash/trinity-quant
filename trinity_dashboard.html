@@ -109,9 +109,14 @@
         <span>📱</span> <span>添加到手机App</span>
       </button>
 
-      <button id="soundToggleBtn" onclick="toggleAudioAlerts()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900/90 hover:bg-slate-800 text-cyan-400 border border-slate-800 backdrop-blur transition shadow-sm shrink-0">
-        <span id="soundIcon">🔊</span> <span id="soundLabel">告警音效: 开启</span>
-      </button>
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button id="soundToggleBtn" onclick="toggleAudioAlerts()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900/90 hover:bg-slate-800 text-cyan-400 border border-slate-800 backdrop-blur transition shadow-sm">
+          <span id="soundIcon">🔊</span> <span id="soundLabel">告警音效: 开启</span>
+        </button>
+        <button onclick="openSoundTestModal()" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 border border-cyan-800/80 backdrop-blur transition shadow-sm flex items-center gap-1" title="手机端试听声音">
+          <span>🎧</span><span>试听</span>
+        </button>
+      </div>
 
       <div class="flex items-center gap-2 text-xs bg-slate-900/90 border border-slate-800 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl backdrop-blur flex-wrap">
         <span class="flex h-2 w-2 relative shrink-0">
@@ -2432,6 +2437,91 @@
     </div>
   </div>
 
+  <!-- 手机端声音与触感警报试听与调试弹窗 -->
+  <div id="soundTestModal" onclick="if(event.target===this) closeSoundTestModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🔊</span>
+          <div>
+            <h3 class="text-base font-bold text-white">手机端声音与触感警报中枢</h3>
+            <p class="text-[11px] text-slate-400">Web Audio 原生振荡器 · 零外链 · 触觉震动 · 锁屏外呼</p>
+          </div>
+        </div>
+        <button onclick="closeSoundTestModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <div class="space-y-3">
+        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+          <div class="text-xs font-bold text-emerald-400 flex items-center justify-between">
+            <span class="flex items-center gap-1.5"><span>🔔</span> <span>量化建仓/止盈达标提示音</span></span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 font-mono">880Hz→1760Hz 正弦波</span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            当股票/期货微观造血达标（Φ_CP&gt;1.2）或突破均线触发买点时，发出清脆“叮（Ping）”金属敲击声，并伴随手机轻微点震。
+          </p>
+          <button onclick="playQuantAlert('ENTRY_PING')" class="w-full py-2.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center justify-center gap-2 shadow-sm">
+            <span>🔊 立即试听【清脆建仓叮声】+ 触感震动</span>
+          </button>
+        </div>
+
+        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+          <div class="text-xs font-bold text-rose-400 flex items-center justify-between">
+            <span class="flex items-center gap-1.5"><span>🚨</span> <span>大股东恶性甩卖/黑天鹅危机警报</span></span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-mono">220Hz 锯齿波双脉冲</span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            当监测到大股东集中竞价狂抛、高折价大宗交易、排毒熔断或黑天鹅暴跌时，发出急促低频蜂鸣警报，并伴随手机三段紧迫物理震颤！
+          </p>
+          <button onclick="playQuantAlert('CRISIS_ALARM')" class="w-full py-2.5 rounded-lg text-xs font-bold bg-rose-700 hover:bg-rose-600 text-white transition flex items-center justify-center gap-2 shadow-sm">
+            <span>🚨 立即试听【低频危机蜂鸣】+ 紧迫强震</span>
+          </button>
+        </div>
+
+        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800/80 space-y-1.5 text-[11px] text-slate-300 leading-relaxed">
+          <div class="font-bold text-cyan-400 flex items-center gap-1">
+            <span>💡</span> 手机端运行与防漏报指南:
+          </div>
+          <p>1. <strong>屏幕亮屏/前台运行时</strong>：只要手指在屏幕上触碰过一次，浏览器底层音频引擎即全天候保持唤醒，有信号即响。</p>
+          <p>2. <strong>手机锁屏/切后台时</strong>：为防浏览器休眠漏报，系统已配备<strong>【🚨 手机主动外呼通道 (Webhook)】</strong>，支持直连企业微信/飞书/钉钉，手机将直接收到系统级推送横幅与提示音！</p>
+        </div>
+      </div>
+
+      <div class="pt-2 flex justify-end">
+        <button onclick="closeSoundTestModal()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition">完成试听，关闭窗口</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 实盘战备发射 5 步物理放行指示灯门禁弹窗 (Pre-Flight Safety Gate) -->
+  <div id="preflightModal" onclick="if(event.target===this) closePreflightModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🚀</span>
+          <div>
+            <h3 class="text-base font-bold text-white">实盘战备发射 5 步物理指示灯门禁</h3>
+            <p class="text-[11px] text-slate-400">Pre-Flight Safety Gate · 物理防爆 · 零伪造</p>
+          </div>
+        </div>
+        <button onclick="closePreflightModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <div class="space-y-2.5" id="preflightChecklistContainer">
+        <!-- 5项指标由JS动态渲染 -->
+      </div>
+
+      <div id="preflightSummaryNotice" class="p-3 rounded-xl border text-xs leading-relaxed space-y-1">
+        <!-- 判定通知 -->
+      </div>
+
+      <div class="flex justify-end gap-3 pt-2">
+        <button onclick="closePreflightModal()" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300">取消返回</button>
+        <button id="btnProceedLaunch" onclick="proceedPhysicalLaunch()" class="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition">🚀 物理确认开启真金实盘</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const STOCKS = [
       {
@@ -3426,6 +3516,11 @@
     async function toggleCombatMode() {
       const targetState = !isLiveCombatActive;
       if (targetState) {
+        // 开启真金实战前：强行激活 5 步战备物理指示灯门禁巡检
+        if (window.location.protocol.startsWith('http')) {
+          await openPreflightModal();
+          return;
+        }
         const confirmed = confirm(
           "⚠️【真金实盘最高安全授权】⚠️\n\n" +
           "您即将开启真金实战执行模式 (LIVE COMBAT)！\n\n" +
@@ -3436,7 +3531,10 @@
         );
         if (!confirmed) return;
       }
+      await executeCombatToggle(targetState);
+    }
 
+    async function executeCombatToggle(targetState) {
       if (window.location.protocol.startsWith('http')) {
         try {
           const res = await fetch('/api/real_money/toggle', {
@@ -3452,12 +3550,73 @@
             return;
           }
         } catch (e) {
-          console.warn("toggleCombatMode error", e);
+          console.warn("executeCombatToggle error", e);
         }
       }
       isLiveCombatActive = targetState;
       alert(targetState ? "已切换至真金实盘战场模式" : "已降级回模拟沙盒模式");
       syncRealMoneyState();
+    }
+
+    async function openPreflightModal() {
+      const modal = document.getElementById('preflightModal');
+      const container = document.getElementById('preflightChecklistContainer');
+      const notice = document.getElementById('preflightSummaryNotice');
+      const btnLaunch = document.getElementById('btnProceedLaunch');
+      if (!modal || !container) return;
+
+      container.innerHTML = '<div class="text-xs text-slate-400 p-4 text-center">⏳ 正在执行实盘发射台 5 步物理巡检...</div>';
+      modal.classList.remove('hidden');
+
+      try {
+        const res = await fetch('/api/preflight/check');
+        const data = await res.json();
+
+        container.innerHTML = data.checklist.map(item => {
+          const isOk = item.passed;
+          return `
+            <div class="p-3 rounded-xl border flex items-start justify-between gap-3 ${isOk ? 'bg-slate-950/80 border-slate-800' : 'bg-rose-950/20 border-rose-800/80'}">
+              <div class="space-y-0.5 flex-1">
+                <div class="text-xs font-bold ${isOk ? 'text-white' : 'text-rose-300'} flex items-center gap-1.5">
+                  <span>${item.name}</span>
+                </div>
+                <div class="text-[11px] text-slate-400 leading-snug">${item.detail}</div>
+              </div>
+              <span class="text-xs font-bold font-mono px-2 py-0.5 rounded-full shrink-0 ${isOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-rose-950 text-rose-300 border border-rose-700 animate-pulse'}">
+                ${isOk ? '🟢 放行' : '🔴 拦截'}
+              </span>
+            </div>
+          `;
+        }).join('');
+
+        if (data.can_launch) {
+          notice.className = 'p-3 rounded-xl border text-xs leading-relaxed space-y-1 bg-emerald-950/40 border-emerald-600/80 text-emerald-200';
+          notice.innerHTML = '<div class="font-bold flex items-center gap-1"><span>✅</span> 5 步硬性前置质检 100% 全部通过！</div><div class="text-[11px] text-emerald-300/80">实盘钥匙、主动外呼、柜台心跳、WAL账本与单向棘轮全部就绪，具备物理发射放行条件。</div>';
+          if (btnLaunch) {
+            btnLaunch.classList.remove('hidden');
+            btnLaunch.disabled = false;
+          }
+        } else {
+          notice.className = 'p-3 rounded-xl border text-xs leading-relaxed space-y-1 bg-rose-950/40 border-rose-600/80 text-rose-200';
+          notice.innerHTML = '<div class="font-bold flex items-center gap-1"><span>🛡️</span> 物理安全联锁生效 · 严禁带病上战场</div><div class="text-[11px] text-rose-300/80">存在未通过项，请先点击【🔐 实盘战地钥匙】录入密钥或测试外呼通道。</div>';
+          if (btnLaunch) {
+            btnLaunch.classList.add('hidden');
+            btnLaunch.disabled = true;
+          }
+        }
+      } catch (e) {
+        container.innerHTML = `<div class="text-xs text-rose-400 p-4">巡检请求失败: ${e.message}</div>`;
+      }
+    }
+
+    function closePreflightModal() {
+      const modal = document.getElementById('preflightModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function proceedPhysicalLaunch() {
+      closePreflightModal();
+      await executeCombatToggle(true);
     }
 
     async function submitCombatOrder() {
@@ -4056,6 +4215,11 @@
           osc2.start(now);
           osc1.stop(now + 0.65);
           osc2.stop(now + 0.65);
+
+          // 手机端物理触感轻微点震 (80ms)
+          if (navigator.vibrate) {
+            try { navigator.vibrate(80); } catch (ve) {}
+          }
         } else if (toneType === 'CRISIS_ALARM') {
           // 220Hz 低频锯齿波双蜂鸣警报 (大股东抛售/熔断/黑天鹅)
           const osc = ctx.createOscillator();
@@ -4073,6 +4237,11 @@
 
           osc.start(now);
           osc.stop(now + 0.55);
+
+          // 手机端三段紧迫物理重震 (200ms震, 100ms停, 200ms震, 100ms停, 300ms长震)
+          if (navigator.vibrate) {
+            try { navigator.vibrate([200, 100, 200, 100, 300]); } catch (ve) {}
+          }
         } else if (toneType === 'CAUTION_BEEP') {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
@@ -4106,6 +4275,47 @@
         if (icon) icon.innerText = "🔇";
         if (label) label.innerText = "告警音效: 静音";
       }
+    }
+
+    function openSoundTestModal() {
+      const modal = document.getElementById('soundTestModal');
+      if (modal) modal.classList.remove('hidden');
+      const ctx = getAudioContext();
+      if (ctx && ctx.state === 'suspended') ctx.resume();
+    }
+
+    function closeSoundTestModal() {
+      const modal = document.getElementById('soundTestModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // 移动端全域首触静默唤醒底层音频硬件 (绕过 iOS/Android 休眠墙)
+    function initMobileAudioUnlock() {
+      const unlock = () => {
+        try {
+          const ctx = getAudioContext();
+          if (ctx && ctx.state === 'suspended') {
+            ctx.resume();
+          }
+          if (ctx) {
+            const buf = ctx.createBuffer(1, 1, 22050);
+            const src = ctx.createBufferSource();
+            src.buffer = buf;
+            src.connect(ctx.destination);
+            src.start(0);
+          }
+        } catch (e) {
+          console.warn("Mobile audio auto-unlock failed", e);
+        }
+        window.removeEventListener('touchstart', unlock, true);
+        window.removeEventListener('touchend', unlock, true);
+        window.removeEventListener('pointerdown', unlock, true);
+        window.removeEventListener('click', unlock, true);
+      };
+      window.addEventListener('touchstart', unlock, { capture: true, once: true, passive: true });
+      window.addEventListener('touchend', unlock, { capture: true, once: true, passive: true });
+      window.addEventListener('pointerdown', unlock, { capture: true, once: true, passive: true });
+      window.addEventListener('click', unlock, { capture: true, once: true, passive: true });
     }
 
     let alertTimeout = null;
@@ -5557,6 +5767,7 @@
     }
 
     // 默认载入回测图表与全引擎
+    initMobileAudioUnlock();
     renderBacktestChart();
     renderCards();
     calcSandbox();

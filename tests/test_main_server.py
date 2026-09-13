@@ -161,6 +161,17 @@ class TestMainServer(unittest.TestCase):
         self.assertIn("iceberg", micro_rep)
         self.assertIn("institutional_flow", micro_rep)
 
+    def test_preflight_check_endpoint(self) -> None:
+        """验证实盘战备发射 5 步指示灯门禁端点"""
+        from entropy_execution.battlefield_api_service import handle_get_preflight_checklist
+        from main import _GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK
+        res = handle_get_preflight_checklist(_GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK)
+        self.assertIn("can_launch", res)
+        self.assertIn("checklist", res)
+        self.assertEqual(len(res["checklist"]), 5)
+        ids = [item["id"] for item in res["checklist"]]
+        self.assertEqual(ids, ["vault", "alert", "gateway", "ledger", "ratchet"])
+
     def test_run_full_verification(self) -> None:
         """验证主检验脚本返回码为0"""
         ret = run_full_verification()
