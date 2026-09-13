@@ -13,15 +13,14 @@ TRINITY QUANT 工业级黑天鹅极端市场极端压力测试防爆引擎。
 5. 蒙特卡洛非对称尾部极端扰动 (Monte Carlo Extreme CVaR 99% Stress)：10,000次随机极端路径演化。
 """
 
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 import math
 import random
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 from entropy_execution.algorithmic_order_slicer import MarketImpactModel
 from entropy_execution.paper_trading_engine import PaperTradingEngine
-from entropy_execution.real_money_risk_gateway import RealMoneyRiskGateway, RiskVerdict
-from immune_system.debt_wall import DebtWallEngine
+from entropy_execution.real_money_risk_gateway import RealMoneyRiskGateway
 from immune_system.poison_firewall import PoisonFirewall
 from immune_system.reflex_system import BioReflexCentral, ReflexLevel
 from truth_kernel.models import (
@@ -30,6 +29,10 @@ from truth_kernel.models import (
     CompanyFinancialRecord,
     IncomeStatement,
 )
+
+
+# ref: AGENTS.md 第24条 单日最大亏损2%；第21条 禁止粉饰全绿
+DAILY_DRAWDOWN_CAP_PCT = 0.02
 
 
 @dataclass(frozen=True)
@@ -249,20 +252,23 @@ class BlackSwanStressTester:
         worst_dd = max(s.max_drawdown_contained for s in scenarios)
         cvar_99 = scenarios[-1].max_drawdown_contained
 
+        dd_ok = worst_dd <= DAILY_DRAWDOWN_CAP_PCT
+        all_ok = failed == 0 and dd_ok
         verdict = (
             f"【黑天鹅极端压力测试全量通过】：5大极端危机情景 100% 成功防御！"
-            f"最坏情况下日内回撤受控在 {worst_dd*100:.2f}%，"
-            f"极端 99% CVaR 处于绝对安全边界，系统具备工业级反脆弱生存能力。"
-            if failed == 0 else "【压力测试未通过】：存在未阻断的极端风险穿透！"
+            f"最坏情况下日内回撤受控在 {worst_dd*100:.2f}%。"
+            if all_ok else
+            (f"【压力测试未通过 FAIL】：最坏回撤 {worst_dd*100:.2f}% 超过硬上限 {DAILY_DRAWDOWN_CAP_PCT*100:.2f}%，禁止把假全绿当成可买。"
+             if not dd_ok else "【压力测试未通过 FAIL】：存在未阻断的极端风险穿透！")
         )
 
         return FullStressTestReport(
             total_scenarios=len(scenarios),
             passed_scenarios=passed,
             failed_scenarios=failed,
-            is_all_passed=(failed == 0),
+            is_all_passed=all_ok,
             worst_case_drawdown_pct=round(worst_dd, 4),
-            max_allowed_drawdown_pct=0.02,
+            max_allowed_drawdown_pct=DAILY_DRAWDOWN_CAP_PCT,
             cvar_99_worst_case_pct=round(cvar_99, 4),
             scenarios=scenarios,
             final_verdict=verdict
