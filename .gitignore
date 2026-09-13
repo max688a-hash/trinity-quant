@@ -11,4 +11,5 @@ scratch/
 .DS_Store
 data/*.enc.json
 *.enc.json
-
+*.db-shm
+*.db-wal
