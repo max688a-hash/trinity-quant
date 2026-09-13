@@ -118,6 +118,35 @@ class HttpApiDispatcher:
         }
 
     @staticmethod
+    def get_realtime_ticks(symbol: Optional[str] = None) -> Dict[str, Any]:
+        """获取全市场或指定标的实时高频跳动数据"""
+        from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
+        adapter = RealtimeFeedAdapter()
+        if symbol:
+            tick = adapter.get_tick(symbol)
+            return {"ticks": [asdict(tick)], "count": 1}
+        ticks = adapter.get_batch_ticks()
+        return {"ticks": [asdict(t) for t in ticks], "count": len(ticks)}
+
+    @staticmethod
+    def get_industry_chain(symbol: Optional[str] = None) -> Dict[str, Any]:
+        """获取产业链全景图谱数据"""
+        from truth_kernel.industry_chain_graph import IndustryChainGraphRegistry
+        target = symbol or "600519.SH"
+        chain = IndustryChainGraphRegistry.get_chain(target)
+        if not chain:
+            return {"found": False, "symbol": target}
+        return {"found": True, "chain": asdict(chain)}
+
+    @staticmethod
+    def get_institutional_report(symbol: Optional[str] = None) -> Dict[str, Any]:
+        """获取机构级万字穿透研报"""
+        from truth_kernel.institutional_report_generator import InstitutionalReportGenerator
+        target = symbol or "600519.SH"
+        rep = InstitutionalReportGenerator.generate_report(target)
+        return {"report": asdict(rep)}
+
+    @staticmethod
     def handle_paper_trade(
         engine: PaperTradingEngine,
         lock: threading.Lock,

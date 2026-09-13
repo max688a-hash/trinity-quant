@@ -2,7 +2,12 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#020617">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TRINITY">
+  <link rel="manifest" href="/manifest.json">
   <title>TRINITY QUANT · 顶级真值引力量化监控中枢</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
@@ -100,6 +105,10 @@
 
     <!-- 状态指示与声音控制器 -->
     <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+      <button id="pwaInstallBtn" onclick="openPwaInstallModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-950 to-blue-950 hover:from-cyan-900 hover:to-blue-900 text-cyan-300 border border-cyan-700/80 backdrop-blur transition shadow-sm shrink-0">
+        <span>📱</span> <span>添加到手机App</span>
+      </button>
+
       <button id="soundToggleBtn" onclick="toggleAudioAlerts()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900/90 hover:bg-slate-800 text-cyan-400 border border-slate-800 backdrop-blur transition shadow-sm shrink-0">
         <span id="soundIcon">🔊</span> <span id="soundLabel">告警音效: 开启</span>
       </button>
@@ -1241,11 +1250,20 @@
               <span class="font-bold text-white text-xs" id="tickerSymbolTag">600519.SH (贵州茅台)</span>
               <span class="text-slate-400" id="tickerDateTag">2024-08-27</span>
               <span class="text-cyan-400 font-sans" id="tickerMarketTag">[🇨🇳 A股市场]</span>
+              <span id="tickerLiveBadge" class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-950/90 text-emerald-300 border border-emerald-700/60 animate-pulse">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span id="tickerLiveSourceText">实时高频跳动流 1000ms</span>
+              </span>
               <button onclick="openAdmissionDocketModal()" class="px-2 py-0.5 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-700 text-[10px] font-sans hover:bg-cyan-900 transition flex items-center gap-1 shadow">
-                <span>📋</span> 入池深研依据
+                <span>📋</span> 入池深研依据与产业链
               </button>
             </div>
-            <span class="font-bold text-emerald-400" id="tickerChangeTag">涨跌: +1.99%</span>
+            <div class="flex items-center gap-3">
+              <span class="text-[11px] font-mono text-slate-400 hidden sm:inline" id="tickerOrderBookDepth">
+                买一: <span id="tickerBid1" class="text-rose-400 font-bold">-</span>(<span id="tickerBidVol1" class="text-slate-400">-</span>) | 卖一: <span id="tickerAsk1" class="text-emerald-400 font-bold">-</span>(<span id="tickerAskVol1" class="text-slate-400">-</span>)
+              </span>
+              <span class="font-bold text-emerald-400" id="tickerChangeTag">涨跌: +1.99%</span>
+            </div>
           </div>
           <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-[11px] pt-1.5 font-mono text-slate-300">
             <div><span class="text-slate-500">开:</span> <span id="tickerOpen" class="text-white font-bold">1829.08</span></div>
@@ -1964,88 +1982,233 @@
     </div>
   </div>
 
-  <!-- 标的动态入池科学依据与深度研报模态框 (ADMISSION FORENSIC DOCKET MODAL) -->
+  <!-- 标的动态入池科学依据与深度研报模态框 (ADMISSION FORENSIC DOCKET MODAL: 3-TAB UPGRADE) -->
   <div id="admissionDocketModal" onclick="if(event.target===this) closeDocketModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-3xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
       <!-- 头部 -->
-      <div class="flex justify-between items-center p-4 sm:p-5 border-b border-slate-800 bg-slate-950/60">
+      <div class="flex justify-between items-center p-4 sm:p-5 border-b border-slate-800 bg-slate-950/80">
         <div>
           <div class="flex flex-wrap items-center gap-2">
             <h3 class="text-base sm:text-lg font-bold text-white" id="docketSymbolName">贵州茅台 (600519.SH)</h3>
             <span class="text-xs text-cyan-400 font-sans" id="docketMarketTag">[🇨🇳 A股市场]</span>
             <span id="docketGradeBadge" class="px-2 py-0.5 rounded-lg text-xs font-bold bg-rose-950 text-rose-300 border border-rose-800">AAA级 · 长期价值堡垒</span>
           </div>
-          <p class="text-[11px] text-slate-400 mt-0.5">宪法第27条：入池科学依据全息透视 · 拒绝拍脑袋与黑盒随机伪入池</p>
+          <p class="text-[11px] text-slate-400 mt-0.5">宪法第27条：入池科学依据全息透视 · 产业链全景穿透 · 拒绝拍脑袋黑盒</p>
         </div>
         <button onclick="closeDocketModal()" class="text-slate-400 hover:text-white text-xl font-bold px-2 py-1">✕</button>
       </div>
 
-      <!-- 主体内容 -->
+      <!-- 分段导航选项卡 -->
+      <div class="flex border-b border-slate-800 bg-slate-950/60 px-4 text-xs font-bold overflow-x-auto">
+        <button id="docketTabBtn-audit" onclick="switchDocketTab('audit')" class="docket-tab-btn py-2.5 px-3.5 text-cyan-400 border-b-2 border-cyan-400 flex items-center gap-1.5 shrink-0 transition">
+          <span>📋</span> 4维法证体检与排毒
+        </button>
+        <button id="docketTabBtn-chain" onclick="switchDocketTab('chain')" class="docket-tab-btn py-2.5 px-3.5 text-slate-400 hover:text-white border-b-2 border-transparent flex items-center gap-1.5 shrink-0 transition">
+          <span>🕸️</span> 产业链图谱与利润分配
+        </button>
+        <button id="docketTabBtn-report" onclick="switchDocketTab('report')" class="docket-tab-btn py-2.5 px-3.5 text-slate-400 hover:text-white border-b-2 border-transparent flex items-center gap-1.5 shrink-0 transition">
+          <span>📊</span> 机构级万字穿透研报
+        </button>
+      </div>
+
+      <!-- 主体内容 (3 个 Tab 面板) -->
       <div class="p-4 sm:p-5 overflow-y-auto custom-scrollbar flex-1 space-y-4 text-xs">
-        <!-- 4 维微观法证与引力估值关键指标卡 -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono">
-          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
-            <div class="text-[10px] text-slate-500 font-sans">微观造血纯度 (Φ_CP)</div>
-            <div class="text-base font-bold text-emerald-400" id="docketBloodPurity">88%</div>
-            <div class="text-[9px] text-slate-400 font-sans">≥30% 达标 (现金流充沛)</div>
+        <!-- 选项卡 1: 法证体检与排毒档案 -->
+        <div id="docketPanel-audit" class="space-y-4">
+          <!-- 4 维微观法证与引力估值关键指标卡 -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono">
+            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+              <div class="text-[10px] text-slate-500 font-sans">微观造血纯度 (Φ_CP)</div>
+              <div class="text-base font-bold text-emerald-400" id="docketBloodPurity">88%</div>
+              <div class="text-[9px] text-slate-400 font-sans">≥30% 达标 (现金流充沛)</div>
+            </div>
+            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+              <div class="text-[10px] text-slate-500 font-sans">债务毒性 (Ω_Debt)</div>
+              <div class="text-base font-bold text-cyan-300" id="docketDebtToxicity">3%</div>
+              <div class="text-[9px] text-slate-400 font-sans">≤40% 安全 (无破产墙)</div>
+            </div>
+            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+              <div class="text-[10px] text-slate-500 font-sans">真值引力定价 (V_G)</div>
+              <div class="text-base font-bold text-amber-300" id="docketIntrinsicVal">1850.00</div>
+              <div class="text-[9px] text-slate-400 font-sans">非对称凸性现金流内生价值</div>
+            </div>
+            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+              <div class="text-[10px] text-slate-500 font-sans">当前安全边际</div>
+              <div class="text-base font-bold text-rose-400" id="docketSafetyMargin">+16.2%</div>
+              <div class="text-[9px] text-slate-400 font-sans">折价引力吸引区</div>
+            </div>
           </div>
-          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
-            <div class="text-[10px] text-slate-500 font-sans">债务毒性 (Ω_Debt)</div>
-            <div class="text-base font-bold text-cyan-300" id="docketDebtToxicity">3%</div>
-            <div class="text-[9px] text-slate-400 font-sans">≤40% 安全 (无破产墙)</div>
+
+          <!-- 为什么能入池：3大科学依据 -->
+          <div class="bg-slate-950/50 p-3.5 rounded-xl border border-slate-800/80 space-y-2">
+            <h4 class="font-bold text-cyan-300 flex items-center gap-1.5 text-xs">
+              <span>🏛️</span> 为什么被系统大脑选入主力作战池？（客观科学依据与基本面深研）
+            </h4>
+            <ul class="space-y-1.5 text-slate-300 pl-1" id="docketReasonsList"></ul>
           </div>
-          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
-            <div class="text-[10px] text-slate-500 font-sans">真值引力定价 (V_G)</div>
-            <div class="text-base font-bold text-amber-300" id="docketIntrinsicVal">1850.00</div>
-            <div class="text-[9px] text-slate-400 font-sans">非对称凸性现金流内生价值</div>
+
+          <!-- 目前是否适合买入：当前行动建议 -->
+          <div class="bg-slate-950/50 p-3.5 rounded-xl border border-slate-800/80 space-y-2">
+            <h4 class="font-bold text-emerald-300 flex items-center gap-1.5 text-xs">
+              <span>⚖️</span> 目前是否适合买入？当前实战行动建议
+            </h4>
+            <div class="flex items-start gap-2 text-slate-200">
+              <span class="text-emerald-400 text-sm">💡</span>
+              <span id="docketActionAdvice" class="leading-relaxed">处于引力价值安全边际区间 (+16.2%)，造血强劲，适合长期底仓低吸</span>
+            </div>
           </div>
-          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
-            <div class="text-[10px] text-slate-500 font-sans">当前安全边际</div>
-            <div class="text-base font-bold text-rose-400" id="docketSafetyMargin">+16.2%</div>
-            <div class="text-[9px] text-slate-400 font-sans">折价引力吸引区</div>
+
+          <!-- 什么情况下会被坚决剔除：硬性排毒指标 -->
+          <div class="bg-slate-950/50 p-3.5 rounded-xl border border-rose-950/60 space-y-2">
+            <h4 class="font-bold text-rose-400 flex items-center gap-1.5 text-xs">
+              <span>🚨</span> 触发何种条件将被坚决一票否决剔除？（排毒熔断硬指标）
+            </h4>
+            <ul class="space-y-1.5 text-slate-300 pl-1" id="docketExpulsionList"></ul>
+          </div>
+
+          <!-- 为什么不是几千只全入池？全市场穿透说明 -->
+          <div class="p-3 rounded-xl bg-cyan-950/30 border border-cyan-900/40 text-[11px] text-cyan-200/90 leading-relaxed">
+            <strong>🛡️ 全生命周期排毒防火墙机制：</strong>本系统坚决摒弃“几千只股票全扔进池子靠概率瞎碰”的伪量化模式。全市场历经 561 期财报法证穿透，<strong>370 期因造血失血、债务毒性超标被一票否决</strong>。唯有通过造血纯度 $\ge 0.30$、债务毒性 $\le 0.40$ 与引力定价双重检验的洁净标的，方获准授予作战池法证席位！
           </div>
         </div>
 
-        <!-- 为什么能入池：3大科学依据 -->
-        <div class="bg-slate-950/50 p-3.5 rounded-xl border border-slate-800/80 space-y-2">
-          <h4 class="font-bold text-cyan-300 flex items-center gap-1.5 text-xs">
-            <span>🏛️</span> 为什么被系统大脑选入主力作战池？（客观科学依据与基本面深研）
-          </h4>
-          <ul class="space-y-1.5 text-slate-300 pl-1" id="docketReasonsList">
-            <!-- 动态填充 -->
-          </ul>
-        </div>
+        <!-- 选项卡 2: 产业链全景图谱与利润分配 -->
+        <div id="docketPanel-chain" class="space-y-4 hidden">
+          <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+            <div class="flex justify-between items-center flex-wrap gap-2">
+              <h4 class="font-bold text-amber-300 text-xs flex items-center gap-1.5">
+                <span>🕸️</span> <span id="chainSectorName">高端白酒与高壁垒消费品</span>
+              </h4>
+              <span id="chainPricingBadge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-800">绝对主导级 (DOMINANT)</span>
+            </div>
+            <p id="chainProfitSummary" class="text-slate-300 text-[11px] leading-relaxed">产业链利润极度集中于中游品牌持有方与自营零售终端，毛利率超 91%，下游渠道享丰厚批零差价。</p>
+          </div>
 
-        <!-- 目前是否适合买入：当前行动建议 -->
-        <div class="bg-slate-950/50 p-3.5 rounded-xl border border-slate-800/80 space-y-2">
-          <h4 class="font-bold text-emerald-300 flex items-center gap-1.5 text-xs">
-            <span>⚖️</span> 目前是否适合买入？当前实战行动建议
-          </h4>
-          <div class="flex items-start gap-2 text-slate-200">
-            <span class="text-emerald-400 text-sm">💡</span>
-            <span id="docketActionAdvice" class="leading-relaxed">处于引力价值安全边际区间 (+16.2%)，造血强劲，适合长期底仓低吸</span>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <!-- 上游 -->
+            <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800 space-y-2">
+              <div class="font-bold text-cyan-400 text-xs pb-1 border-b border-slate-800 flex items-center gap-1">
+                <span>🔼</span> 上游原材料与基础能源
+              </div>
+              <div class="space-y-2 text-[11px]" id="chainUpstreamList">
+                <!-- 动态填充 -->
+              </div>
+            </div>
+
+            <!-- 中游 -->
+            <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800 space-y-2">
+              <div class="font-bold text-amber-400 text-xs pb-1 border-b border-slate-800 flex items-center gap-1">
+                <span>⚙️</span> 中游核心制造与关键工艺
+              </div>
+              <div class="space-y-2 text-[11px]" id="chainMidstreamList">
+                <!-- 动态填充 -->
+              </div>
+            </div>
+
+            <!-- 下游 -->
+            <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800 space-y-2">
+              <div class="font-bold text-emerald-400 text-xs pb-1 border-b border-slate-800 flex items-center gap-1">
+                <span>🔽</span> 下游流通分销与最终消费
+              </div>
+              <div class="space-y-2 text-[11px]" id="chainDownstreamList">
+                <!-- 动态填充 -->
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- 什么情况下会被坚决剔除：硬性排毒指标 -->
-        <div class="bg-slate-950/50 p-3.5 rounded-xl border border-rose-950/60 space-y-2">
-          <h4 class="font-bold text-rose-400 flex items-center gap-1.5 text-xs">
-            <span>🚨</span> 触发何种条件将被坚决一票否决剔除？（排毒熔断硬指标）
-          </h4>
-          <ul class="space-y-1.5 text-slate-300 pl-1" id="docketExpulsionList">
-            <!-- 动态填充 -->
-          </ul>
-        </div>
+        <!-- 选项卡 3: 机构级万字穿透研报 -->
+        <div id="docketPanel-report" class="space-y-4 hidden font-sans">
+          <!-- 核心投资摘要与评级 -->
+          <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-4 rounded-xl border border-cyan-800/60 space-y-2">
+            <div class="flex justify-between items-center flex-wrap gap-2">
+              <div class="font-bold text-white text-sm flex items-center gap-1.5">
+                <span>📜</span> 机构法证研报投资摘要
+              </div>
+              <span id="reportRatingBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-950 text-rose-300 border border-rose-700">🏆 强力准入·真值特级重仓 (GRADE_AAA)</span>
+            </div>
+            <p id="reportExecSummary" class="text-slate-300 text-[11px] leading-relaxed"></p>
+          </div>
 
-        <!-- 为什么不是几千只全入池？全市场穿透说明 -->
-        <div class="p-3 rounded-xl bg-cyan-950/30 border border-cyan-900/40 text-[11px] text-cyan-200/90 leading-relaxed">
-          <strong>🛡️ 全生命周期排毒防火墙机制：</strong>本系统坚决摒弃“几千只股票全扔进池子靠概率瞎碰”的伪量化模式。全市场历经 561 期财报法证穿透，<strong>370 期因造血失血、债务毒性超标被一票否决</strong>。唯有通过造血纯度 $\ge 0.30$、债务毒性 $\le 0.40$ 与引力定价双重检验的洁净标的，方获准授予作战池法证席位！
+          <!-- 现金流造血与负债审计双栏 -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+              <h5 class="font-bold text-emerald-400 text-xs flex items-center gap-1">
+                <span>🩸</span> 现金流造血骨架解剖
+              </h5>
+              <div class="space-y-1 text-slate-300 text-[11px]" id="reportCashFlowBox"></div>
+            </div>
+            <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+              <h5 class="font-bold text-rose-400 text-xs flex items-center gap-1">
+                <span>🧱</span> 债务到期墙与清偿压力
+              </h5>
+              <div class="space-y-1 text-slate-300 text-[11px]" id="reportDebtAuditBox"></div>
+            </div>
+          </div>
+
+          <!-- 黑天鹅极端压力测试 -->
+          <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+            <h5 class="font-bold text-amber-300 text-xs flex items-center gap-1">
+              <span>🦢</span> 2008/2015/2020 黑天鹅极限压力测试打靶
+            </h5>
+            <div class="space-y-2 text-[11px]" id="reportStressList"></div>
+          </div>
+
+          <!-- 监管裁决与动态凯利头寸建议 -->
+          <div class="bg-slate-950/80 p-3.5 rounded-xl border border-cyan-900/60 flex flex-wrap justify-between items-center gap-2">
+            <div>
+              <div class="text-[10px] text-slate-400">事前硬风控与动态凯利头寸建议 (f*)</div>
+              <div class="text-base font-bold text-cyan-300 font-mono" id="reportKellyPosition">18.5% 组合总资产</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-slate-400">刚性物理止损线</div>
+              <div class="text-xs font-bold text-rose-400 font-mono" id="reportStopLoss">现价下跌 5.0% 刚性物理止损</div>
+            </div>
+          </div>
         </div>
       </div>
       
       <!-- 底部操作条 -->
-      <div class="p-3 bg-slate-950 border-t border-slate-800 flex justify-end">
+      <div class="p-3 bg-slate-950 border-t border-slate-800 flex justify-between items-center">
+        <span class="text-[11px] text-slate-500 font-mono hidden sm:inline">TRINITY QUANT · 第一性原理穿透研报大脑</span>
         <button onclick="closeDocketModal()" class="px-4 py-1.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition">关闭深研档案</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 移动端 PWA 一键安装原生 App 指引弹窗 -->
+  <div id="pwaInstallModal" onclick="if(event.target===this) closePwaInstallModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md p-5 shadow-2xl space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">📱</span>
+          <div>
+            <h3 class="text-base font-bold text-white">一键添加到手机桌面 App</h3>
+            <p class="text-[11px] text-slate-400">独立沉浸式全屏 · 毫秒级闪开 · 离线坚守</p>
+          </div>
+        </div>
+        <button onclick="closePwaInstallModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+      <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
+        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+          <div class="font-bold text-cyan-400 flex items-center gap-1">
+            <span>🍏</span> 苹果手机 (iPhone / iPad / Safari 浏览器):
+          </div>
+          <p>1. 点击 Safari 底部中央的 <strong>【分享按钮 (向上箭头 ⎋)】</strong></p>
+          <p>2. 在弹出菜单中向下滑动，选择 <strong>【添加到主屏幕 (Add to Home Screen)】</strong></p>
+          <p>3. 点击右上角 <strong>【添加】</strong> 即可像原生独立 App 一样全屏沉浸运行！</p>
+        </div>
+        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+          <div class="font-bold text-emerald-400 flex items-center gap-1">
+            <span>🤖</span> 安卓手机 (Android / Chrome / 华为 / 小米):
+          </div>
+          <p>1. 点击浏览器右上角 <strong>【⋮ 菜单】</strong></p>
+          <p>2. 选择 <strong>【添加到桌面】</strong> 或 <strong>【安装应用 (Install App)】</strong></p>
+          <p>3. 确认后桌面上即刻生成 TRINITY QUANT 独立无框应用图标。</p>
+        </div>
+      </div>
+      <div class="pt-2 flex justify-end">
+        <button onclick="closePwaInstallModal()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-cyan-600 hover:bg-cyan-500 text-white transition shadow-lg shadow-cyan-600/20">我知道了，立即体验</button>
       </div>
     </div>
   </div>
@@ -3981,8 +4144,8 @@
       updateTopTickerWithCandle(latest);
     }
 
-    // 将指定蜡烛数据渲染至顶部独立无遮挡看板条
-    function updateTopTickerWithCandle(c) {
+    // 将指定蜡烛数据与微观逐笔 Tick 渲染至顶部独立无遮挡看板条
+    function updateTopTickerWithCandle(c, tick) {
       if (!c) return;
       const meta = ASSET_META[klineState.symbol] || { 
         name: klineState.symbol, digits: 2, marketName: '资产',
@@ -4019,6 +4182,20 @@
       }
       if (volTag) volTag.innerText = c.volume.toLocaleString();
       if (ma5Tag) ma5Tag.innerText = c.ma5 ? c.ma5.toFixed(meta.digits) : '-';
+
+      // 实时买一/卖一盘口与行情数据源标签更新
+      if (tick) {
+        const bidTag = document.getElementById('tickerBid1');
+        const bidVolTag = document.getElementById('tickerBidVol1');
+        const askTag = document.getElementById('tickerAsk1');
+        const askVolTag = document.getElementById('tickerAskVol1');
+        const srcText = document.getElementById('tickerLiveSourceText');
+        if (bidTag && tick.bid1) bidTag.innerText = tick.bid1.toFixed(meta.digits);
+        if (bidVolTag && tick.bid_vol1) bidVolTag.innerText = tick.bid_vol1;
+        if (askTag && tick.ask1) askTag.innerText = tick.ask1.toFixed(meta.digits);
+        if (askVolTag && tick.ask_vol1) askVolTag.innerText = tick.ask_vol1;
+        if (srcText) srcText.innerText = tick.is_live ? '交易所真实行情流 (Sina/直连)' : '高保真微观布朗流 1000ms';
+      }
 
       // 动态更新微观社会环境交易契约与风控法条
       const exTag = document.getElementById('specExchange');
@@ -4171,8 +4348,124 @@
       }
     };
 
+    function switchDocketTab(tabId) {
+      const tabs = ['audit', 'chain', 'report'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`docketTabBtn-${t}`);
+        const panel = document.getElementById(`docketPanel-${t}`);
+        if (t === tabId) {
+          if (btn) {
+            btn.classList.add('text-cyan-400', 'border-cyan-400');
+            btn.classList.remove('text-slate-400', 'border-transparent');
+          }
+          if (panel) panel.classList.remove('hidden');
+        } else {
+          if (btn) {
+            btn.classList.remove('text-cyan-400', 'border-cyan-400');
+            btn.classList.add('text-slate-400', 'border-transparent');
+          }
+          if (panel) panel.classList.add('hidden');
+        }
+      });
+    }
+
+    async function loadChainAndReport(targetSym) {
+      try {
+        // 1. 异步拉取产业链图谱
+        const chainResp = await fetch(`/api/industry/chain?symbol=${encodeURIComponent(targetSym)}`);
+        if (chainResp.ok) {
+          const chainData = await chainResp.json();
+          if (chainData.found && chainData.chain) {
+            renderIndustryChainUI(chainData.chain);
+          }
+        }
+        // 2. 异步拉取机构级穿透研报
+        const repResp = await fetch(`/api/institutional/report?symbol=${encodeURIComponent(targetSym)}`);
+        if (repResp.ok) {
+          const repData = await repResp.json();
+          if (repData && repData.report) {
+            renderInstitutionalReportUI(repData.report);
+          }
+        }
+      } catch (err) {
+        console.warn("加载产业链与研报异常:", err);
+      }
+    }
+
+    function renderIndustryChainUI(chain) {
+      const nameTag = document.getElementById('chainSectorName');
+      const badgeTag = document.getElementById('chainPricingBadge');
+      const summaryTag = document.getElementById('chainProfitSummary');
+      if (nameTag) nameTag.innerText = `${chain.sector_name} (${chain.representative_name})`;
+      if (badgeTag) badgeTag.innerText = chain.pricing_power_verdict;
+      if (summaryTag) summaryTag.innerText = chain.profit_distribution_summary;
+
+      const renderNodes = (nodes, containerId) => {
+        const el = document.getElementById(containerId);
+        if (!el) return;
+        el.innerHTML = (nodes || []).map(n => `
+          <div class="p-2.5 bg-slate-900/90 rounded-lg border border-slate-800 space-y-1.5 shadow-sm">
+            <div class="flex justify-between items-center font-bold text-slate-200">
+              <span class="text-white">${n.name}</span>
+              <span class="text-amber-400 font-mono text-[10px] px-1.5 py-0.2 rounded bg-amber-950/50 border border-amber-800/60">${n.gross_margin_pct.toFixed(1)}% 毛利</span>
+            </div>
+            <div class="text-[10px] text-slate-400">🛡️ <strong>壁垒:</strong> ${n.moat_barrier}</div>
+            <div class="text-[10px] text-rose-300">⚠️ <strong>风险:</strong> ${n.major_risks}</div>
+          </div>
+        `).join('');
+      };
+
+      renderNodes(chain.upstream_nodes, 'chainUpstreamList');
+      renderNodes(chain.midstream_nodes, 'chainMidstreamList');
+      renderNodes(chain.downstream_nodes, 'chainDownstreamList');
+    }
+
+    function renderInstitutionalReportUI(report) {
+      const ratingBadge = document.getElementById('reportRatingBadge');
+      const execSummary = document.getElementById('reportExecSummary');
+      const cfBox = document.getElementById('reportCashFlowBox');
+      const debtBox = document.getElementById('reportDebtAuditBox');
+      const stressList = document.getElementById('reportStressList');
+      const kellyPos = document.getElementById('reportKellyPosition');
+      const stopLoss = document.getElementById('reportStopLoss');
+
+      if (ratingBadge) ratingBadge.innerText = report.rating;
+      if (execSummary) execSummary.innerText = report.executive_summary;
+      if (cfBox) {
+        cfBox.innerHTML = `
+          <div>• 造血评级: <span class="text-emerald-400 font-bold">${report.cash_flow_anatomy.operating_cash_flow_quality}</span></div>
+          <div>• 资本开支: <span class="text-slate-300">${report.cash_flow_anatomy.capex_burden_level}</span></div>
+          <div>• 折现现值: <span class="text-amber-300">${report.cash_flow_anatomy.fcf_discount_status}</span></div>
+          <div>• 审计覆盖: <span class="text-slate-400">${report.cash_flow_anatomy.audit_period_coverage}</span></div>
+        `;
+      }
+      if (debtBox) {
+        debtBox.innerHTML = `
+          <div>• 短债覆盖: <span class="text-cyan-300 font-bold font-mono">${report.debt_solvency_audit.cash_to_short_debt_ratio}</span></div>
+          <div>• 隐性担保: <span class="text-slate-300">${report.debt_solvency_audit.hidden_guarantee_risk}</span></div>
+          <div>• 偿债裁决: <span class="text-rose-300">${report.debt_solvency_audit.liquidity_firewall_verdict}</span></div>
+        `;
+      }
+      if (stressList) {
+        stressList.innerHTML = (report.black_swan_stress_tests || []).map(s => `
+          <div class="p-2.5 bg-slate-900 rounded-lg border border-slate-800 space-y-1">
+            <div class="flex justify-between items-center font-bold text-white">
+              <span>${s.scenario}</span>
+              <span class="text-emerald-400 font-mono text-[10px] px-1.5 py-0.5 rounded bg-emerald-950/60 border border-emerald-800">${s.survival_verdict}</span>
+            </div>
+            <div class="text-[10px] text-slate-400">${s.cash_flow_impact}</div>
+          </div>
+        `).join('');
+      }
+      if (kellyPos) kellyPos.innerText = report.regulatory_verdict_and_kelly.recommended_kelly_position;
+      if (stopLoss) stopLoss.innerText = report.regulatory_verdict_and_kelly.stop_loss_hard_line;
+    }
+
     function openAdmissionDocketModal(sym) {
       const targetSym = sym || klineState.symbol || '600519.SH';
+      switchDocketTab('audit');
+      loadChainAndReport(targetSym);
+
       const meta = ASSET_META[targetSym] || { name: targetSym, marketName: '市场' };
       const docket = (typeof ADMISSION_DOCKETS !== 'undefined' && ADMISSION_DOCKETS[targetSym])
         ? ADMISSION_DOCKETS[targetSym]
@@ -4711,6 +5004,106 @@
       });
     }
 
+    // ========================================================
+    // 【刀刃 A】实盘全市场实时高频盘口跳动引擎 (LiveTickEngine)
+    // 毫秒级轮询 /api/market/realtime_ticks，高保真微观布朗流与盘口跳动
+    // ========================================================
+    let liveTickInterval = null;
+    let lastTickPrice = null;
+
+    function startLiveTickEngine() {
+      if (liveTickInterval) clearInterval(liveTickInterval);
+      liveTickInterval = setInterval(async () => {
+        try {
+          const sym = klineState.symbol || '600519.SH';
+          const resp = await fetch(`/api/market/realtime_ticks?symbol=${encodeURIComponent(sym)}`);
+          if (!resp.ok) return;
+          const data = await resp.json();
+          if (!data || !data.ticks || data.ticks.length === 0) return;
+          const tick = data.ticks[0];
+          applyRealtimeTick(tick);
+        } catch (err) {
+          // 容错降级，不阻断前端渲染
+        }
+      }, 1000);
+    }
+
+    function applyRealtimeTick(tick) {
+      if (!tick || tick.symbol !== klineState.symbol) return;
+      const data = klineState.candles;
+      if (!data || data.length === 0) return;
+      const lastCandle = data[data.length - 1];
+      const prevPrice = lastTickPrice !== null ? lastTickPrice : lastCandle.close;
+      lastTickPrice = tick.price;
+
+      // 动态更新最后一根K线蜡烛 (真实贴合高低收与累计成交量)
+      lastCandle.close = tick.price;
+      lastCandle.high = Math.max(lastCandle.high, tick.price);
+      lastCandle.low = Math.min(lastCandle.low, tick.price);
+      lastCandle.volume = tick.volume;
+      lastCandle.isUp = lastCandle.close >= lastCandle.open;
+
+      // 动态更新顶部无遮挡行情看板条与买一/卖一盘口
+      updateTopTickerWithCandle(lastCandle, tick);
+
+      // 价格变动翠绿/赤红呼吸脉冲
+      const closeTag = document.getElementById('tickerClose');
+      if (closeTag) {
+        if (tick.price > prevPrice) {
+          closeTag.classList.add('bg-rose-500/20', 'ring-1', 'ring-rose-400');
+          setTimeout(() => closeTag.classList.remove('bg-rose-500/20', 'ring-1', 'ring-rose-400'), 500);
+        } else if (tick.price < prevPrice) {
+          closeTag.classList.add('bg-emerald-500/20', 'ring-1', 'ring-emerald-400');
+          setTimeout(() => closeTag.classList.remove('bg-emerald-500/20', 'ring-1', 'ring-emerald-400'), 500);
+        }
+      }
+
+      // 未处于十字光标交互锁定时重绘K线
+      if (klineState.crosshairIdx === null) {
+        drawKlineChart();
+      }
+    }
+
+    // ========================================================
+    // 【刀刃 C】移动端 PWA 原生化与一键添加到独立桌面 App
+    // ========================================================
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+
+    function openPwaInstallModal() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('用户已接受 PWA 安装');
+          }
+          deferredPrompt = null;
+        });
+        return;
+      }
+      const modal = document.getElementById('pwaInstallModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closePwaInstallModal() {
+      const modal = document.getElementById('pwaInstallModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // 注册 Service Worker 实现极端断网离线坚守
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then((reg) => {
+          console.log('TRINITY QUANT Service Worker 注册成功:', reg.scope);
+        }).catch((err) => {
+          console.log('SW registration skipped:', err);
+        });
+      });
+    }
+
     // 默认载入回测图表与全引擎
     renderBacktestChart();
     renderCards();
@@ -4718,6 +5111,7 @@
     updateAssetSim();
     updateFractalView();
     initKlineEngine();
+    startLiveTickEngine();
   </script>
 
   <!-- 移动端专属浮动底栏 (Mobile Navigation Bar: v0-grade iOS/Android PWA 触控体验) -->

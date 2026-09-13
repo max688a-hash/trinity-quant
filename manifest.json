@@ -1,0 +1,25 @@
+{
+  "name": "TRINITY QUANT 顶级真值量化系统",
+  "short_name": "TRINITY",
+  "description": "第一性原理量化金融物理系统 · 移动原生全息工作台",
+  "start_url": "/trinity_dashboard.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "icons": [
+    {
+      "src": "/data/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/data/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity", "utilities"]
+}

@@ -99,6 +99,26 @@ class TestMainServer(unittest.TestCase):
         self.assertGreater(rep.total_auto_trades, 0)
         self.assertIn("系统自学习总结", rep.learning_synthesis)
 
+    def test_realtime_ticks_endpoint(self) -> None:
+        """验证实时高频行情跳动端点"""
+        from entropy_execution.http_api_dispatcher import HttpApiDispatcher
+        res = HttpApiDispatcher.get_realtime_ticks("600519.SH")
+        self.assertEqual(res["count"], 1)
+        self.assertEqual(res["ticks"][0]["symbol"], "600519.SH")
+        self.assertGreater(res["ticks"][0]["price"], 0.0)
+
+    def test_industry_chain_and_report_endpoints(self) -> None:
+        """验证产业链图谱与机构研报端点"""
+        from entropy_execution.http_api_dispatcher import HttpApiDispatcher
+        chain_res = HttpApiDispatcher.get_industry_chain("600519.SH")
+        self.assertTrue(chain_res["found"])
+        self.assertEqual(chain_res["chain"]["sector_id"], "baijiu_consumer")
+
+        rep_res = HttpApiDispatcher.get_institutional_report("600519.SH")
+        self.assertIn("report", rep_res)
+        self.assertEqual(rep_res["report"]["symbol"], "600519.SH")
+        self.assertGreater(rep_res["report"]["target_gravity_price"], 0.0)
+
     def test_run_full_verification(self) -> None:
         """验证主检验脚本返回码为0"""
         ret = run_full_verification()

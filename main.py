@@ -20,7 +20,7 @@ import sys
 import threading
 import time
 from typing import Any, Dict, List, Optional
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 
 WORKSPACE_ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, WORKSPACE_ROOT)
@@ -77,6 +77,15 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/stress/report": lambda: asdict(BlackSwanStressTester().run_full_stress_test()),
             "/api/bio_synapse/status": lambda: {"pulses": [asdict(p) for p in _GLOBAL_BIO_SYNAPSE.get_synaptic_health_pulses()]},
             "/api/pool/dockets": lambda: [asdict(d) for d in PoolAdmissionAuditor.list_all_dockets()],
+            "/api/market/realtime_ticks": lambda: HttpApiDispatcher.get_realtime_ticks(
+                parse_qs(parsed.query).get("symbol", [None])[0]
+            ),
+            "/api/industry/chain": lambda: HttpApiDispatcher.get_industry_chain(
+                parse_qs(parsed.query).get("symbol", [None])[0]
+            ),
+            "/api/institutional/report": lambda: HttpApiDispatcher.get_institutional_report(
+                parse_qs(parsed.query).get("symbol", [None])[0]
+            ),
         }
         if parsed.path in api_map:
             self._send_json(api_map[parsed.path]())
