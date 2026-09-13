@@ -119,14 +119,17 @@ def _fetch_binance_daily(symbol: str) -> List[Dict[str, Any]]:
 
 
 def _live_tick_bars(symbol: str) -> List[Dict[str, Any]]:
-    """仅接受新浪真实快照；禁止走 get_tick 的冻结基准价伪报价。"""
+    """仅接受新浪或 Binance 公开快照；禁止走冻结基准价伪报价。"""
     from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
 
+    adapter = RealtimeFeedAdapter()
     try:
-        tick = RealtimeFeedAdapter()._fetch_sina_live_quote(symbol)
+        tick = adapter._fetch_sina_live_quote(symbol)
     except (urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
         _LOG.warning("看板实时快照失败 %s: %s", symbol, exc)
-        return []
+        tick = None
+    if tick is None:
+        tick = adapter._fetch_binance_last(symbol)
     if tick is None:
         return []
     last = _finite_positive(tick.price)

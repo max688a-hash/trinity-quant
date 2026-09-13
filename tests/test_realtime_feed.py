@@ -56,7 +56,17 @@ class TestRealtimeFeedAdapter(unittest.TestCase):
         self.assertEqual(len(batch), len(symbols))
         for t in batch:
             self.assertIn(t.symbol, symbols)
-            self.assertIn(t.source, ("DATA_UNAVAILABLE", "REAL_LAST_CLOSE_FROZEN", "SINA_LIVE_FEED", "SINA_FUTURES_LIVE", "CACHE_STATIC_WAITING_TRADE"))
+            self.assertIn(
+                t.source,
+                (
+                    "DATA_UNAVAILABLE",
+                    "REAL_LAST_CLOSE_FROZEN",
+                    "SINA_LIVE_FEED",
+                    "SINA_FUTURES_LIVE",
+                    "CACHE_STATIC_WAITING_TRADE",
+                    "BINANCE_PUBLIC_TICKER",
+                ),
+            )
             self.assertNotEqual(t.source, "MICRO_TICK_SYNTHESIZER")
 
     def test_concurrent_multithread_access(self) -> None:

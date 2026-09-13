@@ -10,10 +10,22 @@ truth_kernel/historical_kline_service.py
 
 from dataclasses import dataclass, asdict
 import json
+import logging
+import math
 import threading
-import time
 from typing import Any, Dict, List, Optional
+import urllib.error
 import urllib.request
+
+_LOG = logging.getLogger(__name__)
+_BINANCE_TF = {
+    "D": "1d",
+    "1H": "1h",
+    "60m": "1h",
+    "15M": "15m",
+    "5M": "5m",
+    "Tick": "1m",
+}
 
 
 @dataclass(frozen=True)
@@ -128,8 +140,58 @@ class HistoricalKlineService:
                             "date": day, "open": o, "high": h, "low": l, "close": c, "vol": v
                         })
                 return cls._build_candles_with_ma(raw_candles)
-        except Exception:
+        except Exception as exc:
+            _LOG.warning("新浪K线拉取失败 symbol=%s err=%s", symbol, exc)
             return None
+
+    @classmethod
+    def _fetch_binance_kline(
+        cls, symbol: str, timeframe: str, count: int
+    ) -> Optional[List[KlineCandle]]:
+        """Binance 公开 K 线。失败返回空，禁止借茅台日K冒充 BTC。"""
+        if not symbol.endswith("USDT"):
+            return None
+        interval = _BINANCE_TF.get(timeframe, "1d")
+        limit = max(5, min(int(count), 500))
+        url = (
+            "https://api.binance.com/api/v3/klines"
+            f"?symbol={symbol}&interval={interval}&limit={limit}"
+        )
+        req = urllib.request.Request(url, headers={"User-Agent": "TRINITY-QUANT/1.0"})
+        try:
+            with urllib.request.urlopen(req, timeout=3.0) as resp:
+                payload = json.loads(resp.read().decode("utf-8", errors="ignore"))
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, OSError) as exc:
+            _LOG.warning("Binance K线拉取失败 symbol=%s err=%s", symbol, exc)
+            return None
+        if not isinstance(payload, list) or not payload:
+            return None
+        raw_candles: List[Dict[str, Any]] = []
+        for row in payload:
+            if not isinstance(row, list) or len(row) < 6:
+                continue
+            try:
+                o = float(row[1])
+                h = float(row[2])
+                l = float(row[3])
+                c = float(row[4])
+                v = float(row[5])
+            except (TypeError, ValueError) as exc:
+                _LOG.warning("Binance K线无法解析 symbol=%s err=%s", symbol, exc)
+                continue
+            if (not math.isfinite(c)) or c <= 0.0:
+                continue
+            raw_candles.append({
+                "date": str(row[0]),
+                "open": o if math.isfinite(o) and o > 0.0 else c,
+                "high": h if math.isfinite(h) and h > 0.0 else c,
+                "low": l if math.isfinite(l) and l > 0.0 else c,
+                "close": c,
+                "vol": v if math.isfinite(v) and v >= 0.0 else 0.0,
+            })
+        if not raw_candles:
+            return None
+        return cls._build_candles_with_ma(raw_candles)
 
     @classmethod
     def _build_candles_with_ma(cls, raw_list: List[Dict[str, Any]]) -> List[KlineCandle]:
@@ -184,17 +246,24 @@ class HistoricalKlineService:
             if cache_key in cls._CACHE:
                 return [asdict(c) for c in cls._CACHE[cache_key]]
 
-        # 3. 离线使用真实历史样本 (严禁正弦波)
-        base_raw = cls._REAL_CYPC_DAILY if "600900" in sym else cls._REAL_MOUTAI_DAILY
-        candles = cls._build_candles_with_ma(base_raw)
-        return [asdict(c) for c in candles]
+        crypto = cls._fetch_binance_kline(sym, timeframe, count)
+        if crypto:
+            with cls._CACHE_LOCK:
+                cls._CACHE[f"{sym}_{timeframe}"] = crypto
+            return [asdict(c) for c in crypto]
+
+        if "600900" in sym:
+            return [asdict(c) for c in cls._build_candles_with_ma(cls._REAL_CYPC_DAILY)]
+        if "600519" in sym:
+            return [asdict(c) for c in cls._build_candles_with_ma(cls._REAL_MOUTAI_DAILY)]
+        return []
 
     @classmethod
     def get_recent_closes(cls, symbol: str, window: int = 30) -> List[float]:
         """获取标的真实客观收盘价序列，用于状态机与策略输入"""
         klines = cls.get_kline(symbol, timeframe="D", count=window)
         if not klines:
-            return [1420.0] * window
+            return []
         closes = [float(k["close"]) for k in klines]
         if len(closes) < window:
             pad = [closes[0]] * (window - len(closes))

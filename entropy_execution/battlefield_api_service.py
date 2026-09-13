@@ -96,6 +96,8 @@ def handle_get_regime_evaluation(symbol: Optional[str] = None) -> Dict[str, Any]
     sym = (symbol or "600519.SH").strip().upper()
     from truth_kernel.historical_kline_service import HistoricalKlineService
     prices = HistoricalKlineService.get_recent_closes(sym, window=30)
+    if not prices:
+        return {"symbol": sym, "available": False, "status": "DATA_UNAVAILABLE"}
     curr_p = prices[-1]
 
     regime_rep = MarketRegimeClassifier.classify_regime(prices)

@@ -6,7 +6,9 @@ truth_kernel/realtime_feed_adapter.py
 """
 
 from dataclasses import dataclass
+import json
 import logging
+import math
 import threading
 import time
 from typing import Any, Dict, List, Optional
@@ -129,6 +131,37 @@ class RealtimeFeedAdapter:
                 return None
         return None
 
+    def _fetch_binance_last(self, symbol: str) -> Optional[MarketTick]:
+        """加密公开最新成交价。失败记日志并返回空，禁止写死 64800。"""
+        if not symbol.endswith("USDT"):
+            return None
+        url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"
+        req = urllib.request.Request(url, headers={"User-Agent": "TRINITY-QUANT/1.0"})
+        try:
+            with urllib.request.urlopen(req, timeout=3.0) as resp:
+                payload = json.loads(resp.read().decode("utf-8", errors="ignore"))
+        except Exception as exc:
+            _LOG.warning("Binance 现货价失败 symbol=%s err=%s", symbol, exc)
+            return None
+        try:
+            px = float(payload.get("price") or 0.0)
+        except (TypeError, ValueError) as exc:
+            _LOG.warning("Binance 价格无法解析 symbol=%s err=%s", symbol, exc)
+            return None
+        if (not math.isfinite(px)) or px <= 0.0:
+            return None
+        now = time.time()
+        time_str = time.strftime("%H:%M:%S", time.localtime(now))
+        cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol, "tick": 0.1})
+        tick_sz = float(cfg.get("tick") or 0.1)
+        return MarketTick(
+            symbol=symbol, name=str(cfg.get("name") or symbol), timestamp=now, time_str=time_str,
+            price=px, open=px, high=px, low=px, close=px, volume=0.0, amount=0.0,
+            bid1=max(tick_sz, px - tick_sz), ask1=px + tick_sz,
+            bid_vol1=0.0, ask_vol1=0.0, change_pct=0.0,
+            is_live=True, source="BINANCE_PUBLIC_TICKER"
+        )
+
     def get_tick(self, symbol: str) -> MarketTick:
         """无成交即零跳动。拿不到行情不得写死底价。"""
         from truth_kernel.market_session_clock import MarketSessionClock
@@ -143,6 +176,8 @@ class RealtimeFeedAdapter:
                     return cached
 
         live_tick = self._fetch_sina_live_quote(symbol)
+        if live_tick is None or live_tick.price <= 0:
+            live_tick = self._fetch_binance_last(symbol)
         if live_tick is not None and live_tick.price > 0:
             if not clock.is_open:
                 closed_tick = MarketTick(

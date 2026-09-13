@@ -126,7 +126,7 @@ export function KlineChart() {
       ctx.fillRect(0, 0, rect.width, 360);
       if (rows.length < 2) {
         ctx.fillStyle = "#9fb0c0";
-        ctx.fillText("暂无K线", 16, 24);
+        ctx.fillText("DATA_UNAVAILABLE", 16, 24);
         return;
       }
       const highs = rows.map((c) => c.high);
@@ -270,7 +270,7 @@ export function KlineChart() {
             {symbol}
           </span>
           <span id="tickerChangeTag" className={last && last.close >= last.open ? "text-buy" : "text-sell"}>
-            {last ? last.close.toFixed(2) : "—"}
+            {last ? last.close.toFixed(2) : "DATA_UNAVAILABLE"}
           </span>
           <Button variant="secondary" onClick={() => openAdmissionDocketModal(symbol)}>
             入池深研依据
@@ -279,6 +279,9 @@ export function KlineChart() {
         <div id="tickerMicroSpecBar" className="mt-2 text-[11px] text-muted-foreground">
           {meta.assets.find((a) => a.code === symbol)?.rule ?? "自然人客户禁止进入交割月"}
         </div>
+        <p className="mt-2 text-[13px] text-muted-foreground">
+          均线金叉是真实K线上的动量标注，不是入池与纸上成交依据。
+        </p>
       </Card>
       <div className="flex flex-wrap gap-2">
         {TFS.map((item) => (
