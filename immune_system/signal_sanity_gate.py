@@ -10,6 +10,7 @@ TRINITY QUANT 产出信号多维交叉验证门与微观撮合物理过滤器。
 """
 
 from dataclasses import dataclass
+import math
 from typing import Optional
 
 
@@ -67,6 +68,20 @@ class SignalSanityGate:
         :return: SanityGateResult
         """
         sym = symbol.upper()
+
+        # 0. 数学防爆防御：严防非法、非正或 NaN 假信号漏入
+        if (
+            signal_price <= 0 or current_market_price <= 0 or proposed_quantity <= 0 or
+            math.isnan(signal_price) or math.isnan(current_market_price) or math.isnan(proposed_quantity) or
+            math.isinf(signal_price) or math.isinf(current_market_price) or math.isinf(proposed_quantity)
+        ):
+            return SanityGateResult(
+                symbol=sym,
+                is_passed=False,
+                adjusted_quantity=0.0,
+                veto_reason=f"价格或报单量存在非法非正或异常数值: sig_px={signal_price}, mkt_px={current_market_price}, qty={proposed_quantity}",
+                is_limit_locked=False
+            )
 
         # 1. 检验行情是否严重过期
         if quote_age_sec > self._max_quote_age:

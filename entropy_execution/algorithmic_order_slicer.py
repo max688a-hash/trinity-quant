@@ -64,24 +64,25 @@ class MarketImpactModel:
         """
         计算市场冲击成本: Impact = gamma * sigma * sqrt(OrderNotional / ADV)
         """
+        safe_notional = max(0.0, float(notional)) if (not math.isnan(notional) and not math.isinf(notional)) else 0.0
         adv = max(1_000_000.0, float(adv_notional))
-        part_rate = min(1.0, notional / adv)
+        part_rate = min(1.0, safe_notional / adv)
         vol = max(0.005, float(daily_volatility))
 
         # 平方根市场冲击定律
-        slippage_pct = self.gamma * vol * math.sqrt(part_rate)
-        impact_cost = notional * slippage_pct
+        slippage_pct = self.gamma * vol * math.sqrt(max(0.0, part_rate))
+        impact_cost = safe_notional * slippage_pct
 
         # 研判拆单策略
-        if notional < 50_000.0:
+        if safe_notional < 50_000.0:
             rec_algo = SlicerAlgorithm.DIRECT
             rec_slices = 1
-        elif notional < 500_000.0:
+        elif safe_notional < 500_000.0:
             rec_algo = SlicerAlgorithm.ICEBERG
-            rec_slices = max(3, int(math.ceil(notional / 50_000.0)))
+            rec_slices = max(3, int(math.ceil(safe_notional / 50_000.0)))
         else:
             rec_algo = SlicerAlgorithm.TWAP
-            rec_slices = max(5, min(20, int(math.ceil(notional / 80_000.0))))
+            rec_slices = max(5, min(20, int(math.ceil(safe_notional / 80_000.0))))
 
         return MarketImpactEstimate(
             symbol=symbol.upper(),
@@ -115,6 +116,8 @@ class TWAPOrderSlicer:
         """
         total_qty = float(total_quantity)
         px = float(base_price)
+        if total_qty <= 0 or px <= 0 or math.isnan(total_qty) or math.isnan(px) or math.isinf(total_qty) or math.isinf(px):
+            return []
         notional = total_qty * px
 
         impact = self.impact_model.estimate_impact(symbol, notional)
@@ -172,6 +175,8 @@ class IcebergOrderSlicer:
         """
         total_qty = float(total_quantity)
         px = float(price)
+        if total_qty <= 0 or px <= 0 or math.isnan(total_qty) or math.isnan(px) or math.isinf(total_qty) or math.isinf(px):
+            return []
         visible_qty = max(1.0, math.floor(total_qty * self.visible_ratio))
         hidden_qty = total_qty - visible_qty
 

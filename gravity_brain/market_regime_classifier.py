@@ -43,13 +43,14 @@ class MarketRegimeClassifier:
         H = 0.5: 独立随机游走布朗运动
         H < 0.5: 反持续均值回归
         """
-        n = len(prices)
+        valid_prices = [float(p) for p in prices if p is not None and not math.isnan(p) and not math.isinf(p) and p > 0]
+        n = len(valid_prices)
         if n < 16:
             return 0.50
 
-        # 对数收益率
-        returns = [math.log(prices[i] / prices[i - 1]) for i in range(1, n) if prices[i - 1] > 0]
-        if not returns:
+        # 对数收益率 (保证除数与被除数均严格大于0)
+        returns = [math.log(valid_prices[i] / valid_prices[i - 1]) for i in range(1, n)]
+        if len(returns) < 4:
             return 0.50
 
         mean_ret = sum(returns) / len(returns)
@@ -70,7 +71,7 @@ class MarketRegimeClassifier:
         std_s = math.sqrt(max(variance, 1e-9))
 
         rs_value = r_range / std_s
-        if rs_value <= 0:
+        if rs_value <= 0 or len(returns) <= 1:
             return 0.50
 
         # H = log(R/S) / log(N)
@@ -86,24 +87,25 @@ class MarketRegimeClassifier:
         lows: Optional[List[float]] = None
     ) -> RegimeClassificationResult:
         """对时序价格数据进行市场状态裁决"""
-        if len(prices) < 20:
+        clean_prices = [float(p) for p in prices if p is not None and not math.isnan(p) and not math.isinf(p) and p > 0]
+        if len(clean_prices) < 20:
             return RegimeClassificationResult(
                 regime=MarketRegime.CHOPPY_OSCILLATING,
                 hurst_exponent=0.50,
                 volatility_atr_pct=0.015,
                 trend_strength=0.0,
-                recommendation="数据样本不足，保持基准中性震荡策略"
+                recommendation="数据样本不足或包含非法非正价格，保持基准中性震荡策略"
             )
 
-        hurst = cls.calculate_hurst_exponent(prices)
+        hurst = cls.calculate_hurst_exponent(clean_prices)
 
         # 计算 20 周期收益率与趋势强度
-        start_p = prices[0]
-        end_p = prices[-1]
+        start_p = clean_prices[0]
+        end_p = clean_prices[-1]
         ret_20 = (end_p - start_p) / start_p if start_p > 0 else 0.0
 
         # 计算真实时序对数收益率波动率 (Return Volatility)
-        rets = [math.log(prices[i] / prices[i - 1]) for i in range(1, len(prices)) if prices[i - 1] > 0]
+        rets = [math.log(clean_prices[i] / clean_prices[i - 1]) for i in range(1, len(clean_prices))]
         mean_ret = sum(rets) / len(rets) if rets else 0.0
         var_ret = sum((r - mean_ret) ** 2 for r in rets) / len(rets) if rets else 0.0004
         vol_pct = math.sqrt(max(var_ret, 1e-9))

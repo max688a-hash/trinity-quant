@@ -49,7 +49,12 @@ class OrderFlowImbalanceEngine:
           - 若 Bid_Price(t) < Bid_Price(t-1), Delta_B = 0
         Delta_A 同理 (方向相反)
         """
-        if not prev.bid_prices or not curr.bid_prices or not prev.ask_prices or not curr.ask_prices:
+        if (
+            not prev.bid_prices or not curr.bid_prices or
+            not prev.ask_prices or not curr.ask_prices or
+            not prev.bid_volumes or not curr.bid_volumes or
+            not prev.ask_volumes or not curr.ask_volumes
+        ):
             return 0.0
 
         p_b_prev = prev.bid_prices[0]

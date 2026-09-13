@@ -60,6 +60,23 @@ class DynamicKellyAllocator:
         :param gravity_potential: 引力势能比率 (V_G - P) / P
         :param is_firewall_admitted: 是否通过排毒防火墙
         """
+        # 0. 数学防爆防御：严防 NaN / Inf 毒化仓位计算
+        if (
+            math.isnan(win_rate) or math.isinf(win_rate) or
+            math.isnan(payoff_ratio) or math.isinf(payoff_ratio) or
+            math.isnan(cvar_alpha) or math.isinf(cvar_alpha) or
+            (gravity_potential is not None and (math.isnan(gravity_potential) or math.isinf(gravity_potential)))
+        ):
+            return KellyAllocationResult(
+                symbol=symbol,
+                target_weight=0.0,
+                raw_kelly_fraction=0.0,
+                cvar_penalty_multiplier=0.0,
+                gravity_potential_scale=0.0,
+                is_vetoed=True,
+                allocation_reason="输入指标包含 NaN 或 Inf 异常浮点值，触发数学安全熔断保护"
+            )
+
         # 1. 一票否决硬约束：未通过排毒标的，仓位坚决归零
         if not is_firewall_admitted:
             return KellyAllocationResult(

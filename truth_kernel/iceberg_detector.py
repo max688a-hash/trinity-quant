@@ -53,19 +53,22 @@ class IcebergDetector:
         若存在冰山: 实际成交量 >> (初始量 - 剩余量)
         隐形吸收量 = 成交量 - (初始量 - 剩余量)
         """
-        expected_consumed = initial_visible_vol - remaining_visible_vol
-        hidden_volume = executed_trade_vol - expected_consumed
+        init_vol = max(0, int(initial_visible_vol))
+        exec_vol = max(0, int(executed_trade_vol))
+        rem_vol = max(0, int(remaining_visible_vol))
+        expected_consumed = init_vol - rem_vol
+        hidden_volume = exec_vol - expected_consumed
 
-        if hidden_volume > 200 and executed_trade_vol > initial_visible_vol * 1.5:
+        if hidden_volume > 200 and exec_vol > init_vol * 1.5 and init_vol > 0:
             # 明确发现隐形补单吸筹/出货
             iceberg_type = IcebergType.BUY_ACCUMULATION if is_bid else IcebergType.SELL_DISTRIBUTION
-            confidence = min(0.98, 0.60 + (hidden_volume / (initial_visible_vol + 1e-5)) * 0.1)
+            confidence = min(0.98, 0.60 + (hidden_volume / (init_vol + 1e-5)) * 0.1)
             return IcebergDetectionReport(
                 symbol=symbol,
                 price_level=price_level,
                 detected_type=iceberg_type,
-                visible_volume=remaining_visible_vol,
-                executed_volume=executed_trade_vol,
+                visible_volume=rem_vol,
+                executed_volume=exec_vol,
                 estimated_hidden_volume=hidden_volume,
                 confidence_score=round(confidence, 2),
                 timestamp=time.time()

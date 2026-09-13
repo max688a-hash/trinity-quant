@@ -17,6 +17,7 @@ from enum import Enum
 from typing import Any, Dict, List, Optional
 import uuid
 import time
+import math
 
 
 class BrokerGatewayType(str, Enum):
@@ -262,6 +263,13 @@ class RealBrokerRouter:
     ) -> RealOrderResponse:
         """执行全路由分发"""
         ord_id = cl_ord_id if cl_ord_id else f"CL_{uuid.uuid4().hex[:12]}_{int(time.time())}"
+        if quantity <= 0 or price <= 0 or math.isnan(quantity) or math.isnan(price) or math.isinf(quantity) or math.isinf(price):
+            return RealOrderResponse(
+                cl_ord_id=ord_id, broker_order_id="", status=RealOrderStatus.REJECTED,
+                executed_price=0.0, executed_quantity=0.0, friction_cost=0.0,
+                rejection_reason=f"非法报单参数拦截: qty={quantity}, px={price}",
+                is_live_combat=self.is_live_combat
+            )
         gw_type = self.resolve_gateway_type(symbol)
         req = RealOrderRequest(
             cl_ord_id=ord_id, symbol=symbol, is_buy=is_buy,

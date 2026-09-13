@@ -15,6 +15,7 @@ TRINITY QUANT 真金级事前硬风控网关与日内最大回撤熔断中枢。
 """
 
 import time
+import math
 from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, List, Optional, Tuple
@@ -115,6 +116,18 @@ class RealMoneyRiskGateway:
         qty = float(quantity)
         px = float(order_price)
         mkt_px = float(market_price)
+
+        if (
+            math.isnan(qty) or math.isnan(px) or math.isnan(mkt_px) or
+            math.isinf(qty) or math.isinf(px) or math.isinf(mkt_px) or
+            qty <= 0 or px <= 0 or mkt_px <= 0
+        ):
+            return PreTradeRiskResult(
+                is_allowed=False, verdict=RiskVerdict.REJECT_FAT_FINGER,
+                reason=f"委托数量/价格存在非法非正或 NaN 异常: qty={qty}, px={px}, mkt_px={mkt_px}",
+                symbol=sym, notional=0.0, current_drawdown_pct=0.0, kill_switch_active=self._kill_switch_active
+            )
+
         order_notional = qty * px
         current_eq = account_total_equity if account_total_equity > 0 else self._current_equity
         base_eq = self._day_start_equity if self._day_start_equity > 0 else current_eq
