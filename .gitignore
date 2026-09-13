@@ -9,3 +9,6 @@ scratch/
 *.log
 .system_generated/
 .DS_Store
+data/*.enc.json
+*.enc.json
+

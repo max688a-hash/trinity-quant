@@ -35,6 +35,11 @@ from entropy_execution.real_money_service import (
     get_real_money_orders, get_real_money_status,
     handle_real_money_order, handle_real_money_toggle, handle_real_money_unlock
 )
+from entropy_execution.battlefield_api_service import (
+    handle_get_alert_history, handle_get_supervisor_telemetry,
+    handle_get_vault_status, handle_run_reconciliation_audit,
+    handle_save_vault_credentials, handle_trigger_test_alert
+)
 from entropy_execution.system_quality_inspector import SystemQualityInspector
 from truth_kernel.pool_admission_auditor import PoolAdmissionAuditor
 from gravity_brain.bio_synapse_hub import BioSynapseHub
@@ -86,6 +91,10 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/institutional/report": lambda: HttpApiDispatcher.get_institutional_report(
                 parse_qs(parsed.query).get("symbol", [None])[0]
             ),
+            "/api/vault/status": handle_get_vault_status,
+            "/api/alert/history": handle_get_alert_history,
+            "/api/supervisor/telemetry": handle_get_supervisor_telemetry,
+            "/api/reconciliation/run": lambda: handle_run_reconciliation_audit(_GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK),
         }
         if parsed.path in api_map:
             self._send_json(api_map[parsed.path]())
@@ -110,6 +119,9 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/real_money/toggle": lambda: handle_real_money_toggle(payload),
             "/api/real_money/order": lambda: handle_real_money_order(payload),
             "/api/real_money/unlock": lambda: handle_real_money_unlock(payload),
+            "/api/vault/save": lambda: handle_save_vault_credentials(payload),
+            "/api/alert/test": lambda: handle_trigger_test_alert(payload),
+            "/api/reconciliation/audit": lambda: handle_run_reconciliation_audit(_GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK),
             "/api/learning/tick": lambda: _GLOBAL_LEARNING_SANDBOX.run_autonomous_tick(
                 symbol=str(payload.get("symbol", "BTCUSDT")),
                 current_price=float(payload.get("price", 65000.0)),

@@ -119,6 +119,31 @@ class TestMainServer(unittest.TestCase):
         self.assertEqual(rep_res["report"]["symbol"], "600519.SH")
         self.assertGreater(rep_res["report"]["target_gravity_price"], 0.0)
 
+    def test_battlefield_service_endpoints(self) -> None:
+        """验证战地发射台、告警与平账端点"""
+        from entropy_execution.battlefield_api_service import (
+            handle_get_vault_status, handle_save_vault_credentials,
+            handle_get_alert_history, handle_trigger_test_alert,
+            handle_get_supervisor_telemetry
+        )
+        vault_res = handle_get_vault_status()
+        self.assertIn("gateways", vault_res)
+
+        save_res = handle_save_vault_credentials({
+            "gateway": "BINANCE_CRYPTO",
+            "credentials": {"api_key": "abc123456", "api_secret": "sec987654"}
+        })
+        self.assertTrue(save_res["success"])
+
+        alert_res = handle_trigger_test_alert({"channel": "WECHAT", "webhook_url": ""})
+        self.assertTrue(alert_res["dispatched"])
+
+        history = handle_get_alert_history()
+        self.assertIn("alerts", history)
+
+        telemetry = handle_get_supervisor_telemetry()
+        self.assertIn("memory_rss_mb", telemetry)
+
     def test_run_full_verification(self) -> None:
         """验证主检验脚本返回码为0"""
         ret = run_full_verification()
