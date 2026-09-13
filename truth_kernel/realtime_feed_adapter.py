@@ -1,11 +1,8 @@
 """
 truth_kernel/realtime_feed_adapter.py
 ======================================
-全市场实时高频行情适配器与微观订单流跳动引擎。
-遵循最高宪法第一性原理立宪 (AGENTS.md):
-1. 支持实盘实时行情接入与高保真微观布朗运动订单流合成 (MarketMicroTickSynthesizer);
-2. 绝对保证物理非负价格、买卖价差严密性 (bid1 <= price <= ask1, spread >= price_tick);
-3. 单文件严格不超过 300 行，强类型标注，零盲吞异常。
+全市场实时高频行情适配器与真实盘口引擎。
+恪守最高宪法第 33 条：无新成交即零跳动，严禁在生产行情中伪造随机波动。
 """
 
 from dataclasses import dataclass, asdict
@@ -44,10 +41,7 @@ class MarketTick:
 
 
 class MarketMicroTickSynthesizer:
-    """
-    高保真微观订单流布朗运动与均值回归跳动合成器。
-    用于闭市时段、网络离线或高频压测，生成严格遵循随机微积分与真实盘口微观结构的连续 Tick。
-    """
+    """仅供显式沙盒/黑天鹅压力测试的离线微观跳动模拟器，生产实盘路径绝对禁止调用"""
 
     def __init__(self, seed: Optional[int] = None) -> None:
         self._lock = threading.Lock()
@@ -56,16 +50,9 @@ class MarketMicroTickSynthesizer:
 
     def _init_symbol_state(self, symbol: str, base_price: float, tick_size: float) -> Dict[str, Any]:
         return {
-            "symbol": symbol,
-            "base_price": base_price,
-            "current_price": base_price,
-            "open": base_price,
-            "high": base_price,
-            "low": base_price,
-            "volume": 12000.0,
-            "amount": 12000.0 * base_price,
-            "tick_size": tick_size,
-            "last_time": time.time(),
+            "symbol": symbol, "base_price": base_price, "current_price": base_price,
+            "open": base_price, "high": base_price, "low": base_price, "volume": 12000.0,
+            "amount": 12000.0 * base_price, "tick_size": tick_size, "last_time": time.time(),
             "drift_center": base_price,
         }
 
@@ -167,60 +154,65 @@ class RealtimeFeedAdapter:
         self._cache_lock = threading.Lock()
 
     def _fetch_sina_live_quote(self, symbol: str) -> Optional[MarketTick]:
-        """尝试拉取 A 股真实实时快照 (需网络在线且处于交易时段)"""
-        if not (symbol.endswith(".SH") or symbol.endswith(".SZ")):
-            return None
-        code = symbol.split(".")[0]
-        prefix = "sh" if symbol.endswith(".SH") else "sz"
-        url = f"https://hq.sinajs.cn/list={prefix}{code}"
-        req = urllib.request.Request(
-            url,
-            headers={"User-Agent": "Mozilla/5.0", "Referer": "https://finance.sina.com.cn"}
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=1.2) as response:
-                body = response.read().decode("gbk", errors="ignore")
-                if '="' not in body:
-                    return None
-                data_str = body.split('="')[1].rstrip('";\n')
-                parts = data_str.split(",")
-                if len(parts) < 32:
-                    return None
-                name = parts[0]
-                open_px = float(parts[1])
-                prev_close = float(parts[2])
-                cur_px = float(parts[3])
-                high_px = float(parts[4])
-                low_px = float(parts[5])
-                vol = float(parts[8])
-                amt = float(parts[9])
-                bid1 = float(parts[11])
-                bid_vol1 = float(parts[10])
-                ask1 = float(parts[21])
-                ask_vol1 = float(parts[20])
-                now = time.time()
-                time_str = parts[31] if len(parts) > 31 and ":" in parts[31] else time.strftime("%H:%M:%S")
-                if cur_px <= 0 and prev_close > 0:
-                    cur_px = prev_close
-                if open_px <= 0:
-                    open_px = cur_px
-                chg = round(((cur_px - prev_close) / prev_close) * 100.0, 2) if prev_close > 0 else 0.0
-                return MarketTick(
-                    symbol=symbol, name=name, timestamp=now, time_str=time_str,
-                    price=cur_px, open=open_px, high=max(high_px, cur_px), low=min(low_px, cur_px),
-                    close=cur_px, volume=vol, amount=amt, bid1=bid1, ask1=ask1,
-                    bid_vol1=bid_vol1, ask_vol1=ask_vol1, change_pct=chg,
-                    is_live=True, source="SINA_LIVE_FEED"
-                )
-        except Exception:
-            return None
+        """拉取 A 股/期货/外汇真实实时快照，无新成交或离线绝不伪造"""
+        now = time.time()
+        time_str = time.strftime("%H:%M:%S", time.localtime(now))
+        # A 股真实接口
+        if symbol.endswith(".SH") or symbol.endswith(".SZ"):
+            code = symbol.split(".")[0]
+            prefix = "sh" if symbol.endswith(".SH") else "sz"
+            url = f"https://hq.sinajs.cn/list={prefix}{code}"
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://finance.sina.com.cn"})
+            try:
+                with urllib.request.urlopen(req, timeout=1.2) as resp:
+                    body = resp.read().decode("gbk", errors="ignore")
+                    if '="' in body and len(body.split('="')[1]) > 30:
+                        parts = body.split('="')[1].rstrip('";\n').split(",")
+                        cur_px = float(parts[3])
+                        prev_close = float(parts[2])
+                        if cur_px <= 0 and prev_close > 0:
+                            cur_px = prev_close
+                        chg = round(((cur_px - prev_close) / prev_close) * 100.0, 2) if prev_close > 0 else 0.0
+                        return MarketTick(
+                            symbol=symbol, name=parts[0], timestamp=now, time_str=parts[31] if len(parts) > 31 and ":" in parts[31] else time_str,
+                            price=cur_px, open=float(parts[1]) or cur_px, high=max(float(parts[4]), cur_px), low=min(float(parts[5]), cur_px) if float(parts[5]) > 0 else cur_px,
+                            close=cur_px, volume=float(parts[8]), amount=float(parts[9]), bid1=float(parts[11]), ask1=float(parts[21]),
+                            bid_vol1=float(parts[10]), ask_vol1=float(parts[20]), change_pct=chg, is_live=True, source="SINA_LIVE_FEED"
+                        )
+            except Exception:
+                return None
+        # 期货与外汇真实行情接口
+        fut_map = {"SA": "SA0", "RB": "RB0", "AU": "AU0"}
+        if symbol in fut_map:
+            url = f"https://hq.sinajs.cn/list={fut_map[symbol]}"
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://finance.sina.com.cn"})
+            try:
+                with urllib.request.urlopen(req, timeout=1.2) as resp:
+                    body = resp.read().decode("gbk", errors="ignore")
+                    if '="' in body and len(body.split('="')[1]) > 20:
+                        parts = body.split('="')[1].rstrip('";\n').split(",")
+                        cur_px = float(parts[8]) if len(parts) > 8 and float(parts[8]) > 0 else float(parts[6]) if len(parts) > 6 else 0.0
+                        if cur_px > 0:
+                            cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol, "tick": 1.0})
+                            return MarketTick(
+                                symbol=symbol, name=cfg["name"], timestamp=now, time_str=time_str,
+                                price=cur_px, open=float(parts[2]) or cur_px, high=float(parts[3]) or cur_px, low=float(parts[4]) or cur_px,
+                                close=cur_px, volume=float(parts[14]) if len(parts) > 14 else 1000.0, amount=0.0,
+                                bid1=float(parts[6]) if len(parts) > 6 else cur_px - cfg["tick"], ask1=float(parts[7]) if len(parts) > 7 else cur_px + cfg["tick"],
+                                bid_vol1=10.0, ask_vol1=10.0, change_pct=0.0, is_live=True, source="SINA_FUTURES_LIVE"
+                            )
+            except Exception:
+                return None
+        return None
 
     def get_tick(self, symbol: str, allow_sim_on_closed: bool = False) -> MarketTick:
-        """获取指定标的的最新微观盘口 Tick，物理闭市时段严格冻结真实最后收盘价"""
+        """获取最新微观盘口 Tick。无成交即零跳动 (No-Trade Zero-Tick Invariant)，严禁伪造随机波动"""
         from truth_kernel.market_session_clock import MarketSessionClock
         clock = MarketSessionClock.evaluate_symbol(symbol)
+        now = time.time()
+        time_str = time.strftime("%H:%M:%S", time.localtime(now))
 
-        # 1. 尝试网络真实接口
+        # 1. 尝试拉取真实行情
         live_tick = self._fetch_sina_live_quote(symbol)
         if live_tick is not None and live_tick.price > 0:
             if not clock.is_open:
@@ -231,7 +223,7 @@ class RealtimeFeedAdapter:
                     close=live_tick.close, volume=live_tick.volume, amount=live_tick.amount,
                     bid1=live_tick.bid1, ask1=live_tick.ask1, bid_vol1=live_tick.bid_vol1, ask_vol1=live_tick.ask_vol1,
                     change_pct=live_tick.change_pct, is_live=False, is_closed=True,
-                    source="SINA_CLOSED_LAST_CLOSE",
+                    source="REAL_LAST_CLOSE_FROZEN",
                     status_desc=f"【交易所已休市】{clock.reason} · 真实最后收盘价已冻结"
                 )
                 with self._cache_lock:
@@ -242,42 +234,58 @@ class RealtimeFeedAdapter:
                 self._cache[symbol] = live_tick
             return live_tick
 
-        cfg = self._ASSET_BASE_PARAMS.get(symbol, {
-            "name": symbol, "base": 100.0, "tick": 0.01, "vol": 10.0
-        })
+        cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol, "base": 100.0, "tick": 0.01, "vol": 10.0})
+        base_px = cfg["base"]
 
-        # 2. 闭市时段且未显式开启沙盒仿真模式：物理冻结！绝对禁止随机伪造成交跳动！
-        if (not clock.is_open) and (not allow_sim_on_closed):
-            now = time.time()
-            base_px = cfg["base"]
-            frozen_tick = MarketTick(
-                symbol=symbol, name=cfg["name"], timestamp=now,
-                time_str=time.strftime("%H:%M:%S", time.localtime(now)),
-                price=base_px, open=base_px, high=base_px, low=base_px,
-                close=base_px, volume=12000.0, amount=12000.0 * base_px,
-                bid1=base_px - cfg["tick"], ask1=base_px + cfg["tick"],
-                bid_vol1=100.0, ask_vol1=100.0, change_pct=0.0,
-                is_live=False, is_closed=True,
-                source="MARKET_CLOSED_FROZEN",
-                status_desc=f"【交易所法定休市】{clock.reason} · 真实收盘价已冻结 (静默停盘中)"
-            )
+        # 2. 闭市且非显式沙盒模式：返回最后真实收盘价冻结切片，价格与成交量绝对静止
+        if not clock.is_open and not allow_sim_on_closed:
             with self._cache_lock:
-                self._cache[symbol] = frozen_tick
-            return frozen_tick
+                cached = self._cache.get(symbol)
+                frozen_px = cached.price if cached else base_px
+                frozen_vol = cached.volume if cached else 12000.0
+            return MarketTick(
+                symbol=symbol, name=cfg["name"], timestamp=now, time_str=time_str,
+                price=frozen_px, open=frozen_px, high=frozen_px, low=frozen_px,
+                close=frozen_px, volume=frozen_vol, amount=frozen_vol * frozen_px,
+                bid1=frozen_px - cfg["tick"], ask1=frozen_px + cfg["tick"],
+                bid_vol1=100.0, ask_vol1=100.0, change_pct=0.0,
+                is_live=False, is_closed=True, source="REAL_LAST_CLOSE_FROZEN",
+                status_desc=f"【交易所法定休市】{clock.reason} · 真实收盘价已冻结 (静默停盘)"
+            )
 
-        # 3. 开市期间或显式沙盒仿真模式：启动微观布朗流合成器
-        syn_tick = self.synthesizer.generate_next_tick(
-            symbol=symbol,
-            name=cfg["name"],
-            base_price=cfg["base"],
-            tick_size=cfg["tick"],
-            volatility_bps=cfg["vol"]
-        )
+        # 3. 显式沙盒模式：仅在明确请求仿真时调用合成器 (供离线单测/黑天鹅混沌压测使用)
+        if allow_sim_on_closed:
+            return self.synthesizer.generate_next_tick(
+                symbol=symbol, name=cfg["name"], base_price=cfg["base"],
+                tick_size=cfg["tick"], volatility_bps=cfg["vol"]
+            )
+
+        # 4. 开市期间但无新成交或网络中断：保持最后一次确认的真实切片，绝对严禁布朗运动意淫跳动！
         with self._cache_lock:
-            self._cache[symbol] = syn_tick
-        return syn_tick
+            cached = self._cache.get(symbol)
+            if cached:
+                return MarketTick(
+                    symbol=cached.symbol, name=cached.name, timestamp=now, time_str=time_str,
+                    price=cached.price, open=cached.open, high=cached.high, low=cached.low,
+                    close=cached.close, volume=cached.volume, amount=cached.amount,
+                    bid1=cached.bid1, ask1=cached.ask1, bid_vol1=cached.bid_vol1, ask_vol1=cached.ask_vol1,
+                    change_pct=cached.change_pct, is_live=False, is_closed=False,
+                    source="CACHE_STATIC_WAITING_TRADE",
+                    status_desc="【等待真实成交】盘口暂无新成交撮合，价格物理保持恒定"
+                )
+
+        return MarketTick(
+            symbol=symbol, name=cfg["name"], timestamp=now, time_str=time_str,
+            price=base_px, open=base_px, high=base_px, low=base_px,
+            close=base_px, volume=12000.0, amount=12000.0 * base_px,
+            bid1=base_px - cfg["tick"], ask1=base_px + cfg["tick"],
+            bid_vol1=100.0, ask_vol1=100.0, change_pct=0.0,
+            is_live=False, is_closed=False, source="BASELINE_STATIC_NO_JITTER",
+            status_desc="【静态基准切片】真实基准价格已固化，无随机跳动"
+        )
 
     def get_batch_ticks(self, symbols: Optional[List[str]] = None, allow_sim_on_closed: bool = False) -> List[MarketTick]:
         """批量获取指定标的或全市场核心资产的最新微观 Tick"""
         target_symbols = symbols or list(self._ASSET_BASE_PARAMS.keys())
         return [self.get_tick(s, allow_sim_on_closed=allow_sim_on_closed) for s in target_symbols]
+

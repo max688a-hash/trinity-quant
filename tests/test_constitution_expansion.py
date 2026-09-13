@@ -72,6 +72,34 @@ class TestConstitutionExpansion(unittest.TestCase):
         self.assertIn("沙盒内探索无限自由", self.cursorrules)
         self.assertIn("Articles 29-32", self.cursor_mdc)
 
+    def test_article_33_absolute_truth_grounding_anti_fabrication(self) -> None:
+        """断言第33条：绝对真值数据锚定、反伪造心跳与零假演播铁律"""
+        self.assertIn("第 33 条：绝对真值数据锚定、反伪造心跳与零假演播铁律", self.agents_md)
+        self.assertIn("No-Trade Zero-Tick Invariant", self.agents_md)
+        self.assertIn("Zero-Random-Jitter Law", self.agents_md)
+
+        # 1. 物理断言：连续查询实时行情，无新成交时价格与成交量必须绝对保持恒定 (零随机伪跳动)
+        from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
+        adapter = RealtimeFeedAdapter()
+        t1 = adapter.get_tick("600519.SH")
+        t2 = adapter.get_tick("600519.SH")
+        self.assertEqual(t1.price, t2.price, "违宪：无新成交时价格发生漂移随机跳动！")
+        self.assertEqual(t1.volume, t2.volume, "违宪：无新成交时成交量发生随机漂移！")
+
+        # 2. 物理断言：真实历史 K 线服务必须返回客观历史记录，严禁正弦波造假
+        from truth_kernel.historical_kline_service import HistoricalKlineService
+        candles = HistoricalKlineService.get_kline("600519.SH", timeframe="D", count=30)
+        self.assertGreaterEqual(len(candles), 10)
+        self.assertIn("2024-", candles[0]["date"])
+
+        # 3. 物理断言：前端代码静态排查，绝对禁止正弦波捏造蜡烛与写死买卖点索引
+        with open(os.path.join(self.workspace_root, "trinity_dashboard.html"), "r", encoding="utf-8") as f:
+            html = f.read()
+        self.assertNotIn("Math.sin(i * 0.55)", html, "违宪：前端仍在使用正弦波伪造K线！")
+        self.assertNotIn("candles[10].signal = { type: 'BUY'", html, "违宪：前端仍在使用固定索引硬编码信号点！")
+        self.assertIn("loadRealKlineData", html, "缺失真实K线加载器！")
+        self.assertIn("calculateDynamicSignals", html, "缺失动态数学算法信号推导器！")
+
 
 if __name__ == "__main__":
     unittest.main()

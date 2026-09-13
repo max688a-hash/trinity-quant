@@ -121,15 +121,18 @@ class AutoPilotLearningDaemon:
             self._stop_event.wait(self.poll_interval_seconds)
 
     def process_next_asset_tick(self) -> Dict[str, Any]:
-        """单次调度轮询执行一个标的资产"""
+        """单次调度轮询执行一个标的资产 (接入真实行情价格)"""
         with self._lock:
             asset = self.asset_universe[self._asset_index]
             self._asset_index = (self._asset_index + 1) % len(self.asset_universe)
             sym = asset["symbol"]
-            px = asset["base_price"]
             is_replay = asset.get("is_replay", False)
 
-        # 触发影子沙盒流水线
+        from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
+        real_tick = RealtimeFeedAdapter().get_tick(sym)
+        px = real_tick.price
+
+        # 触发影子沙盒流水线 (严格基于真实行情)
         res = self.sandbox.run_autonomous_tick(
             symbol=sym,
             current_price=px,

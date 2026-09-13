@@ -36,7 +36,7 @@ from entropy_execution.real_money_service import (
     handle_real_money_order, handle_real_money_toggle, handle_real_money_unlock
 )
 from entropy_execution.battlefield_api_service import (
-    handle_get_alert_history, handle_get_gateways_patrol,
+    handle_get_alert_history, handle_get_gateways_patrol, handle_get_kline,
     handle_get_microstructure_flow, handle_get_preflight_checklist,
     handle_get_regime_evaluation, handle_get_supervisor_telemetry,
     handle_get_vault_status, handle_run_reconciliation_audit,
@@ -103,6 +103,10 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             ),
             "/api/microstructure/flow": lambda: handle_get_microstructure_flow(
                 parse_qs(parsed.query).get("symbol", [None])[0]
+            ),
+            "/api/market/kline": lambda: handle_get_kline(
+                parse_qs(parsed.query).get("symbol", [None])[0],
+                timeframe=parse_qs(parsed.query).get("tf", ["D"])[0]
             ),
             "/api/reconciliation/run": lambda: handle_run_reconciliation_audit(_GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK),
             "/api/preflight/check": lambda: handle_get_preflight_checklist(_GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK),
