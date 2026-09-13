@@ -23,13 +23,13 @@ class TestAutonomousLearningSandbox(unittest.TestCase):
         self.sandbox = AutonomousLearningSandbox(paper_engine=self.paper)
 
     def test_initial_learning_report(self) -> None:
-        """测试初始自主学习实证报告结构"""
+        """测试初始自主学习实证报告结构：真实零假样本冷启动"""
         rep = self.sandbox.generate_learning_report()
-        self.assertGreaterEqual(rep.total_auto_trades, 2)
-        self.assertGreater(rep.empirical_win_rate, 0.5)
+        self.assertEqual(rep.total_auto_trades, 0)
+        self.assertEqual(rep.empirical_win_rate, 0.0)
         self.assertGreater(rep.calibrated_kelly_f, 0.05)
         self.assertFalse(rep.is_cooling_down)
-        self.assertIn("系统自学习总结", rep.learning_synthesis)
+        self.assertIn("系统自学习中枢已就绪", rep.learning_synthesis)
 
     def test_shadow_tick_execution(self) -> None:
         """测试影子自动巡航 Tick 执行与决策"""

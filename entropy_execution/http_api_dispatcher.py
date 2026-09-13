@@ -30,7 +30,11 @@ class HttpApiDispatcher:
         probe = DataProbeRouter()
         probe.register_source("COMMERCIAL_API")
         now = time.time()
-        probe.probe_and_ingest("COMMERCIAL_API", "600519.SH", 1550.0, 1000.0, now, 35.0, now)
+        from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
+        tick = RealtimeFeedAdapter().get_tick("600519.SH")
+        probe_px = tick.price if tick.price > 0 else 0.0
+        probe_vol = tick.volume if tick.volume > 0 else 0.0
+        probe.probe_and_ingest("COMMERCIAL_API", "600519.SH", probe_px, probe_vol, now, 35.0, now)
         return {
             "status": "HEALTHY",
             "active_source": probe.get_active_source(),
@@ -124,14 +128,14 @@ class HttpApiDispatcher:
         }
 
     @staticmethod
-    def get_realtime_ticks(symbol: Optional[str] = None, allow_sim_on_closed: bool = False) -> Dict[str, Any]:
-        """获取全市场或指定标的实时高频跳动数据"""
+    def get_realtime_ticks(symbol: Optional[str] = None) -> Dict[str, Any]:
+        """获取全市场或指定标的实时高频跳动数据（生产网关严禁调用合成器）"""
         from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
         adapter = RealtimeFeedAdapter()
         if symbol:
-            tick = adapter.get_tick(symbol, allow_sim_on_closed=allow_sim_on_closed)
+            tick = adapter.get_tick(symbol)
             return {"ticks": [asdict(tick)], "count": 1}
-        ticks = adapter.get_batch_ticks(allow_sim_on_closed=allow_sim_on_closed)
+        ticks = adapter.get_batch_ticks()
         return {"ticks": [asdict(t) for t in ticks], "count": len(ticks)}
 
     @staticmethod
@@ -206,9 +210,31 @@ class HttpApiDispatcher:
     ) -> Dict[str, Any]:
         """全链路流水线单次执行"""
         sym = str(payload.get("symbol", "600519.SH")).upper()
+        px_val = payload.get("price")
+        if px_val is not None:
+            current_price = float(px_val)
+        else:
+            from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
+            tick = RealtimeFeedAdapter().get_tick(sym)
+            current_price = tick.price if tick.price > 0 else 0.0
+
+        if current_price <= 0:
+            return {
+                "symbol": sym,
+                "is_executed": False,
+                "action": "VETO",
+                "stage_immune_passed": False,
+                "stage_gravity_passed": False,
+                "stage_execution_passed": False,
+                "veto_reason": "DATA_UNAVAILABLE: 缺失真实行情价格，严禁默用 1550 假价撮合",
+                "alert_type": "DATA_UNAVAILABLE",
+                "alert_color": "zinc",
+                "audit_trace": ["行情源离线/未指定真实价格，触发真值防伪阻断"]
+            }
+
         res = orchestrator.execute_tick(
             symbol=sym,
-            current_price=float(payload.get("price", 1550.0)),
+            current_price=current_price,
             macro_history=payload.get("macro_history", [100.0 + i for i in range(25)]),
             meso_history=payload.get("meso_history", [120.0 + i for i in range(12)]),
             instant_price_drop_pct=float(payload.get("price_drop_pct", 0.0)),

@@ -89,8 +89,7 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/pool/dockets": lambda: [docket_as_public_dict(d) for d in PoolAdmissionAuditor.list_all_dockets()],
             "/api/pool/autopsy": HttpApiDispatcher.get_forensic_autopsy,
             "/api/market/realtime_ticks": lambda: HttpApiDispatcher.get_realtime_ticks(
-                parse_qs(parsed.query).get("symbol", [None])[0],
-                allow_sim_on_closed=(parse_qs(parsed.query).get("mode", ["live"])[0] == "sim"),
+                parse_qs(parsed.query).get("symbol", [None])[0]
             ),
             "/api/industry/chain": lambda: HttpApiDispatcher.get_industry_chain(
                 parse_qs(parsed.query).get("symbol", [None])[0]

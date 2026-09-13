@@ -82,39 +82,22 @@ class AutonomousLearningSandbox:
         self.orchestrator = orchestrator or LivePipelineOrchestrator(paper_engine=self.paper)
         self.impact_model = MarketImpactModel()
 
-        # 贝叶斯在线先验与盈亏跟踪 (Beta Prior)
-        self._prior_wins: float = 12.0
-        self._prior_losses: float = 8.0
-        self._win_pnls: List[float] = [15000.0, 22000.0, 8000.0]
-        self._loss_pnls: List[float] = [5000.0, 6000.0]
+        # 贝叶斯在线先验与盈亏跟踪 (真实冷启动，严禁虚构赢钱历史)
+        self._prior_wins: float = 0.0
+        self._prior_losses: float = 0.0
+        self._win_pnls: List[float] = []
+        self._loss_pnls: List[float] = []
 
         # 自校准超参数
-        self.calibrated_kelly_fraction: float = 0.18
+        self.calibrated_kelly_fraction: float = 0.10
         self.calibrated_stop_k: float = 2.0
         self.calibrated_gamma: float = 0.314
-        self.strategy_health_index: float = 0.92
+        self.strategy_health_index: float = 1.0
         self.is_cooling_down: bool = False
         self._autopsy_history: List[TradeAutopsyRecord] = []
-        self._seed_initial_history()
 
     def _now_str(self) -> str:
         return datetime.now(self.BEIJING_TZ).strftime("%Y-%m-%d %H:%M:%S")
-
-    def _seed_initial_history(self) -> None:
-        self._autopsy_history.append(TradeAutopsyRecord(
-            trade_id="AUTO_001", symbol="600519.SH", action="BUY->SELL",
-            entry_price=1520.0, exit_price=1550.0, quantity=100.0, pnl=3000.0,
-            pnl_pct=0.0197, friction_cost=108.5, holding_seconds=7200.0,
-            predicted_slippage=0.0005, realized_slippage=0.00045, slippage_error=-0.00005,
-            verdict=AutopsyVerdict.ALPHA_EXPANSION_WIN, timestamp=self._now_str()
-        ))
-        self._autopsy_history.append(TradeAutopsyRecord(
-            trade_id="AUTO_002", symbol="BTCUSDT", action="BUY->SELL",
-            entry_price=64200.0, exit_price=65100.0, quantity=0.5, pnl=450.0,
-            pnl_pct=0.0140, friction_cost=24.1, holding_seconds=3600.0,
-            predicted_slippage=0.00075, realized_slippage=0.00070, slippage_error=-0.00005,
-            verdict=AutopsyVerdict.TRAILING_STOP_PROFIT, timestamp=self._now_str()
-        ))
 
     def run_autonomous_tick(
         self,
@@ -131,8 +114,23 @@ class AutonomousLearningSandbox:
             if not clock_eval.is_open and not is_replay_mode:
                 return {"executed": False, "reason": f"交易所闭市 ({clock_eval.reason})，自动执行暂停", "auto_learning_active": True}
 
-            macro = macro_history or [current_price * (0.95 + 0.002 * i) for i in range(25)]
-            meso = meso_history or [current_price * (0.98 + 0.002 * i) for i in range(12)]
+            if not macro_history:
+                from truth_kernel.historical_kline_service import HistoricalKlineService
+                candles = HistoricalKlineService.get_kline(sym, timeframe="D", count=25)
+                macro = [float(c["close"]) for c in candles] if len(candles) >= 5 else []
+            else:
+                macro = macro_history
+
+            if not meso_history:
+                from truth_kernel.historical_kline_service import HistoricalKlineService
+                candles_m = HistoricalKlineService.get_kline(sym, timeframe="60m", count=12)
+                meso = [float(c["close"]) for c in candles_m] if len(candles_m) >= 5 else (macro[:12] if len(macro) >= 12 else [])
+            else:
+                meso = meso_history
+
+            if not macro or not meso:
+                return {"executed": False, "reason": "缺失真实历史K线序列，严禁虚构自造涨价曲线", "auto_learning_active": False}
+
             pipe_res = self.orchestrator.execute_tick(symbol=sym, current_price=current_price, macro_history=macro, meso_history=meso)
             self._evaluate_auto_exit(sym, current_price)
 
@@ -209,6 +207,24 @@ class AutonomousLearningSandbox:
         with self._lock:
             total = int(self._prior_wins + self._prior_losses)
             wins, losses = int(self._prior_wins), int(self._prior_losses)
+
+            if total == 0:
+                syn = (
+                    "【系统自学习中枢已就绪】：当前处于零假样本冷启动待命状态，"
+                    "尚未产生实盘或影子成交样本，严禁虚构盈利历史；动态半凯利初始设定为 f*=10.0%。"
+                )
+                return SelfLearningReport(
+                    total_auto_trades=0, winning_trades=0, losing_trades=0,
+                    empirical_win_rate=0.0, empirical_payoff_ratio=0.0,
+                    calibrated_kelly_f=self.calibrated_kelly_fraction,
+                    calibrated_trailing_stop_k=self.calibrated_stop_k,
+                    calibrated_impact_gamma=self.calibrated_gamma,
+                    strategy_health_index=self.strategy_health_index,
+                    is_cooling_down=self.is_cooling_down,
+                    recent_autopsies=[],
+                    learning_synthesis=syn
+                )
+
             win_rate = wins / max(1, total)
             avg_win = (sum(self._win_pnls[-10:]) / len(self._win_pnls[-10:])) if self._win_pnls else 1000.0
             avg_loss = (sum(self._loss_pnls[-10:]) / len(self._loss_pnls[-10:])) if self._loss_pnls else 500.0

@@ -133,23 +133,23 @@ class MarketMicroTickSynthesizer:
 class RealtimeFeedAdapter:
     """
     全市场实时行情统一适配网关。
-    优先穿透真实公开行情接口，如遇休市或网络阻断无缝降级为微观高保真合成器。
+    严格穿透真实交易所/财经公开行情，交易所休市冻结真实最后收盘价；
+    若未获取到真实行情或断网，诚实标定 DATA_UNAVAILABLE (price=0.0)，生产环境绝对禁止伪造随机跳动。
     """
 
     _ASSET_BASE_PARAMS: Dict[str, Dict[str, Any]] = {
-        "600519.SH": {"name": "贵州茅台", "base": 1420.0, "tick": 0.01, "vol": 12.0},
-        "600900.SH": {"name": "长江电力", "base": 28.50, "tick": 0.01, "vol": 5.0},
-        "002594.SZ": {"name": "比亚迪", "base": 268.0, "tick": 0.01, "vol": 18.0},
-        "000002.SZ": {"name": "万科A", "base": 6.80, "tick": 0.01, "vol": 25.0},
-        "SA": {"name": "纯碱主力期货", "base": 1380.0, "tick": 1.0, "vol": 35.0},
-        "RB": {"name": "螺纹钢主力期货", "base": 3320.0, "tick": 1.0, "vol": 20.0},
-        "AU": {"name": "沪金主力期货", "base": 586.5, "tick": 0.02, "vol": 15.0},
-        "BTCUSDT": {"name": "比特币现货", "base": 64800.0, "tick": 0.1, "vol": 40.0},
-        "USDCNH": {"name": "美元离岸人民币", "base": 7.1250, "tick": 0.0001, "vol": 4.0}
+        "600519.SH": {"name": "贵州茅台", "tick": 0.01},
+        "600900.SH": {"name": "长江电力", "tick": 0.01},
+        "002594.SZ": {"name": "比亚迪", "tick": 0.01},
+        "000002.SZ": {"name": "万科A", "tick": 0.01},
+        "SA": {"name": "纯碱主力期货", "tick": 1.0},
+        "RB": {"name": "螺纹钢主力期货", "tick": 1.0},
+        "AU": {"name": "沪金主力期货", "tick": 0.02},
+        "BTCUSDT": {"name": "比特币现货", "tick": 0.1},
+        "USDCNH": {"name": "美元离岸人民币", "tick": 0.0001}
     }
 
-    def __init__(self, synthesizer: Optional[MarketMicroTickSynthesizer] = None) -> None:
-        self.synthesizer = synthesizer or MarketMicroTickSynthesizer()
+    def __init__(self) -> None:
         self._cache: Dict[str, MarketTick] = {}
         self._cache_lock = threading.Lock()
 
@@ -205,21 +205,21 @@ class RealtimeFeedAdapter:
                 return None
         return None
 
-    def get_tick(self, symbol: str, allow_sim_on_closed: bool = False) -> MarketTick:
+    def get_tick(self, symbol: str) -> MarketTick:
         """获取最新微观盘口 Tick。无成交即零跳动 (No-Trade Zero-Tick Invariant)，严禁伪造随机波动"""
         from truth_kernel.market_session_clock import MarketSessionClock
         clock = MarketSessionClock.evaluate_symbol(symbol)
         now = time.time()
         time_str = time.strftime("%H:%M:%S", time.localtime(now))
 
-        # 1. 闭市检查: 若已休市且已有冻结缓存，直接返回确定性切片，物理零跳动
-        if not clock.is_open and not allow_sim_on_closed:
+        # 1. 闭市检查: 若已休市且已有真实冻结缓存，直接返回确定性切片，物理零跳动
+        if not clock.is_open:
             with self._cache_lock:
                 cached = self._cache.get(symbol)
-                if cached is not None and cached.is_closed:
+                if cached is not None and cached.is_closed and cached.price > 0:
                     return cached
 
-        # 2. 尝试拉取真实行情
+        # 2. 尝试拉取交易所公开真实行情
         live_tick = self._fetch_sina_live_quote(symbol)
         if live_tick is not None and live_tick.price > 0:
             if not clock.is_open:
@@ -241,57 +241,34 @@ class RealtimeFeedAdapter:
                 self._cache[symbol] = live_tick
             return live_tick
 
-        cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol, "base": 100.0, "tick": 0.01, "vol": 10.0})
-        base_px = cfg["base"]
-
-        # 3. 闭市且未拉取到网络（离线/沙盒）：固化基准收盘价切片，价格与成交量绝对静止
-        if not clock.is_open and not allow_sim_on_closed:
-            frozen_tick = MarketTick(
-                symbol=symbol, name=cfg["name"], timestamp=now, time_str=time_str,
-                price=base_px, open=base_px, high=base_px, low=base_px,
-                close=base_px, volume=12000.0, amount=12000.0 * base_px,
-                bid1=base_px - cfg["tick"], ask1=base_px + cfg["tick"],
-                bid_vol1=100.0, ask_vol1=100.0, change_pct=0.0,
-                is_live=False, is_closed=True, source="REAL_LAST_CLOSE_FROZEN",
-                status_desc=f"【交易所法定休市】{clock.reason} · 真实收盘价已冻结 (静默停盘)"
-            )
-            with self._cache_lock:
-                self._cache[symbol] = frozen_tick
-            return frozen_tick
-
-        # 3. 显式沙盒模式：仅在明确请求仿真时调用合成器 (供离线单测/黑天鹅混沌压测使用)
-        if allow_sim_on_closed:
-            return self.synthesizer.generate_next_tick(
-                symbol=symbol, name=cfg["name"], base_price=cfg["base"],
-                tick_size=cfg["tick"], volatility_bps=cfg["vol"]
-            )
-
-        # 4. 开市期间但无新成交或网络中断：保持最后一次确认的真实切片，绝对严禁布朗运动意淫跳动！
+        # 3. 网络故障或无网络，若此前有真实有效行情缓存，继续返回真实缓存（零跳动）
         with self._cache_lock:
             cached = self._cache.get(symbol)
-            if cached:
+            if cached is not None and cached.price > 0:
                 return MarketTick(
                     symbol=cached.symbol, name=cached.name, timestamp=now, time_str=time_str,
                     price=cached.price, open=cached.open, high=cached.high, low=cached.low,
                     close=cached.close, volume=cached.volume, amount=cached.amount,
                     bid1=cached.bid1, ask1=cached.ask1, bid_vol1=cached.bid_vol1, ask_vol1=cached.ask_vol1,
-                    change_pct=cached.change_pct, is_live=False, is_closed=False,
-                    source="CACHE_STATIC_WAITING_TRADE",
-                    status_desc="【等待真实成交】盘口暂无新成交撮合，价格物理保持恒定"
+                    change_pct=cached.change_pct, is_live=False, is_closed=not clock.is_open,
+                    source="REAL_LAST_CLOSE_FROZEN" if not clock.is_open else "CACHE_STATIC_WAITING_TRADE",
+                    status_desc="【缓存真实切片】外部网络断开，维持最后真实行情切片，零意淫跳动"
                 )
 
+        # 4. 彻底无真实行情数据源（未获取/断网/非法标的）：诚实报告 DATA_UNAVAILABLE，绝对严禁写死底价伪造！
+        cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol})
         return MarketTick(
-            symbol=symbol, name=cfg["name"], timestamp=now, time_str=time_str,
-            price=base_px, open=base_px, high=base_px, low=base_px,
-            close=base_px, volume=12000.0, amount=12000.0 * base_px,
-            bid1=base_px - cfg["tick"], ask1=base_px + cfg["tick"],
-            bid_vol1=100.0, ask_vol1=100.0, change_pct=0.0,
-            is_live=False, is_closed=False, source="BASELINE_STATIC_NO_JITTER",
-            status_desc="【静态基准切片】真实基准价格已固化，无随机跳动"
+            symbol=symbol, name=cfg.get("name", symbol), timestamp=now, time_str=time_str,
+            price=0.0, open=0.0, high=0.0, low=0.0,
+            close=0.0, volume=0.0, amount=0.0,
+            bid1=0.0, ask1=0.0, bid_vol1=0.0, ask_vol1=0.0, change_pct=0.0,
+            is_live=False, is_closed=not clock.is_open, source="DATA_UNAVAILABLE",
+            status_desc="【数据源离线 DATA_UNAVAILABLE】未获取到交易所真实行情数据，严禁伪造价格"
         )
 
-    def get_batch_ticks(self, symbols: Optional[List[str]] = None, allow_sim_on_closed: bool = False) -> List[MarketTick]:
+    def get_batch_ticks(self, symbols: Optional[List[str]] = None) -> List[MarketTick]:
         """批量获取指定标的或全市场核心资产的最新微观 Tick"""
         target_symbols = symbols or list(self._ASSET_BASE_PARAMS.keys())
-        return [self.get_tick(s, allow_sim_on_closed=allow_sim_on_closed) for s in target_symbols]
+        return [self.get_tick(s) for s in target_symbols]
+
 
