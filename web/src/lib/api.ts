@@ -1,4 +1,4 @@
-import type { AutopsyCase, BoardQuote, Candle, PaperState, ScreenerCandidate } from "./types";
+import type { AdmissionDocket, AutopsyCase, BoardQuote, Candle, PaperState, ScreenerCandidate } from "./types";
 
 async function getJson<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -20,6 +20,10 @@ export async function fetchForensicAutopsy(): Promise<{
   return getJson("/api/pool/autopsy");
 }
 
+
+export async function fetchPoolDockets(): Promise<AdmissionDocket[]> {
+  return getJson("/api/pool/dockets");
+}
 
 export async function fetchPaperState(): Promise<PaperState> {
   return getJson("/api/paper_state");

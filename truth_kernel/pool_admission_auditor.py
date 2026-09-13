@@ -198,12 +198,16 @@ class PoolAdmissionAuditor:
 
     @classmethod
     def get_docket(cls, symbol: str) -> AdmissionDocket:
-        """获取标的入池法证档案"""
+        """获取标的入池法证档案，并叠加真实体检单向棘轮。"""
+        from truth_kernel.docket_audit_ratchet import apply_audit_ratchet
+        return apply_audit_ratchet(cls._lookup_raw_docket(symbol))
+
+    @classmethod
+    def _lookup_raw_docket(cls, symbol: str) -> AdmissionDocket:
+        """未叠加体检棘轮的静态宗卷（仅供棘轮层调用）。"""
         key = symbol.strip().upper()
         if key in cls._DOCKETS:
             return cls._DOCKETS[key]
-        
-        # 期货与衍生品标的入池法证回退工厂
         prefix = "".join(filter(str.isalpha, key))
         if prefix in ("RB", "HC", "I", "J", "JM"):
             return AdmissionDocket(
@@ -240,8 +244,6 @@ class PoolAdmissionAuditor:
                 current_action_advice="基准大盘对冲工具，配合现货多头实现市场中性 Alpha 收益",
                 is_buyable_now=True
             )
-
-        # 默认回退合法档案 (防止KeyError崩盘)
         return AdmissionDocket(
             symbol=key, name=f"{key}已审计资产", market="global",
             grade=AdmissionGrade.AA_CYCLICAL, horizon=InvestmentHorizon.MEDIUM_TERM_CYCLE,
@@ -262,8 +264,9 @@ class PoolAdmissionAuditor:
 
     @classmethod
     def list_all_dockets(cls) -> List[AdmissionDocket]:
-        """返回所有已建立法证的标的档案"""
-        return list(cls._DOCKETS.values())
+        """返回所有已建立法证的标的档案（含体检棘轮）。"""
+        from truth_kernel.docket_audit_ratchet import apply_audit_ratchet
+        return [apply_audit_ratchet(row) for row in cls._DOCKETS.values()]
 
     @classmethod
     def audit_pool_authenticity(cls, symbols: List[str]) -> Tuple[bool, List[str]]:

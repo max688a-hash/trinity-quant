@@ -158,11 +158,21 @@ class HttpApiDispatcher:
         lock: threading.Lock,
         payload: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """执行模拟盘下单"""
-        sym = str(payload.get("symbol", "600519.SH")).upper()
-        act = str(payload.get("action", "BUY")).upper()
-        qty = float(payload.get("quantity", 100.0))
-        px = float(payload.get("price", 1550.0))
+        """执行模拟盘下单：无行情价不得默 1550；未准入不得买入。"""
+        from entropy_execution.paper_trade_gate import evaluate_paper_ticket
+        ok, reason, sym, act, qty, px = evaluate_paper_ticket(payload)
+        if not ok:
+            return {
+                "success": False,
+                "action": act or "BUY",
+                "symbol": sym,
+                "price": 0.0,
+                "quantity": 0.0,
+                "friction_total": 0.0,
+                "stamp_duty": 0.0,
+                "commission": 0.0,
+                "rejection_reason": reason,
+            }
         with lock:
             rcpt = engine.submit_order(
                 symbol=sym, is_buy=(act == "BUY"), quantity=qty, market_price=px,

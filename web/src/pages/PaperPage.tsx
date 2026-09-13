@@ -1,31 +1,111 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../components/ui/select";
-import { fetchPaperState, postPaperTrade } from "../lib/api";
+import { fetchBoardQuotes, fetchPaperState, fetchPoolDockets, fetchScreener, postPaperTrade } from "../lib/api";
+import { toListedSymbol } from "../lib/listedSymbol";
 import { scrollToPaperSection } from "../lib/viewport";
-import type { PaperState } from "../lib/types";
+import type { AdmissionDocket, PaperState, ScreenerCandidate } from "../lib/types";
 
 export function PaperPage() {
   const [state, setState] = useState<PaperState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [side, setSide] = useState<"BUY" | "SELL">("BUY");
   const [msg, setMsg] = useState<string>("");
+  const [qty, setQty] = useState("100");
+  const [pool, setPool] = useState<ScreenerCandidate[]>([]);
+  const [poolState, setPoolState] = useState<"loading" | "ready" | "error">("loading");
+  const [symbol, setSymbol] = useState("");
+  const [last, setLast] = useState<number | null>(null);
+  const [quoteStatus, setQuoteStatus] = useState("DATA_UNAVAILABLE");
+  const [dockets, setDockets] = useState<AdmissionDocket[]>([]);
+
+  const vetoRoots = useMemo(
+    () => new Set(
+      dockets
+        .filter((row) => !row.is_buyable_now)
+        .map((row) => row.symbol.split(".")[0].toUpperCase()),
+    ),
+    [dockets],
+  );
+  const qualified = useMemo(
+    () => pool.filter((row) => row.is_qualified && !vetoRoots.has(row.symbol.split(".")[0].toUpperCase())),
+    [pool, vetoRoots],
+  );
+  const listed = symbol ? toListedSymbol(symbol) : "";
+
+  useEffect(() => {
+    if (symbol || qualified.length === 0) {
+      return;
+    }
+    setSymbol(qualified[0].symbol);
+  }, [symbol, qualified]);
 
   useEffect(() => {
     fetchPaperState()
       .then(setState)
       .catch((err: Error) => setError(err.message));
+    fetchPoolDockets()
+      .then(setDockets)
+      .catch(() => setDockets([]));
+    fetchScreener()
+      .then((res) => {
+        const rows = res.candidates ?? [];
+        setPool(rows);
+        setPoolState("ready");
+      })
+      .catch(() => {
+        setPool([]);
+        setPoolState("error");
+      });
   }, []);
 
+  useEffect(() => {
+    if (!listed) {
+      setLast(null);
+      setQuoteStatus("DATA_UNAVAILABLE");
+      return;
+    }
+    let cancelled = false;
+    fetchBoardQuotes([listed])
+      .then((res) => {
+        if (cancelled) {
+          return;
+        }
+        const quote = (res.quotes ?? []).find((row) => row.symbol === listed) ?? res.quotes?.[0];
+        if (quote?.available && quote.last != null && Number.isFinite(quote.last) && quote.last > 0) {
+          setLast(quote.last);
+          setQuoteStatus("OK");
+          return;
+        }
+        setLast(null);
+        setQuoteStatus("DATA_UNAVAILABLE");
+      })
+      .catch(() => {
+        if (cancelled) {
+          return;
+        }
+        setLast(null);
+        setQuoteStatus("DATA_UNAVAILABLE");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [listed]);
+
   async function submit() {
+    const quantity = Number(qty);
+    if (!listed || last == null || !Number.isFinite(quantity) || quantity <= 0) {
+      setMsg("DATA_UNAVAILABLE。禁止默用 1550，无行情价不得成交。");
+      return;
+    }
     try {
       const res = await postPaperTrade({
-        symbol: "600519.SH",
+        symbol: listed,
         action: side,
-        quantity: 100,
-        price: 1550,
+        quantity,
+        price: last,
         is_replay_mode: true,
       });
       setMsg(res.success ? `成交，摩擦 ${res.friction_total}` : res.rejection_reason || "被风控拦截");
@@ -34,6 +114,8 @@ export function PaperPage() {
       setMsg(err instanceof Error ? err.message : "报单失败");
     }
   }
+
+  const canSubmit = Boolean(listed && last != null && Number(qty) > 0);
 
   return (
     <div className="space-y-4">
@@ -51,11 +133,41 @@ export function PaperPage() {
           <p className="text-[22px] font-semibold tabular-nums">¥{state ? state.cash.toLocaleString("zh-CN") : "—"}</p>
           <p className="mt-2 text-[13px] text-muted-foreground">总权益</p>
           <p className="text-[18px] font-medium tabular-nums">¥{state ? state.equity.toLocaleString("zh-CN") : "—"}</p>
+          <p className="mt-2 text-[13px] text-muted-foreground">最大回撤</p>
+          <p className="text-[15px] tabular-nums">{state ? `${(state.max_drawdown * 100).toFixed(2)}%` : "—"}</p>
           <p className="mt-2 text-[13px]">T+1 锁仓 {state?.t_plus_1_enforced ? "已启用" : "未知"} · 单向棘轮 {state?.ratchet_enabled ? "已启用" : "未知"}</p>
+          <p className="mt-3 text-[13px] text-muted-foreground">
+            纸上成交按最后行情价计提印花税、佣金、滑点。权益变红变绿是账本结果，禁止为绿而放宽风控。纸上亏，真金更不能当成已经会赚。
+          </p>
         </Card>
       </section>
       <section id="sec-paper-combat" className="space-y-3">
         <Card className="space-y-3">
+          <label className="text-[13px]" htmlFor="paper-symbol">准入标的</label>
+          {poolState === "loading" ? (
+            <p className="text-[13px] text-muted-foreground">正在读取 /api/screener…</p>
+          ) : null}
+          {poolState === "error" ? (
+            <p className="text-[13px] text-buy">DATA_UNAVAILABLE。选股接口不可达，禁止成交。</p>
+          ) : null}
+          {poolState === "ready" && qualified.length === 0 ? (
+            <p className="text-[13px] text-buy">DATA_UNAVAILABLE。洁净池为空，禁止纸上买入。</p>
+          ) : null}
+          {poolState === "ready" && qualified.length > 0 ? (
+            <Select value={symbol} onValueChange={setSymbol}>
+              <SelectTrigger id="paper-symbol" />
+              <SelectContent>
+                {qualified.map((row) => (
+                  <SelectItem key={row.symbol} value={row.symbol}>
+                    {row.name} {toListedSymbol(row.symbol)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : null}
+          <p className="text-[13px] tabular-nums">
+            最后行情价 {last != null ? last.toFixed(2) : "DATA_UNAVAILABLE"} · {quoteStatus}
+          </p>
           <label className="text-[13px]" htmlFor="side">交易方向</label>
           <Select value={side} onValueChange={(v) => setSide(v as "BUY" | "SELL")}>
             <SelectTrigger id="side" />
@@ -65,9 +177,9 @@ export function PaperPage() {
             </SelectContent>
           </Select>
           <label className="text-[13px]" htmlFor="qty">数量</label>
-          <Input id="qty" defaultValue={100} type="number" />
-          <Button variant={side === "BUY" ? "buy" : "sell"} onClick={() => void submit()}>
-            提交实战报单
+          <Input id="qty" value={qty} onChange={(ev) => setQty(ev.target.value)} type="number" min={1} />
+          <Button variant={side === "BUY" ? "buy" : "sell"} disabled={!canSubmit} onClick={() => void submit()}>
+            提交纸上工单
           </Button>
           {msg ? <p className="text-[13px]">{msg}</p> : null}
         </Card>

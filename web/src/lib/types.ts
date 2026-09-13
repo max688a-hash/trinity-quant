@@ -74,3 +74,15 @@ export type ScreenerCandidate = {
     recommended_action: string;
   };
 };
+
+export type AdmissionDocket = {
+  name: string;
+  symbol: string;
+  grade: string;
+  horizon: string;
+  blood_purity: number;
+  debt_toxicity: number;
+  current_action_advice: string;
+  is_buyable_now: boolean;
+};
+

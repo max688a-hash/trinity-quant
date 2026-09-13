@@ -10,6 +10,7 @@ scratch/
 .system_generated/
 .DS_Store
 data/*.enc.json
+data/*.db
 *.enc.json
 *.db-shm
 *.db-wal

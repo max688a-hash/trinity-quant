@@ -26,9 +26,16 @@ class TestPoolAdmissionAuditor(unittest.TestCase):
             self.assertGreaterEqual(len(docket.admission_reasons), 3, f"{s} 必须至少具备3条入池客观科学依据")
             self.assertGreaterEqual(len(docket.expulsion_triggers), 2, f"{s} 必须至少具备2条硬性排毒剔除条件")
             self.assertGreaterEqual(docket.blood_purity, 0.30, f"{s} 入池标的造血纯度必须不低于0.30")
+            self.assertIn(docket.horizon, (InvestmentHorizon.LONG_TERM_CORE, InvestmentHorizon.MEDIUM_TERM_CYCLE, InvestmentHorizon.SHORT_TERM_TACTICAL))
+            if not docket.is_buyable_now:
+                self.assertEqual(docket.grade, AdmissionGrade.WATCHLIST)
+                self.assertTrue(
+                    docket.debt_toxicity > 0.40 or "否决" in docket.current_action_advice,
+                    f"{s} 不可买时必须有体检否决或债务超阈",
+                )
+                continue
             self.assertLessEqual(docket.debt_toxicity, 0.40, f"{s} 入池标的债务毒性必须不高于0.40")
             self.assertIn(docket.grade, (AdmissionGrade.AAA_FORTRESS, AdmissionGrade.AA_CYCLICAL, AdmissionGrade.A_TACTICAL))
-            self.assertIn(docket.horizon, (InvestmentHorizon.LONG_TERM_CORE, InvestmentHorizon.MEDIUM_TERM_CYCLE, InvestmentHorizon.SHORT_TERM_TACTICAL))
             self.assertTrue(docket.is_buyable_now)
 
     def test_horizon_categorization_logic(self) -> None:

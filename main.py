@@ -46,6 +46,7 @@ from entropy_execution.battlefield_api_service import (
 from entropy_execution.board_quotes_service import handle_get_board_quotes
 from entropy_execution.system_quality_inspector import SystemQualityInspector
 from truth_kernel.pool_admission_auditor import PoolAdmissionAuditor
+from truth_kernel.docket_audit_ratchet import docket_as_public_dict
 from gravity_brain.bio_synapse_hub import BioSynapseHub
 
 _GLOBAL_PAPER_LOCK = threading.Lock()
@@ -85,7 +86,7 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/autopilot/status": lambda: asdict(_GLOBAL_AUTOPILOT_DAEMON.get_heartbeat()),
             "/api/stress/report": lambda: asdict(BlackSwanStressTester().run_full_stress_test()),
             "/api/bio_synapse/status": lambda: {"pulses": [asdict(p) for p in _GLOBAL_BIO_SYNAPSE.get_synaptic_health_pulses()]},
-            "/api/pool/dockets": lambda: [asdict(d) for d in PoolAdmissionAuditor.list_all_dockets()],
+            "/api/pool/dockets": lambda: [docket_as_public_dict(d) for d in PoolAdmissionAuditor.list_all_dockets()],
             "/api/pool/autopsy": HttpApiDispatcher.get_forensic_autopsy,
             "/api/market/realtime_ticks": lambda: HttpApiDispatcher.get_realtime_ticks(
                 parse_qs(parsed.query).get("symbol", [None])[0],
