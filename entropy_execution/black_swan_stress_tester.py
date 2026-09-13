@@ -223,7 +223,7 @@ class BlackSwanStressTester:
         tail_losses.sort(reverse=True)
         top_1_pct_idx = int(len(tail_losses) * 0.01)
         worst_cvar_99 = sum(tail_losses[:max(1, top_1_pct_idx)]) / max(1, top_1_pct_idx)
-        is_cvar_safe = worst_cvar_99 < 0.12  # 极端多日连续黑天鹅下最大受控回撤 (受半凯利与拔插头严密约束)
+        is_cvar_safe = worst_cvar_99 <= DAILY_DRAWDOWN_CAP_PCT  # ref: 第24条 单日最大亏损2%，禁止用12%放水
 
         return StressScenarioResult(
             scenario_name="蒙特卡洛 99% CVaR 肥尾极端扰动压力测试",
@@ -235,7 +235,7 @@ class BlackSwanStressTester:
             max_drawdown_contained=round(worst_cvar_99, 4),
             hard_circuit_breaker_active=True,
             verdict="PASS" if is_cvar_safe else "FAIL",
-            details=f"99% 条件在险价值 CVaR={worst_cvar_99*100:.2f}%，系统在极端肥尾扰动下绝不穿仓爆仓"
+            details=(f"99% CVaR={worst_cvar_99*100:.2f}% <= {DAILY_DRAWDOWN_CAP_PCT*100:.2f}% 硬上限" if is_cvar_safe else f"FAIL：99% CVaR={worst_cvar_99*100:.2f}% 超过硬上限 {DAILY_DRAWDOWN_CAP_PCT*100:.2f}%，禁止把情景假绿当成可买")
         )
 
     def run_full_stress_test(self) -> FullStressTestReport:

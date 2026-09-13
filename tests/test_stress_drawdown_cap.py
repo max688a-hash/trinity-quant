@@ -21,6 +21,13 @@ class TestStressDrawdownCap(unittest.TestCase):
         self.assertFalse(rep.is_all_passed)
         self.assertIn("FAIL", rep.final_verdict)
 
+    def test_monte_carlo_cvar_over_cap_is_fail(self) -> None:
+        res = BlackSwanStressTester().test_scenario_monte_carlo_cvar_99(n_simulations=500)
+        self.assertGreater(res.max_drawdown_contained, 0.02)
+        self.assertFalse(res.is_defense_successful)
+        self.assertEqual(res.verdict, "FAIL")
+        self.assertIn("FAIL", res.details)
+
     def test_letv_kangmei_remain_vetoed(self) -> None:
         from tests.test_immune_system import TestImmuneSystem
         immune = TestImmuneSystem()
