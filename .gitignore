@@ -1,0 +1,11 @@
+# TRINITY QUANT .gitignore
+.venv/
+__pycache__/
+*.pyc
+.chrome_profile/
+.chrome_mobile_profile/
+.chrome_tmp/
+scratch/
+*.log
+.system_generated/
+.DS_Store

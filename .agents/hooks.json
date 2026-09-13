@@ -1,0 +1,31 @@
+{
+  "bionic-reflex-guard": {
+    "enabled": true,
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "python3 /Volumes/tianyou-168/顶级量化/scripts/reflex_guard_hook.py",
+        "timeout": 10
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Volumes/tianyou-168/顶级量化/scripts/reflex_guard_hook.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python3 /Volumes/tianyou-168/顶级量化/scripts/reflex_guard_hook.py",
+        "timeout": 30
+      }
+    ]
+  }
+}

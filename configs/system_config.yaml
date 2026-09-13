@@ -1,0 +1,31 @@
+# TRINITY QUANT 系统全局参数配置
+# 版本: v1.0.0-PROD
+
+system:
+  environment: "production"
+  base_currency: "CNY"
+  log_level: "INFO"
+  random_seed: 42
+
+calendar:
+  # 财报法定披露安全缓冲天数（防止同日跨时区/盘后延时穿透）
+  pit_buffer_days: 1
+  market_timezone: "Asia/Shanghai"
+
+truth_kernel:
+  # 最小会计周期分析年限
+  min_history_quarters: 4
+  # 资本开支平滑窗口（季度）
+  capex_smoothing_window: 4
+  # 折旧与摊销下限保护值（元）
+  min_depr_amort_floor: 1.0
+
+market_friction:
+  # A 股单边印花税（2023 减半征收后为 0.05%）
+  stamp_duty_sell: 0.0005
+  # 券商双边佣金（万分之二）
+  commission_rate: 0.0002
+  # 最低佣金门槛（元）
+  min_commission: 5.0
+  # 基准滑点冲击成本（双边 0.1%）
+  slippage_cost: 0.0010

@@ -1,0 +1,42 @@
+# TRINITY QUANT 免疫系统排毒阈值与硬性风险控制配置
+# 版本: v1.0.0-PROD
+
+immune_system:
+  # 造血纯度 Φ_CP 阈值
+  cash_purity:
+    # 绝对一票否决红线：Φ_CP < 0.3 即刻否决
+    veto_threshold: 0.30
+    # 关注预警黄线
+    warning_threshold: 0.60
+    # 应收账款占营业收入最高允许上限（超过 50% 亮红牌）
+    max_receivables_to_revenue: 0.50
+
+  # 债务毒性 Ω_Debt 阈值
+  debt_wall:
+    # 债务毒性一票否决红线（一年内到期负债 / 真实货币资金及 FCF）
+    veto_threshold: 1.20
+    # 债务毒性预警黄线
+    warning_threshold: 0.80
+    # 财务费用占 EBITDA 最高允许上限（利息覆盖倍数倒数）
+    max_interest_to_ebitda: 0.40
+
+  # 资产负债表排毒硬红线
+  balance_sheet:
+    # 商誉占净资产（净资产 = 总资产 - 总负债）最高上限（>30% 视为商誉炸弹）
+    max_goodwill_to_equity: 0.30
+    # 受限资金占总货币资金上限（>40% 视为造假隐患）
+    max_restricted_cash_ratio: 0.40
+    # 资产负债率一票否决红线（金融类除外）
+    max_debt_to_assets: 0.85
+
+entropy_execution:
+  # 动态凯利参数
+  kelly:
+    # 极端下行风险 CVaR 惩罚敏感度
+    cvar_penalty_gamma: 2.50
+    # 置信区间
+    cvar_alpha: 0.99
+    # 单标的最大允许持仓上限（20% 铁律）
+    max_single_position: 0.20
+    # 组合最大总杠杆率（严格禁止杠杆，最大 1.0）
+    max_portfolio_leverage: 1.00
