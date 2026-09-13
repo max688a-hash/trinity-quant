@@ -6,9 +6,9 @@ export const MARKET_SECTORS = {
         name: 'A股市场',
         icon: '🇨🇳',
         benchmarks: [
-          { code: '000001.SH', name: '上证指数', price: '3,042.88', change: '+0.65%', isUp: true, base: 3042.0, digits: 2, exchange: '上交所 (SSE)', mult: '综合点位指数', tick: '0.01点', margin: '100%', hours: '09:30-15:00', rule: 'A股主板宏观晴雨表' },
-          { code: '000300.SH', name: '沪深300', price: '3,580.12', change: '+0.82%', isUp: true, base: 3580.0, digits: 2, exchange: '中证指数 (CSI)', mult: '蓝筹核心宽基', tick: '0.01点', margin: '100%', hours: '09:30-15:00', rule: '沪深核心资产大盘基准' },
-          { code: '399006.SZ', name: '创业板指', price: '1,788.50', change: '+1.12%', isUp: true, base: 1788.0, digits: 2, exchange: '深交所 (SZSE)', mult: '成长科技指数', tick: '0.01点', margin: '100%', hours: '09:30-15:00', rule: '高成长创新创业企业指数' }
+          { code: '000001.SH', name: '上证指数', base: 3042.0, digits: 2, exchange: '上交所 (SSE)', mult: '综合点位指数', tick: '0.01点', margin: '100%', hours: '09:30-15:00', rule: 'A股主板宏观晴雨表' },
+          { code: '000300.SH', name: '沪深300', base: 3580.0, digits: 2, exchange: '中证指数 (CSI)', mult: '蓝筹核心宽基', tick: '0.01点', margin: '100%', hours: '09:30-15:00', rule: '沪深核心资产大盘基准' },
+          { code: '399006.SZ', name: '创业板指', base: 1788.0, digits: 2, exchange: '深交所 (SZSE)', mult: '成长科技指数', tick: '0.01点', margin: '100%', hours: '09:30-15:00', rule: '高成长创新创业企业指数' }
         ],
         assets: [
           { code: '600519.SH', name: '贵州茅台', base: 1550.0, step: 15.0, digits: 2, unit: '元', tag: '白酒龙头', exchange: '上交所主板 (SSE)', mult: '100股/手 (股票)', tick: '0.01元', margin: '100% (无杠杆)', hours: '09:30-11:30, 13:00-15:00', rule: 'A股T+1现货交收 · 卖出计提0.05%印花税 · 10%跌停硬熔断' },
@@ -33,8 +33,8 @@ export const MARKET_SECTORS = {
           { id: 'agriculture', name: '🌾 农产品软商品 (8)' }
         ],
         benchmarks: [
-          { code: 'NHCI', name: '南华商品综合指数', price: '2,280.45', change: '+0.42%', isUp: true, base: 2280.0, digits: 2, exchange: '南华期货研究所', mult: '商品综合基准', tick: '0.01点', margin: '100%', hours: '09:00-15:00', rule: '大宗商品整体周期风向标' },
-          { code: 'IF00', name: '沪深300期指主力', price: '3,582.0', change: '+0.78%', isUp: true, base: 3582.0, digits: 1, exchange: '中金所 (CFFEX)', mult: '300元/点', tick: '0.2点', margin: '12%', hours: '09:30-15:00', rule: '现金交割·自然人可参与·股指主力' }
+          { code: 'NHCI', name: '南华商品综合指数', base: 2280.0, digits: 2, exchange: '南华期货研究所', mult: '商品综合基准', tick: '0.01点', margin: '100%', hours: '09:00-15:00', rule: '大宗商品整体周期风向标' },
+          { code: 'IF00', name: '沪深300期指主力', base: 3582.0, digits: 1, exchange: '中金所 (CFFEX)', mult: '300元/点', tick: '0.2点', margin: '12%', hours: '09:30-15:00', rule: '现金交割·自然人可参与·股指主力' }
         ],
         assets: [
           // 🏛️ 金融国债 (CFFEX 中金所 - 6只)
@@ -86,8 +86,8 @@ export const MARKET_SECTORS = {
         name: '港股市场',
         icon: '🇭🇰',
         benchmarks: [
-          { code: 'HSI', name: '恒生指数', price: '17,650.20', change: '+1.25%', isUp: true, base: 17650.0, digits: 2, exchange: '香港交易所 (HKEX)', mult: '恒指基准点位', tick: '0.01点', margin: '100%', hours: '09:30-16:00', rule: '港股核心资产指数' },
-          { code: 'HSTECH', name: '恒生科技指数', price: '3,520.15', change: '+1.80%', isUp: true, base: 3520.0, digits: 2, exchange: '香港交易所 (HKEX)', mult: '科技旗舰指数', tick: '0.01点', margin: '100%', hours: '09:30-16:00', rule: '中国科技互联网三十强' }
+          { code: 'HSI', name: '恒生指数', base: 17650.0, digits: 2, exchange: '香港交易所 (HKEX)', mult: '恒指基准点位', tick: '0.01点', margin: '100%', hours: '09:30-16:00', rule: '港股核心资产指数' },
+          { code: 'HSTECH', name: '恒生科技指数', base: 3520.0, digits: 2, exchange: '香港交易所 (HKEX)', mult: '科技旗舰指数', tick: '0.01点', margin: '100%', hours: '09:30-16:00', rule: '中国科技互联网三十强' }
         ],
         assets: [
           { code: '0700.HK', name: '腾讯控股', base: 378.0, step: 5.5, digits: 2, unit: 'HKD', tag: '社交与游戏', exchange: '港交所主板 (HKEX)', mult: '100股/手', tick: '0.20 HKD', margin: '100% (无杠杆)', hours: '09:30-12:00, 13:00-16:00', rule: '港股T+0回转交易 · 双边0.10%印花税 · 无涨跌幅限制' },
@@ -101,8 +101,8 @@ export const MARKET_SECTORS = {
         name: '美股市场',
         icon: '🇺🇸',
         benchmarks: [
-          { code: 'SPX', name: '标普500指数', price: '5,620.50', change: '+0.45%', isUp: true, base: 5620.0, digits: 2, exchange: 'CBOE / S&P', mult: '大盘代表', tick: '0.01点', margin: '100%', hours: '21:30-04:00 (夏令)', rule: '全球资本市场锚' },
-          { code: 'NDX', name: '纳斯达克100', price: '19,800.20', change: '+0.75%', isUp: true, base: 19800.0, digits: 2, exchange: 'NASDAQ', mult: '科技旗舰', tick: '0.01点', margin: '100%', hours: '21:30-04:00 (夏令)', rule: '全球科技创新龙头基准' }
+          { code: 'SPX', name: '标普500指数', base: 5620.0, digits: 2, exchange: 'CBOE / S&P', mult: '大盘代表', tick: '0.01点', margin: '100%', hours: '21:30-04:00 (夏令)', rule: '全球资本市场锚' },
+          { code: 'NDX', name: '纳斯达克100', base: 19800.0, digits: 2, exchange: 'NASDAQ', mult: '科技旗舰', tick: '0.01点', margin: '100%', hours: '21:30-04:00 (夏令)', rule: '全球科技创新龙头基准' }
         ],
         assets: [
           { code: 'NVDA', name: '英伟达 (NVIDIA)', base: 118.0, step: 2.8, digits: 2, unit: 'USD', tag: 'AI计算基座', exchange: 'NASDAQ', mult: '1股/手', tick: '0.01 USD', margin: '100% (无杠杆)', hours: '21:30-04:00 (夏令时)', rule: '美股T+1清算 · 0印花税 · 无涨跌幅限制 · 盘前盘后交易' },
@@ -116,7 +116,7 @@ export const MARKET_SECTORS = {
         name: '全球外汇',
         icon: '💱',
         benchmarks: [
-          { code: 'DXY', name: '美元指数', price: '101.25', change: '-0.18%', isUp: false, base: 101.2, digits: 2, exchange: 'ICE', mult: '货币篮子指数', tick: '0.01点', margin: '100%', hours: '24小时连续', rule: '全球主要货币汇率定海神针' }
+          { code: 'DXY', name: '美元指数', base: 101.2, digits: 2, exchange: 'ICE', mult: '货币篮子指数', tick: '0.01点', margin: '100%', hours: '24小时连续', rule: '全球主要货币汇率定海神针' }
         ],
         assets: [
           { code: 'USDCNH', name: '美元/离岸人民币', base: 7.1250, step: 0.0035, digits: 4, unit: '汇率', tag: '中美经贸锚', exchange: '场外银行间市场 (OTC)', mult: '100,000基准货币/手', tick: '0.0001 (1点=10 USD)', margin: '2% (50倍杠杆)', hours: '周一早05:00至周六早05:00 (24h)', rule: 'T+0双向交易 · 0印花税 · 隔夜计提利息Swaps' },
@@ -129,7 +129,7 @@ export const MARKET_SECTORS = {
         name: '加密资产(24/7)',
         icon: '🪙',
         benchmarks: [
-          { code: 'TOTAL', name: '全球加密总市值', price: '$2.35T', change: '+2.10%', isUp: true, base: 2350.0, digits: 2, exchange: '链上清算聚合', mult: '市值指数', tick: '0.01B', margin: '100%', hours: '7x24x365永续', rule: '全天候无间断加密市场' }
+          { code: 'TOTAL', name: '全球加密总市值', base: 2350.0, digits: 2, exchange: '链上清算聚合', mult: '市值指数', tick: '0.01B', margin: '100%', hours: '7x24x365永续', rule: '全天候无间断加密市场' }
         ],
         assets: [
           { code: 'BTCUSDT', name: '比特币 (BTC)', base: 64200.0, step: 450.0, digits: 1, unit: 'USDT', tag: '数字黄金', exchange: 'Binance / OKX', mult: '1 BTC / 永续合约', tick: '0.1 USDT', margin: '5% (20倍杠杆)', hours: '7x24x365 全天候永续', rule: '永续合约资金费率每8小时结算 · 零印花税' },

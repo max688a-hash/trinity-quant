@@ -1,4 +1,4 @@
-import type { Candle, PaperState, ScreenerCandidate } from "./types";
+import type { BoardQuote, Candle, PaperState, ScreenerCandidate } from "./types";
 
 async function getJson<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -19,6 +19,13 @@ export async function fetchPaperState(): Promise<PaperState> {
 export async function fetchKline(symbol: string, tf: string): Promise<{ candles: Candle[]; count: number }> {
   const q = new URLSearchParams({ symbol, tf });
   return getJson(`/api/market/kline?${q.toString()}`);
+}
+
+export async function fetchBoardQuotes(
+  symbols: string[],
+): Promise<{ quotes: BoardQuote[]; count: number }> {
+  const q = new URLSearchParams({ symbols: symbols.join(",") });
+  return getJson(`/api/market/quotes?${q.toString()}`);
 }
 
 export async function postPaperTrade(payload: {

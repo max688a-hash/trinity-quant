@@ -43,6 +43,7 @@ from entropy_execution.battlefield_api_service import (
     handle_get_vault_status, handle_run_reconciliation_audit,
     handle_save_vault_credentials, handle_trigger_test_alert
 )
+from entropy_execution.board_quotes_service import handle_get_board_quotes
 from entropy_execution.system_quality_inspector import SystemQualityInspector
 from truth_kernel.pool_admission_auditor import PoolAdmissionAuditor
 from gravity_brain.bio_synapse_hub import BioSynapseHub
@@ -108,6 +109,9 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/market/kline": lambda: handle_get_kline(
                 parse_qs(parsed.query).get("symbol", [None])[0],
                 timeframe=parse_qs(parsed.query).get("tf", ["D"])[0]
+            ),
+            "/api/market/quotes": lambda: handle_get_board_quotes(
+                parse_qs(parsed.query).get("symbols", [None])[0]
             ),
             "/api/reconciliation/run": lambda: handle_run_reconciliation_audit(_GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK),
             "/api/preflight/check": lambda: handle_get_preflight_checklist(_GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK),

@@ -39,6 +39,16 @@ export type PaperState = {
   t_plus_1_enforced: boolean;
 };
 
+
+export type BoardQuote = {
+  symbol: string;
+  available: boolean;
+  last: number | null;
+  prev: number | null;
+  change_pct: number | null;
+  status: string;
+};
+
 export type ScreenerCandidate = {
   symbol: string;
   name: string;

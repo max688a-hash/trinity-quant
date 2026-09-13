@@ -1,6 +1,7 @@
 import { BarChart3, CandlestickChart, Globe2, Shield, Swords } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DocketModal, openAdmissionDocketModal } from "./components/DocketModal";
+import { BoardTicker } from "./components/BoardTicker";
 import { KlineChart } from "./components/KlineChart";
 import { Button } from "./components/ui/button";
 import { TooltipProvider } from "./components/ui/tooltip";
@@ -49,34 +50,7 @@ export default function App() {
             入池深研依据
           </Button>
         </header>
-        <div id="mobileCompactTicker" className="sticky top-0 z-40 -mx-4 mb-4 border-b border-border bg-background/95 px-4 py-2 md:hidden">
-          <div className="flex gap-4 overflow-x-auto text-[13px] tabular-nums no-scrollbar">
-            <span>茅台 1550</span>
-            <span>纯碱 1580</span>
-            <span>USDCNH 7.125</span>
-            <span>BTC 64200</span>
-          </div>
-        </div>
-        <div id="mobilePersistentChrome" className="hidden md:block">
-          <div className="mb-6 grid grid-cols-4 gap-4">
-            <div className="rounded-[16px] border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">A股证券市场</p>
-              <p className="mt-2 text-[18px] font-semibold tabular-nums">上证 3,042.88</p>
-            </div>
-            <div className="rounded-[16px] border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">国内商品期货</p>
-              <p className="mt-2 text-[18px] font-semibold tabular-nums">南华 2,280.45</p>
-            </div>
-            <div className="rounded-[16px] border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">全球外汇市场</p>
-              <p className="mt-2 text-[18px] font-semibold tabular-nums">美元指数 101.25</p>
-            </div>
-            <div className="rounded-[16px] border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">全球加密数字资产</p>
-              <p className="mt-2 text-[18px] font-semibold tabular-nums">BTC 64,200</p>
-            </div>
-          </div>
-        </div>
+        <BoardTicker />
         <div className="hidden md:flex mb-8 gap-2 overflow-x-auto rounded-[16px] border border-border bg-background p-2">
           {/* id="btn-tab-backtest" 桌面条锚点 */}
           {DESKTOP.map((item) => (

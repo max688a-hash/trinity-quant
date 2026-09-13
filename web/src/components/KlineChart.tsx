@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { MARKET_SECTORS } from "../lib/markets";
+import { fetchBoardQuotes } from "../lib/api";
+import { formatBoardLast, quotesBySymbol } from "../lib/boardQuotes";
 import { loadRealKlineData } from "../lib/klineSignals";
 import { registerKlineDrawer } from "../lib/viewport";
 import { openAdmissionDocketModal } from "./DocketModal";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
-import type { Candle } from "../lib/types";
+import type { BoardQuote, Candle } from "../lib/types";
 
 const TFS = ["D", "1H", "15M", "5M", "Tick"] as const;
 const TF_LABEL: Record<string, string> = {
@@ -42,10 +44,38 @@ export function KlineChart() {
   const [candles, setCandles] = useState<Candle[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [boardQuotes, setBoardQuotes] = useState<Record<string, BoardQuote>>({});
+  const [boardLoading, setBoardLoading] = useState(true);
   const candlesRef = useRef<Candle[]>([]);
   const tooltipDismissTimer = useRef<number | null>(null);
   let touchStartX = 0;
   let touchStartY = 0;
+
+
+  useEffect(() => {
+    let cancelled = false;
+    const codes = MARKET_SECTORS[sector].benchmarks.map((bm) => bm.code);
+    setBoardLoading(true);
+    fetchBoardQuotes(codes)
+      .then((res) => {
+        if (!cancelled) {
+          setBoardQuotes(quotesBySymbol(res.quotes));
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setBoardQuotes({});
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setBoardLoading(false);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [sector]);
 
   useEffect(() => {
     let cancelled = false;
@@ -213,7 +243,7 @@ export function KlineChart() {
               className="shrink-0"
               onClick={() => setSymbol(bm.code)}
             >
-              {bm.name} {bm.price} {bm.change}
+              {bm.name} {formatBoardLast(boardQuotes[bm.code], boardLoading)}
             </Button>
           ))}
         </div>
