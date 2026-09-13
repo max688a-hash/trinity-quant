@@ -8,6 +8,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="TRINITY">
   <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/data/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/data/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/data/icon-512.png">
   <title>TRINITY QUANT · 顶级真值引力量化监控中枢</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
@@ -5778,7 +5781,7 @@
   </script>
 
   <!-- 移动端专属浮动底栏 (Mobile Navigation Bar: v0-grade iOS/Android PWA 触控体验) -->
-  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 border-t border-slate-800/80 backdrop-blur-xl px-2 py-2 flex justify-around items-center shadow-2xl">
+  <nav style="padding-bottom: max(0.5rem, env(safe-area-inset-bottom));" class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 border-t border-slate-800/80 backdrop-blur-xl px-2 pt-2 flex justify-around items-center shadow-2xl">
     <button onclick="setMobileTab('tab-backtest', this)" data-tab="tab-backtest" class="mobile-nav-item flex flex-col items-center gap-1 text-cyan-400 transition">
       <span class="text-base">📈</span>
       <span class="text-[10px] font-bold">净值回测</span>
