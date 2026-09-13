@@ -118,14 +118,14 @@ class HttpApiDispatcher:
         }
 
     @staticmethod
-    def get_realtime_ticks(symbol: Optional[str] = None) -> Dict[str, Any]:
+    def get_realtime_ticks(symbol: Optional[str] = None, allow_sim_on_closed: bool = False) -> Dict[str, Any]:
         """获取全市场或指定标的实时高频跳动数据"""
         from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
         adapter = RealtimeFeedAdapter()
         if symbol:
-            tick = adapter.get_tick(symbol)
+            tick = adapter.get_tick(symbol, allow_sim_on_closed=allow_sim_on_closed)
             return {"ticks": [asdict(tick)], "count": 1}
-        ticks = adapter.get_batch_ticks()
+        ticks = adapter.get_batch_ticks(allow_sim_on_closed=allow_sim_on_closed)
         return {"ticks": [asdict(t) for t in ticks], "count": len(ticks)}
 
     @staticmethod

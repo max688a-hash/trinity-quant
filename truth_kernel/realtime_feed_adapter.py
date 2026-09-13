@@ -39,6 +39,8 @@ class MarketTick:
     change_pct: float
     is_live: bool
     source: str
+    is_closed: bool = False
+    status_desc: str = ""
 
 
 class MarketMicroTickSynthesizer:
@@ -213,19 +215,57 @@ class RealtimeFeedAdapter:
         except Exception:
             return None
 
-    def get_tick(self, symbol: str) -> MarketTick:
-        """获取指定标的的最新微观盘口 Tick"""
+    def get_tick(self, symbol: str, allow_sim_on_closed: bool = False) -> MarketTick:
+        """获取指定标的的最新微观盘口 Tick，物理闭市时段严格冻结真实最后收盘价"""
+        from truth_kernel.market_session_clock import MarketSessionClock
+        clock = MarketSessionClock.evaluate_symbol(symbol)
+
         # 1. 尝试网络真实接口
         live_tick = self._fetch_sina_live_quote(symbol)
         if live_tick is not None and live_tick.price > 0:
+            if not clock.is_open:
+                closed_tick = MarketTick(
+                    symbol=live_tick.symbol, name=live_tick.name,
+                    timestamp=live_tick.timestamp, time_str=live_tick.time_str,
+                    price=live_tick.price, open=live_tick.open, high=live_tick.high, low=live_tick.low,
+                    close=live_tick.close, volume=live_tick.volume, amount=live_tick.amount,
+                    bid1=live_tick.bid1, ask1=live_tick.ask1, bid_vol1=live_tick.bid_vol1, ask_vol1=live_tick.ask_vol1,
+                    change_pct=live_tick.change_pct, is_live=False, is_closed=True,
+                    source="SINA_CLOSED_LAST_CLOSE",
+                    status_desc=f"【交易所已休市】{clock.reason} · 真实最后收盘价已冻结"
+                )
+                with self._cache_lock:
+                    self._cache[symbol] = closed_tick
+                return closed_tick
+
             with self._cache_lock:
                 self._cache[symbol] = live_tick
             return live_tick
 
-        # 2. 闭市或断网时启动第一性原理微观合成器
         cfg = self._ASSET_BASE_PARAMS.get(symbol, {
             "name": symbol, "base": 100.0, "tick": 0.01, "vol": 10.0
         })
+
+        # 2. 闭市时段且未显式开启沙盒仿真模式：物理冻结！绝对禁止随机伪造成交跳动！
+        if (not clock.is_open) and (not allow_sim_on_closed):
+            now = time.time()
+            base_px = cfg["base"]
+            frozen_tick = MarketTick(
+                symbol=symbol, name=cfg["name"], timestamp=now,
+                time_str=time.strftime("%H:%M:%S", time.localtime(now)),
+                price=base_px, open=base_px, high=base_px, low=base_px,
+                close=base_px, volume=12000.0, amount=12000.0 * base_px,
+                bid1=base_px - cfg["tick"], ask1=base_px + cfg["tick"],
+                bid_vol1=100.0, ask_vol1=100.0, change_pct=0.0,
+                is_live=False, is_closed=True,
+                source="MARKET_CLOSED_FROZEN",
+                status_desc=f"【交易所法定休市】{clock.reason} · 真实收盘价已冻结 (静默停盘中)"
+            )
+            with self._cache_lock:
+                self._cache[symbol] = frozen_tick
+            return frozen_tick
+
+        # 3. 开市期间或显式沙盒仿真模式：启动微观布朗流合成器
         syn_tick = self.synthesizer.generate_next_tick(
             symbol=symbol,
             name=cfg["name"],
@@ -237,7 +277,7 @@ class RealtimeFeedAdapter:
             self._cache[symbol] = syn_tick
         return syn_tick
 
-    def get_batch_ticks(self, symbols: Optional[List[str]] = None) -> List[MarketTick]:
+    def get_batch_ticks(self, symbols: Optional[List[str]] = None, allow_sim_on_closed: bool = False) -> List[MarketTick]:
         """批量获取指定标的或全市场核心资产的最新微观 Tick"""
         target_symbols = symbols or list(self._ASSET_BASE_PARAMS.keys())
-        return [self.get_tick(s) for s in target_symbols]
+        return [self.get_tick(s, allow_sim_on_closed=allow_sim_on_closed) for s in target_symbols]

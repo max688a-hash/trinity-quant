@@ -1320,18 +1320,29 @@
             <div class="col-span-2"><span class="text-slate-500">⏰ 真实交易时段:</span> <span id="specHours" class="text-slate-300 font-mono">09:30-11:30, 13:00-15:00</span></div>
             <div class="col-span-2"><span class="text-cyan-400 font-bold">⚖️ 物理规则/法条风控:</span> <span id="specLegalRule" class="text-amber-200 font-mono">A股T+1现货交收 · 卖出计提0.05%印花税 · 10%跌停硬熔断</span></div>
           </div>
-          <!-- 市场状态机与微观 OFI 高频 Alpha 看板 -->
-          <div id="tickerRegimeAlphaBar" class="mt-2 pt-2 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-slate-300 bg-slate-950/80 p-2 rounded-lg">
-            <div class="flex items-center gap-2">
-              <span class="text-amber-400 font-bold">🧠 市场状态/策略:</span>
-              <span id="tickerRegimeTag" class="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold border border-cyan-800">BULL_TREND (H=0.62)</span>
-              <span id="tickerActiveStrategy" class="text-emerald-400 font-bold">海龟唐奇安突破 (Half-Kelly 55%)</span>
+          <!-- 市场状态机与微观 OFI 高频 Alpha 看板 (防横向撑破与纯中文通俗化) -->
+          <div id="tickerRegimeAlphaBar" class="mt-2 pt-2 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 max-w-full text-[10px] font-sans text-slate-300 bg-slate-950/80 p-2 rounded-lg break-words">
+            <div class="flex flex-wrap items-center gap-1.5 min-w-0">
+              <span class="text-amber-400 font-bold shrink-0">🧠 市场状态/策略:</span>
+              <span id="tickerRegimeTag" class="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold border border-cyan-800 text-[10px] break-all">🌊 宽幅震荡洗盘 (均值回归)</span>
+              <span id="tickerActiveStrategy" class="text-emerald-400 font-bold text-[10px] break-all">🎯 统计网格高抛低吸 · 🛡️安全仓位15%</span>
             </div>
-            <div class="flex items-center gap-3">
-              <span>🔬 OFI推力: <span id="tickerOfiVal" class="text-emerald-400 font-bold">+850手 (向上)</span></span>
-              <span>🧊 冰山单: <span id="tickerIcebergVal" class="text-cyan-300 font-bold">950手吸筹</span></span>
-              <span>🏛️ 主力真金: <span id="tickerMainFlowVal" class="text-rose-400 font-bold">+21.4% (吸筹)</span></span>
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-[10px]">
+              <span class="shrink-0">🔬 OFI推力: <span id="tickerOfiVal" class="text-emerald-400 font-bold">+850手 (向上推)</span></span>
+              <span class="shrink-0">🧊 冰山单: <span id="tickerIcebergVal" class="text-cyan-300 font-bold">950手吸筹</span></span>
+              <span class="shrink-0">🏛️ 主力真金: <span id="tickerMainFlowVal" class="text-rose-400 font-bold">+21.4% (吸筹)</span></span>
             </div>
+          </div>
+
+          <!-- 小白通俗大白话解读卡 (Toddler-Comprehensible Plain Chinese Card) -->
+          <div id="tickerToddlerExplanation" class="mt-1.5 p-2 rounded-lg bg-cyan-950/30 border border-cyan-800/40 text-[11px] leading-relaxed text-slate-300">
+            <div class="flex items-center gap-1 text-cyan-400 font-bold mb-0.5">
+              <span>💡 【大白话通俗解读】</span>
+              <span class="text-[10px] text-slate-400 font-normal">小白3秒看懂当前量化系统正在做什么</span>
+            </div>
+            <p id="tickerToddlerText" class="text-slate-300 text-[11px]">
+              当前处于宽幅震荡洗盘行情。大白话：股票价格在区间内来回弹跳，没有单边大涨大跌。量化系统自动切换至【统计网格高抛低吸策略】，以 15% 严谨安全底仓在跌出价值洼地时低吸、冲高时及时止盈，绝不追高，杜绝坐过山车！
+            </p>
           </div>
         </div>
 
@@ -2762,7 +2773,25 @@
       renderCards();
     }
 
+    function closeAllActiveModals() {
+      const modalIds = [
+        'soundTestModal',
+        'detailModal',
+        'admissionDocketModal',
+        'vaultModal',
+        'pwaInstallModal',
+        'preflightModal'
+      ];
+      modalIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !el.classList.contains('hidden')) {
+          el.classList.add('hidden');
+        }
+      });
+    }
+
     function switchTab(tabId) {
+      closeAllActiveModals();
       ['tab-backtest', 'tab-valuation', 'tab-screener', 'tab-autopsy', 'tab-pit', 'tab-calculator', 'tab-multiasset', 'tab-reflex', 'tab-paper'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
@@ -4947,7 +4976,15 @@
         if (bidVolTag && tick.bid_vol1) bidVolTag.innerText = tick.bid_vol1;
         if (askTag && tick.ask1) askTag.innerText = tick.ask1.toFixed(meta.digits);
         if (askVolTag && tick.ask_vol1) askVolTag.innerText = tick.ask_vol1;
-        if (srcText) srcText.innerText = tick.is_live ? '交易所真实行情流 (Sina/直连)' : '高保真微观布朗流 1000ms';
+        if (srcText) {
+          if (tick.is_closed) {
+            srcText.innerHTML = '<span class="text-amber-400 font-bold">🔒 交易所法定休市 · 真实收盘价已冻结</span>';
+          } else {
+            srcText.innerHTML = tick.is_live
+              ? '<span class="text-emerald-400 font-bold">🟢 交易所真实行情流 (Sina/直连)</span>'
+              : '<span class="text-cyan-400">⚡ 高保真微观布朗流 1000ms</span>';
+          }
+        }
       }
 
       // 动态更新微观社会环境交易契约与风控法条
@@ -4981,15 +5018,56 @@
         if (regimeRes && regimeRes.regime) {
           const rTag = document.getElementById('tickerRegimeTag');
           const sTag = document.getElementById('tickerActiveStrategy');
+          const toddlerTag = document.getElementById('tickerToddlerText');
+
+          const reg = regimeRes.regime.regime || 'CHOPPY_OSCILLATING';
+          const hurst = (regimeRes.regime.hurst_exponent !== undefined && regimeRes.regime.hurst_exponent !== null)
+            ? Number(regimeRes.regime.hurst_exponent).toFixed(2)
+            : '0.20';
+
+          // 小白通俗化状态映射表 (消除生硬英文枚举)
+          const REGIME_CHINESE_MAP = {
+            'CHOPPY_OSCILLATING': `🌊 宽幅震荡洗盘 (均值回归 H=${hurst})`,
+            'BULL_TREND': `📈 单边多头趋势 (顺势做多 H=${hurst})`,
+            'BEAR_TREND': `📉 单边空头下行 (防守避险 H=${hurst})`,
+            'EXTREME_VOLATILE': `🚨 剧烈震荡危机 (防爆避险 H=${hurst})`,
+            'EXTREME_VOLATILE_CRISIS': `🚨 极端黑天鹅危机 (硬性熔断 H=${hurst})`
+          };
+
+          const STRATEGY_CHINESE_MAP = {
+            'MeanReversionPairsStrategy': '🎯 统计网格高抛低吸',
+            'TurtleTrendBreakoutStrategy': '🐢 海龟唐奇安突破',
+            'DualAdversarialAuditorStrategy': '🛡️ 对偶博弈防御拦截'
+          };
+
+          const rawStrat = (regimeRes.signal && regimeRes.signal.active_strategy) || 'MeanReversionPairsStrategy';
+          const stratCn = STRATEGY_CHINESE_MAP[rawStrat] || rawStrat;
+          const kw = regimeRes.meta_kelly_weights
+            ? Math.round((regimeRes.meta_kelly_weights.trend_breakout_weight || regimeRes.meta_kelly_weights.mean_reversion_weight || 0.15) * 100)
+            : 15;
+
           if (rTag) {
-            rTag.innerText = `${regimeRes.regime.regime} (H=${regimeRes.regime.hurst_exponent})`;
-            rTag.className = regimeRes.regime.regime === 'EXTREME_VOLATILE'
-              ? 'px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-bold border border-rose-700 animate-pulse'
-              : 'px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold border border-cyan-800';
+            rTag.innerText = REGIME_CHINESE_MAP[reg] || `${reg} (H=${hurst})`;
+            rTag.className = (reg === 'EXTREME_VOLATILE' || reg === 'EXTREME_VOLATILE_CRISIS')
+              ? 'px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-bold border border-rose-700 animate-pulse text-[10px] break-all'
+              : 'px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold border border-cyan-800 text-[10px] break-all';
           }
-          if (sTag && regimeRes.signal) {
-            const kw = regimeRes.meta_kelly_weights ? Math.round((regimeRes.meta_kelly_weights.trend_breakout_weight || regimeRes.meta_kelly_weights.mean_reversion_weight || 0.1) * 100) : 50;
-            sTag.innerText = `${regimeRes.signal.active_strategy} (Half-Kelly ${kw}%)`;
+          if (sTag) {
+            sTag.innerText = `${stratCn} · 🛡️安全仓位${kw}%(半凯利)`;
+          }
+
+          if (toddlerTag) {
+            let expl = '';
+            if (reg === 'CHOPPY_OSCILLATING') {
+              expl = `当前处于【宽幅震荡洗盘】行情。大白话：股票价格在箱体内来回弹跳，没有单边大涨大跌。量化系统自动切换至【${stratCn}】，以 ${kw}% 严格防爆仓位在跌出价值洼地时低吸、冲高时及时止盈，绝不追高，杜绝坐过山车！`;
+            } else if (reg === 'BULL_TREND') {
+              expl = `当前处于【单边多头趋势】行情。大白话：多方动能充沛，呈现明确上升通道。系统已启动【${stratCn}】顺势持有，以 ${kw}% 安全仓位享受主升浪，并动态抬高止损防线守住利润。`;
+            } else if (reg === 'BEAR_TREND') {
+              expl = `当前处于【单边空头下行】行情。大白话：空头抛压沉重，盲目抄底极易受伤。系统已自动收紧仓位至 ${kw}% 或空仓观望，首要任务保全本金，绝不在下跌浪中死扛！`;
+            } else {
+              expl = `当前处于【极端黑天鹅剧烈震荡】。大白话：突发流动性危机或恐慌抛售。系统已触发最高级防爆熔断，强制压低杠杆与仓位，绝对严禁盲目博反弹！`;
+            }
+            toddlerTag.innerText = expl;
           }
         }
         if (flowRes) {
@@ -4998,11 +5076,11 @@
           const flowTag = document.getElementById('tickerMainFlowVal');
           if (ofiTag && flowRes.ofi) {
             const ofi = flowRes.ofi.ofi_net_value;
-            ofiTag.innerText = `${ofi > 0 ? '+' : ''}${ofi}手 (${flowRes.ofi.next_tick_momentum === 'UPWARD_PRESSURE' ? '向上' : flowRes.ofi.next_tick_momentum === 'DOWNWARD_PRESSURE' ? '向下' : '均衡'})`;
+            ofiTag.innerText = `${ofi > 0 ? '+' : ''}${ofi}手 (${flowRes.ofi.next_tick_momentum === 'UPWARD_PRESSURE' ? '向上推' : flowRes.ofi.next_tick_momentum === 'DOWNWARD_PRESSURE' ? '向下压' : '均衡'})`;
             ofiTag.className = ofi > 0 ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold';
           }
           if (iceTag && flowRes.iceberg) {
-            iceTag.innerText = flowRes.iceberg.detected_type !== 'NONE' ? `${flowRes.iceberg.estimated_hidden_volume}手吸筹` : '未检出';
+            iceTag.innerText = flowRes.iceberg.detected_type !== 'NONE' ? `${flowRes.iceberg.estimated_hidden_volume}手暗中吸筹` : '未检出隐藏挂单';
           }
           if (flowTag && flowRes.institutional_flow) {
             const r = flowRes.institutional_flow.main_force_ratio_pct;
@@ -5835,6 +5913,14 @@
       const data = klineState.candles;
       if (!data || data.length === 0) return;
       const lastCandle = data[data.length - 1];
+
+      // 闭市停盘时段：物理冻结！绝不在休市期间随机跳动最后一根蜡烛的高低点或伪造脉冲
+      if (tick.is_closed) {
+        lastCandle.close = tick.price;
+        updateTopTickerWithCandle(lastCandle, tick);
+        return;
+      }
+
       const prevPrice = lastTickPrice !== null ? lastTickPrice : lastCandle.close;
       lastTickPrice = tick.price;
 
@@ -5917,8 +6003,8 @@
     startLiveTickEngine();
   </script>
 
-  <!-- 移动端专属浮动底栏 (Mobile Navigation Bar: v0-grade iOS/Android PWA 触控体验) -->
-  <nav style="padding-bottom: max(0.6rem, env(safe-area-inset-bottom));" class="md:hidden fixed bottom-2 left-2 right-2 z-50 max-w-lg mx-auto bg-slate-950/92 border border-slate-700/60 backdrop-blur-2xl px-2 pt-2 rounded-2xl flex justify-around items-center shadow-[0_12px_40px_rgba(0,0,0,0.8)] ring-1 ring-white/10">
+  <!-- 移动端专属浮动底栏 (Mobile Navigation Bar: v0-grade iOS/Android PWA 触控体验，z-[60] 绝对置顶杜绝模态框锁死) -->
+  <nav style="padding-bottom: max(0.6rem, env(safe-area-inset-bottom));" class="md:hidden fixed bottom-2 left-2 right-2 z-[60] max-w-lg mx-auto bg-slate-950/92 border border-slate-700/60 backdrop-blur-2xl px-2 pt-2 rounded-2xl flex justify-around items-center shadow-[0_12px_40px_rgba(0,0,0,0.8)] ring-1 ring-white/10">
     <button onclick="setMobileTab('tab-backtest', this)" data-tab="tab-backtest" class="mobile-nav-item flex flex-col items-center gap-1 text-cyan-400 transition">
       <span class="text-base">📈</span>
       <span class="text-[10px] font-bold">净值回测</span>

@@ -85,7 +85,8 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/bio_synapse/status": lambda: {"pulses": [asdict(p) for p in _GLOBAL_BIO_SYNAPSE.get_synaptic_health_pulses()]},
             "/api/pool/dockets": lambda: [asdict(d) for d in PoolAdmissionAuditor.list_all_dockets()],
             "/api/market/realtime_ticks": lambda: HttpApiDispatcher.get_realtime_ticks(
-                parse_qs(parsed.query).get("symbol", [None])[0]
+                parse_qs(parsed.query).get("symbol", [None])[0],
+                allow_sim_on_closed=(parse_qs(parsed.query).get("mode", ["live"])[0] == "sim"),
             ),
             "/api/industry/chain": lambda: HttpApiDispatcher.get_industry_chain(
                 parse_qs(parsed.query).get("symbol", [None])[0]
