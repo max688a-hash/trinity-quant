@@ -66,31 +66,31 @@ export default function App() {
         </div>
         <main>
           <div id="tab-backtest" data-testid="panel-backtest" className={tab === "tab-backtest" ? "min-h-[70vh] pb-24" : "hidden"}>
-            <BacktestPage />
+            {tab === "tab-backtest" ? <BacktestPage /> : null}
           </div>
           <div id="tab-screener" data-testid="panel-screener" className={tab === "tab-screener" ? "min-h-[70vh] pb-24" : "hidden"}>
-            <ScreenerPage />
+            {tab === "tab-screener" ? <ScreenerPage /> : null}
           </div>
           <div id="tab-reflex" data-testid="panel-reflex" className={tab === "tab-reflex" ? "min-h-[70vh] pb-24" : "hidden"}>
-            <KlineChart />
+            {tab === "tab-reflex" ? <KlineChart /> : null}
           </div>
           <div id="tab-paper" data-testid="panel-paper" className={tab === "tab-paper" ? "min-h-[70vh] pb-24" : "hidden"}>
-            <PaperPage />
+            {tab === "tab-paper" ? <PaperPage /> : null}
           </div>
           <div id="tab-multiasset" data-testid="panel-multiasset" className={tab === "tab-multiasset" ? "min-h-[70vh] pb-24" : "hidden"}>
-            <MultiAssetPage />
+            {tab === "tab-multiasset" ? <MultiAssetPage /> : null}
           </div>
           <div id="tab-valuation" className={tab === "tab-valuation" ? "min-h-[70vh] pb-24" : "hidden"}>
-            <ValuationPanel />
+            {tab === "tab-valuation" ? <ValuationPanel /> : null}
           </div>
           <div id="tab-autopsy" className={tab === "tab-autopsy" ? "min-h-[70vh] pb-24" : "hidden"}>
-            <AutopsyPanel />
+            {tab === "tab-autopsy" ? <AutopsyPanel /> : null}
           </div>
           <div id="tab-pit" className={tab === "tab-pit" ? "min-h-[70vh] pb-24" : "hidden"}>
-            <PitPanel />
+            {tab === "tab-pit" ? <PitPanel /> : null}
           </div>
           <div id="tab-calculator" className={tab === "tab-calculator" ? "min-h-[70vh] pb-24" : "hidden"}>
-            <CalculatorPanel />
+            {tab === "tab-calculator" ? <CalculatorPanel /> : null}
           </div>
         </main>
         <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 md:hidden">

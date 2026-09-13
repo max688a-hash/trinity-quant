@@ -5056,7 +5056,7 @@
           } else {
             srcText.innerHTML = tick.is_live
               ? '<span class="text-emerald-400 font-bold">🟢 交易所真实行情流 (Sina/直连)</span>'
-              : '<span class="text-cyan-400">⚡ 高保真微观布朗流 1000ms</span>';
+              : '<span class="text-rose-400 font-bold">⚠️ 真实行情未就绪 (DATA_UNAVAILABLE)</span>';
           }
         }
       }
@@ -6012,7 +6012,7 @@
 
     // ========================================================
     // 【刀刃 A】实盘全市场实时高频盘口跳动引擎 (LiveTickEngine)
-    // 毫秒级轮询 /api/market/realtime_ticks，高保真微观布朗流与盘口跳动
+    // 毫秒级轮询 /api/market/realtime_ticks；休市冻结真实最后收盘，无新成交即零跳动
     // ========================================================
     let liveTickInterval = null;
     let lastTickPrice = null;

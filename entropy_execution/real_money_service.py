@@ -6,6 +6,7 @@ TRINITY QUANT 真金实战战场服务聚合中枢。
 严格遵守最高宪法：单文件不超过 300 行，强类型，零伪 Mock。
 """
 
+import math
 import secrets
 import threading
 import time
@@ -108,7 +109,21 @@ def handle_real_money_order(payload: Dict[str, Any]) -> Dict[str, Any]:
     sym = str(payload.get("symbol", "600519.SH")).upper().strip()
     is_buy = str(payload.get("action", "BUY")).upper() == "BUY"
     qty = float(payload.get("quantity", 100.0))
-    px = float(payload.get("price", 1550.0))
+    if "price" not in payload or payload.get("price") in (None, ""):
+        return {
+            "success": False,
+            "cl_ord_id": str(payload.get("cl_ord_id") or ""),
+            "verdict": "DATA_UNAVAILABLE",
+            "reason": "DATA_UNAVAILABLE。禁止默用 1550 冒充真金委托价。",
+        }
+    px = float(payload["price"])
+    if (not math.isfinite(px)) or px <= 0.0:
+        return {
+            "success": False,
+            "cl_ord_id": str(payload.get("cl_ord_id") or ""),
+            "verdict": "DATA_UNAVAILABLE",
+            "reason": "DATA_UNAVAILABLE。成交价缺失或非法。",
+        }
     mkt_px = float(payload.get("market_price", px))
     algo = str(payload.get("algo", "AUTO")).upper()
     cl_ord_id = str(payload.get("cl_ord_id") or f"CL_{uuid.uuid4().hex[:10]}_{int(time.time())}")

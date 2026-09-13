@@ -105,19 +105,20 @@ class TestMainServer(unittest.TestCase):
         self.assertGreaterEqual(orders["count"], 1)
 
     def test_autonomous_learning_endpoints(self) -> None:
-        """验证系统自学习与影子巡航端点"""
+        """验证系统自学习与影子巡航端点（零假样本真实冷启动）"""
         from main import _GLOBAL_LEARNING_SANDBOX
         rep = _GLOBAL_LEARNING_SANDBOX.generate_learning_report()
-        self.assertGreater(rep.total_auto_trades, 0)
-        self.assertIn("系统自学习总结", rep.learning_synthesis)
+        self.assertEqual(rep.total_auto_trades, 0)
+        self.assertIn("系统自学习中枢已就绪", rep.learning_synthesis)
 
     def test_realtime_ticks_endpoint(self) -> None:
-        """验证实时高频行情跳动端点"""
+        """验证实时高频行情跳动端点（不造假价格）"""
         from entropy_execution.http_api_dispatcher import HttpApiDispatcher
         res = HttpApiDispatcher.get_realtime_ticks("600519.SH")
         self.assertEqual(res["count"], 1)
         self.assertEqual(res["ticks"][0]["symbol"], "600519.SH")
-        self.assertGreater(res["ticks"][0]["price"], 0.0)
+        self.assertIn(res["ticks"][0]["source"], ("DATA_UNAVAILABLE", "REAL_LAST_CLOSE_FROZEN", "SINA_LIVE_FEED"))
+        self.assertGreaterEqual(res["ticks"][0]["price"], 0.0)
 
     def test_industry_chain_and_report_endpoints(self) -> None:
         """验证产业链图谱与机构研报端点"""

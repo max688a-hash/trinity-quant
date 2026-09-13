@@ -86,13 +86,35 @@ class TestConstitutionExpansion(unittest.TestCase):
         self.assertEqual(t1.price, t2.price, "违宪：无新成交时价格发生漂移随机跳动！")
         self.assertEqual(t1.volume, t2.volume, "违宪：无新成交时成交量发生随机漂移！")
 
-        # 2. 物理断言：真实历史 K 线服务必须返回客观历史记录，严禁正弦波造假
+        # 2. 物理断言：未获取到真实行情时严禁写死底价伪造，必须报告 DATA_UNAVAILABLE (price=0.0)
+        nope_tick = adapter.get_tick("NOPE.SH")
+        self.assertEqual(nope_tick.price, 0.0, "违宪：离线/未知标的伪造了非零底价！")
+        self.assertEqual(nope_tick.source, "DATA_UNAVAILABLE", "违宪：离线未报告 DATA_UNAVAILABLE！")
+
+        # 3. 物理断言：真实历史 K 线服务必须返回客观历史记录，严禁正弦波造假
         from truth_kernel.historical_kline_service import HistoricalKlineService
         candles = HistoricalKlineService.get_kline("600519.SH", timeframe="D", count=30)
         self.assertGreaterEqual(len(candles), 10)
         self.assertTrue(any(yr in candles[0]["date"] for yr in ("2023-", "2024-", "2025-", "2026-")), f"非法历史日期: {candles[0]['date']}")
 
-        # 3. 物理断言：前端代码静态排查，绝对禁止正弦波捏造蜡烛与写死买卖点索引
+        # 4. 物理断言：自学习沙盒严禁虚构种子盈利历史 (AUTO_001 pnl +3000)
+        from entropy_execution.autonomous_learning_sandbox import AutonomousLearningSandbox
+        sandbox = AutonomousLearningSandbox()
+        rep = sandbox.generate_learning_report()
+        self.assertEqual(rep.total_auto_trades, 0, "违宪：自学习沙盒存在伪造的初始赢钱历史！")
+        self.assertEqual(rep.empirical_win_rate, 0.0, "违宪：冷启动报告伪造了胜率！")
+
+        # 5. 物理断言：前端与HTTP路由严禁后门伪造跳动或硬编码回放
+        with open(os.path.join(self.workspace_root, "web", "src", "pages", "PaperPage.tsx"), "r", encoding="utf-8") as fp:
+            paper_tsx = fp.read()
+        self.assertNotIn("is_replay_mode: true", paper_tsx, "违宪：前端硬编码了 is_replay_mode: true 导致休市偷跑！")
+        self.assertIn("is_replay_mode: isReplayMode", paper_tsx)
+
+        with open(os.path.join(self.workspace_root, "main.py"), "r", encoding="utf-8") as fp:
+            main_py = fp.read()
+        self.assertNotIn("allow_sim_on_closed", main_py, "违宪：生产 HTTP 路由仍保留 allow_sim_on_closed 伪造后门！")
+
+        # 6. 物理断言：前端代码静态排查，绝对禁止正弦波捏造蜡烛与写死买卖点索引
         from tests.ui_corpus import load_ui_corpus
         html = load_ui_corpus(self.workspace_root)
         self.assertNotIn("Math.sin(i * 0.55)", html, "违宪：前端仍在使用正弦波伪造K线！")

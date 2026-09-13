@@ -79,4 +79,17 @@ def evaluate_paper_ticket(payload: Dict[str, Any]) -> Tuple[bool, str, str, str,
         return False, "DATA_UNAVAILABLE。方向非法。", sym, "BUY", 0.0, 0.0
     if act == "BUY" and not _buy_is_admitted(sym):
         return False, "法证否决或未准入，禁止纸上成交，禁止手打。", sym, act, 0.0, 0.0
+    replay = bool(payload.get("is_replay_mode", False))
+    if not replay:
+        from truth_kernel.market_session_clock import MarketSessionClock
+        clock = MarketSessionClock.evaluate_symbol(_listed_symbol(sym) or sym)
+        if not clock.is_open:
+            return (
+                False,
+                f"交易所休市。{clock.reason} 未开启历史回放，禁止成交。",
+                sym,
+                act,
+                0.0,
+                0.0,
+            )
     return True, "", sym, act, qty, px

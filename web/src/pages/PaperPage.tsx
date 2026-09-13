@@ -94,6 +94,8 @@ export function PaperPage() {
     };
   }, [listed]);
 
+  const [isReplayMode, setIsReplayMode] = useState(false);
+
   async function submit() {
     const quantity = Number(qty);
     if (!listed || last == null || !Number.isFinite(quantity) || quantity <= 0) {
@@ -106,7 +108,7 @@ export function PaperPage() {
         action: side,
         quantity,
         price: last,
-        is_replay_mode: true,
+        is_replay_mode: isReplayMode,
       });
       setMsg(res.success ? `成交，摩擦 ${res.friction_total}` : res.rejection_reason || "被风控拦截");
       setState(await fetchPaperState());
@@ -178,6 +180,16 @@ export function PaperPage() {
           </Select>
           <label className="text-[13px]" htmlFor="qty">数量</label>
           <Input id="qty" value={qty} onChange={(ev) => setQty(ev.target.value)} type="number" min={1} />
+          <label className="flex items-center gap-2 text-[12px] text-muted-foreground select-none cursor-pointer" htmlFor="paper-replay">
+            <input
+              id="paper-replay"
+              type="checkbox"
+              checked={isReplayMode}
+              onChange={(ev) => setIsReplayMode(ev.target.checked)}
+              className="rounded border-slate-700 bg-slate-900 text-rose-500 focus:ring-0"
+            />
+            <span>历史回放测试（休市默认禁止成交，勾选后才允许纸上练习）</span>
+          </label>
           <Button variant={side === "BUY" ? "buy" : "sell"} disabled={!canSubmit} onClick={() => void submit()}>
             提交纸上工单
           </Button>

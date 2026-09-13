@@ -30,15 +30,15 @@ class HttpApiDispatcher:
         probe = DataProbeRouter()
         probe.register_source("COMMERCIAL_API")
         now = time.time()
+        t0 = time.perf_counter()
         from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
-        tick = RealtimeFeedAdapter().get_tick("600519.SH")
-        probe_px = tick.price if tick.price > 0 else 0.0
-        probe_vol = tick.volume if tick.volume > 0 else 0.0
-        probe.probe_and_ingest("COMMERCIAL_API", "600519.SH", probe_px, probe_vol, now, 35.0, now)
+        RealtimeFeedAdapter().get_tick("600519.SH")
+        rtt_ms = round((time.perf_counter() - t0) * 1000.0, 3)
+        probe.probe_and_ingest("COMMERCIAL_API", "SYSTEM_HEARTBEAT", 100.0, 1000.0, now, rtt_ms, now)
         return {
             "status": "HEALTHY",
             "active_source": probe.get_active_source(),
-            "latency_ms": 35.0,
+            "latency_ms": rtt_ms,
             "system_time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
             "four_pillars": {
                 "truth_kernel": "ONLINE (Point-in-Time PIT 对齐已就绪)",

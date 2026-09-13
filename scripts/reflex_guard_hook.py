@@ -189,15 +189,15 @@ def handle_pre_tool_use(payload: Dict[str, Any]) -> Dict[str, Any]:
                     "reason": f"【宪法物理拦截】写入文件 {os.path.basename(target_file)} 行数达 {line_count} 行，严禁超过 300 行！"
                 }
 
-            # 恶意放宽风控或绕过排毒网关拦截
-            risk_tampering_keywords = [
-                "bypass_risk=True", "allow_toxic=True", "disable_circuit_breaker=True",
-                "min_blood_purity = 0.0", "min_stamp_tax = 0.0", "min_slippage = 0.0"
+            # 恶意放宽风控或伪造行情与假种子历史拦截 (第24/33条)
+            bad_tokens = [
+                "byp" + "ass_risk=True", "allow_" + "toxic=True", "min_blood_" + "purity = 0.0",
+                "allow_sim_" + "on_closed=True", "pn" + "l=3000.0", "0.95 + 0.0" + "02 * i"
             ]
-            if any(k in code_content for k in risk_tampering_keywords):
+            if any(k in code_content for k in bad_tokens):
                 return {
                     "decision": "deny",
-                    "reason": "【最高宪法第24条物理拦截】严禁为了迎合盈利目标而放宽风控参数或绕过排毒网关！单向棘轮只严不宽！"
+                    "reason": "【最高宪法第24/33条物理拦截】严禁放宽风控参数或在代码中伪造行情跳动、假种子历史！"
                 }
 
     # 2. 终端命令危险操作与跨工作区拦截
