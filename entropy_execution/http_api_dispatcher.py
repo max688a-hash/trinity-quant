@@ -101,6 +101,12 @@ class HttpApiDispatcher:
         }
 
     @staticmethod
+    def get_forensic_autopsy() -> Dict[str, Any]:
+        """尸检只列选股引擎未准入的法证否决，禁止与引力榜自相矛盾。"""
+        from entropy_execution.forensic_autopsy_service import list_forensic_autopsy
+        return list_forensic_autopsy()
+
+    @staticmethod
     def get_market_status() -> Dict[str, Any]:
         """获取四大市场物理时钟状态"""
         def _fmt(s: str) -> Dict[str, Any]:

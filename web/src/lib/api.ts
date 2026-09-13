@@ -1,4 +1,4 @@
-import type { BoardQuote, Candle, PaperState, ScreenerCandidate } from "./types";
+import type { AutopsyCase, BoardQuote, Candle, PaperState, ScreenerCandidate } from "./types";
 
 async function getJson<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -11,6 +11,15 @@ async function getJson<T>(url: string): Promise<T> {
 export async function fetchScreener(): Promise<{ count: number; candidates: ScreenerCandidate[] }> {
   return getJson("/api/screener");
 }
+
+export async function fetchForensicAutopsy(): Promise<{
+  status: string;
+  count: number;
+  cases: AutopsyCase[];
+}> {
+  return getJson("/api/pool/autopsy");
+}
+
 
 export async function fetchPaperState(): Promise<PaperState> {
   return getJson("/api/paper_state");

@@ -86,6 +86,7 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/stress/report": lambda: asdict(BlackSwanStressTester().run_full_stress_test()),
             "/api/bio_synapse/status": lambda: {"pulses": [asdict(p) for p in _GLOBAL_BIO_SYNAPSE.get_synaptic_health_pulses()]},
             "/api/pool/dockets": lambda: [asdict(d) for d in PoolAdmissionAuditor.list_all_dockets()],
+            "/api/pool/autopsy": HttpApiDispatcher.get_forensic_autopsy,
             "/api/market/realtime_ticks": lambda: HttpApiDispatcher.get_realtime_ticks(
                 parse_qs(parsed.query).get("symbol", [None])[0],
                 allow_sim_on_closed=(parse_qs(parsed.query).get("mode", ["live"])[0] == "sim"),

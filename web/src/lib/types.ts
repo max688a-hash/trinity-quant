@@ -49,6 +49,17 @@ export type BoardQuote = {
   status: string;
 };
 
+export type AutopsyCase = {
+  symbol: string;
+  name: string;
+  phi_cp: number | null;
+  omega_debt: number | null;
+  is_admitted: boolean;
+  is_buyable: boolean;
+  veto_reasons: string[];
+  period_end_date: string;
+};
+
 export type ScreenerCandidate = {
   symbol: string;
   name: string;
