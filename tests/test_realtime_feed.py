@@ -63,6 +63,7 @@ class TestRealtimeFeedAdapter(unittest.TestCase):
                     "REAL_LAST_CLOSE_FROZEN",
                     "SINA_LIVE_FEED",
                     "SINA_FUTURES_LIVE",
+                    "SINA_FX_LIVE",
                     "CACHE_STATIC_WAITING_TRADE",
                     "BINANCE_PUBLIC_TICKER",
                 ),

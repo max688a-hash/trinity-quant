@@ -120,45 +120,73 @@ def handle_get_kline(symbol: Optional[str] = None, timeframe: str = "D") -> Dict
     return {"symbol": sym, "timeframe": timeframe, "candles": candles, "count": len(candles)}
 
 
-def handle_get_microstructure_flow(symbol: Optional[str] = None) -> Dict[str, Any]:
-    """获取标的高频真实盘口微观数据，依真实L1买卖挂单推导，严禁伪造硬编码成交"""
-    sym = (symbol or "600519.SH").strip().upper()
-    from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
-    tick = RealtimeFeedAdapter().get_tick(sym)
-
-    # 基于真实买一与卖一委托量差额推算真实微观动量 (L1 OFI 推力)
-    diff_vol = int(tick.bid_vol1 - tick.ask_vol1)
-    ofi_net = diff_vol * 10
-    next_momentum = "UPWARD_PRESSURE" if ofi_net > 0 else "DOWNWARD_PRESSURE" if ofi_net < 0 else "BALANCED"
-
-    # 若有大额委买单则推导潜在冰山吸筹规模
-    ice_vol = int(tick.bid_vol1 * 8) if tick.bid_vol1 > 80 else 0
-    ice_type = "BID_ACCUMULATION" if ice_vol > 0 else "NONE"
-
-    main_ratio = round(float(diff_vol) / max(1.0, float(tick.bid_vol1 + tick.ask_vol1)) * 40.0, 1)
-    sig_judgment = "主力温和吸筹" if main_ratio > 0 else "空方主导抛售" if main_ratio < 0 else "多空势均力敌"
-
+def _micro_shell(
+    sym: str,
+    grade: str,
+    judgment: str,
+    ofi_net: int,
+    momentum: str,
+    imbalance: Optional[float],
+    ice_type: str,
+    ice_vol: int,
+    price_level: Optional[float],
+    main_ratio: Optional[float],
+) -> Dict[str, Any]:
     return {
         "symbol": sym,
         "ofi": {
             "ofi_net_value": ofi_net,
-            "next_tick_momentum": next_momentum,
-            "order_book_imbalance": round(float(diff_vol) / max(1.0, float(tick.bid_vol1 + tick.ask_vol1)), 2),
-            "data_grade": "REAL_EXCHANGE_L1"
+            "next_tick_momentum": momentum,
+            "order_book_imbalance": imbalance,
+            "data_grade": grade,
         },
         "iceberg": {
             "symbol": sym,
             "detected_type": ice_type,
             "estimated_hidden_volume": ice_vol,
-            "price_level": tick.bid1
+            "price_level": price_level,
         },
         "institutional_flow": {
             "symbol": sym,
             "main_force_ratio_pct": main_ratio,
-            "signal_judgment": sig_judgment,
-            "super_large_orders_net": ofi_net * 50
-        }
+            "signal_judgment": judgment,
+            "super_large_orders_net": ofi_net * 50 if grade == "REAL_EXCHANGE_L1" else 0,
+        },
     }
+
+
+def handle_get_microstructure_flow(symbol: Optional[str] = None) -> Dict[str, Any]:
+    """无买一量不得自称 REAL_EXCHANGE_L1，严禁把空盘口演播成主力吸筹。"""
+    sym = (symbol or "600519.SH").strip().upper()
+    from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
+    tick = RealtimeFeedAdapter().get_tick(sym)
+    if tick.price <= 0.0 or tick.source == "DATA_UNAVAILABLE":
+        return _micro_shell(
+            sym, "DATA_UNAVAILABLE", "DATA_UNAVAILABLE", 0, "UNKNOWN",
+            None, "NONE", 0, None, None,
+        )
+    if tick.is_closed or "FROZEN" in tick.source.upper():
+        return _micro_shell(
+            sym, "FROZEN_BOOK_NO_LIVE_OFI", "休市冻结盘口，禁止演播盘中吸筹", 0, "UNKNOWN",
+            None, "NONE", 0, tick.price, None,
+        )
+    if tick.bid_vol1 <= 0.0 and tick.ask_vol1 <= 0.0:
+        return _micro_shell(
+            sym, "LAST_ONLY_NO_L1", "无买一卖一量，禁止演播主力", 0, "UNKNOWN",
+            None, "NONE", 0, tick.price, None,
+        )
+    diff_vol = int(tick.bid_vol1 - tick.ask_vol1)
+    ofi_net = diff_vol * 10
+    next_momentum = "UPWARD_PRESSURE" if ofi_net > 0 else "DOWNWARD_PRESSURE" if ofi_net < 0 else "BALANCED"
+    ice_vol = int(tick.bid_vol1 * 8) if tick.bid_vol1 > 80 else 0
+    ice_type = "BID_ACCUMULATION" if ice_vol > 0 else "NONE"
+    book = max(1.0, float(tick.bid_vol1 + tick.ask_vol1))
+    main_ratio = round(float(diff_vol) / book * 40.0, 1)
+    sig_judgment = "主力温和吸筹" if main_ratio > 0 else "空方主导抛售" if main_ratio < 0 else "多空势均力敌"
+    return _micro_shell(
+        sym, "REAL_EXCHANGE_L1", sig_judgment, ofi_net, next_momentum,
+        round(float(diff_vol) / book, 2), ice_type, ice_vol, tick.bid1, main_ratio,
+    )
 
 
 def handle_get_preflight_checklist(engine: PaperTradingEngine, lock: threading.Lock) -> Dict[str, Any]:

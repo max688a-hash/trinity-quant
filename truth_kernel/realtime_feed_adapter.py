@@ -57,78 +57,57 @@ class RealtimeFeedAdapter:
         "RB": {"name": "螺纹钢主力期货", "tick": 1.0},
         "AU": {"name": "沪金主力期货", "tick": 0.02},
         "BTCUSDT": {"name": "比特币现货", "tick": 0.1},
-        "USDCNH": {"name": "美元离岸人民币", "tick": 0.0001}
+        "USDCNH": {"name": "美元离岸人民币", "tick": 0.0001},
+        "DXY": {"name": "美元指数", "tick": 0.01},
     }
 
     def __init__(self) -> None:
         self._cache: Dict[str, MarketTick] = {}
         self._cache_lock = threading.Lock()
 
+    def _tick_from_slice(self, symbol: str, now: float, slice_row: Any) -> MarketTick:
+        return MarketTick(
+            symbol=symbol, name=slice_row.name, timestamp=now, time_str=slice_row.time_str,
+            price=slice_row.last, open=slice_row.open, high=slice_row.high, low=slice_row.low,
+            close=slice_row.last, volume=slice_row.volume, amount=slice_row.amount,
+            bid1=slice_row.bid1, ask1=slice_row.ask1,
+            bid_vol1=slice_row.bid_vol1, ask_vol1=slice_row.ask_vol1,
+            change_pct=slice_row.change_pct, is_live=True, source=slice_row.source,
+        )
+
     def _fetch_sina_live_quote(self, symbol: str) -> Optional[MarketTick]:
-        """拉取 A 股/期货真实快照；失败必须记日志，严禁无声吞掉。"""
+        """拉取 A 股/期货/外汇真实快照；连续合约走 nf_SA0，外汇走 fx_susdcnh 与 DINIW。"""
+        from truth_kernel.sina_public_quotes import (
+            first_sina_fields, parse_ashare, parse_futures, parse_fx,
+        )
+
         now = time.time()
         time_str = time.strftime("%H:%M:%S", time.localtime(now))
+        cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol})
+        fallback_name = str(cfg.get("name") or symbol)
         if symbol.endswith(".SH") or symbol.endswith(".SZ"):
             code = symbol.split(".")[0]
             prefix = "sh" if symbol.endswith(".SH") else "sz"
-            url = f"https://hq.sinajs.cn/list={prefix}{code}"
-            req = urllib.request.Request(
-                url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://finance.sina.com.cn"}
-            )
-            try:
-                with urllib.request.urlopen(req, timeout=1.2) as resp:
-                    body = resp.read().decode("gbk", errors="ignore")
-                    if '="' in body and len(body.split('="')[1]) > 30:
-                        parts = body.split('="')[1].rstrip('";\n').split(",")
-                        cur_px = float(parts[3])
-                        prev_close = float(parts[2])
-                        if cur_px <= 0 and prev_close > 0:
-                            cur_px = prev_close
-                        chg = round(((cur_px - prev_close) / prev_close) * 100.0, 2) if prev_close > 0 else 0.0
-                        return MarketTick(
-                            symbol=symbol, name=parts[0], timestamp=now,
-                            time_str=parts[31] if len(parts) > 31 and ":" in parts[31] else time_str,
-                            price=cur_px, open=float(parts[1]) or cur_px,
-                            high=max(float(parts[4]), cur_px),
-                            low=min(float(parts[5]), cur_px) if float(parts[5]) > 0 else cur_px,
-                            close=cur_px, volume=float(parts[8]), amount=float(parts[9]),
-                            bid1=float(parts[11]), ask1=float(parts[21]),
-                            bid_vol1=float(parts[10]), ask_vol1=float(parts[20]),
-                            change_pct=chg, is_live=True, source="SINA_LIVE_FEED"
-                        )
-            except Exception as exc:
-                _LOG.warning("新浪 A 股行情失败 symbol=%s err=%s", symbol, exc)
-                return None
-        fut_map = {"SA": "SA0", "RB": "RB0", "AU": "AU0"}
-        if symbol in fut_map:
-            url = f"https://hq.sinajs.cn/list={fut_map[symbol]}"
-            req = urllib.request.Request(
-                url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://finance.sina.com.cn"}
-            )
-            try:
-                with urllib.request.urlopen(req, timeout=1.2) as resp:
-                    body = resp.read().decode("gbk", errors="ignore")
-                    if '="' in body and len(body.split('="')[1]) > 20:
-                        parts = body.split('="')[1].rstrip('";\n').split(",")
-                        cur_px = float(parts[8]) if len(parts) > 8 and float(parts[8]) > 0 else (
-                            float(parts[6]) if len(parts) > 6 else 0.0
-                        )
-                        if cur_px > 0:
-                            cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol, "tick": 1.0})
-                            return MarketTick(
-                                symbol=symbol, name=cfg["name"], timestamp=now, time_str=time_str,
-                                price=cur_px, open=float(parts[2]) or cur_px,
-                                high=float(parts[3]) or cur_px, low=float(parts[4]) or cur_px,
-                                close=cur_px, volume=float(parts[14]) if len(parts) > 14 else 1000.0,
-                                amount=0.0,
-                                bid1=float(parts[6]) if len(parts) > 6 else cur_px - cfg["tick"],
-                                ask1=float(parts[7]) if len(parts) > 7 else cur_px + cfg["tick"],
-                                bid_vol1=10.0, ask_vol1=10.0, change_pct=0.0,
-                                is_live=True, source="SINA_FUTURES_LIVE"
-                            )
-            except Exception as exc:
-                _LOG.warning("新浪期货行情失败 symbol=%s err=%s", symbol, exc)
-                return None
+            parts = first_sina_fields((f"{prefix}{code}",))
+            parsed = parse_ashare(parts, time_str) if parts else None
+            return self._tick_from_slice(symbol, now, parsed) if parsed else None
+        fut_lists = {
+            "SA": ("nf_SA0",),
+            "RB": ("nf_RB0",),
+            "AU": ("nf_AU0",),
+        }
+        if symbol in fut_lists:
+            parts = first_sina_fields(fut_lists[symbol])
+            parsed = parse_futures(parts, fallback_name, time_str) if parts else None
+            return self._tick_from_slice(symbol, now, parsed) if parsed else None
+        fx_lists = {
+            "USDCNH": ("fx_susdcnh",),
+            "DXY": ("DINIW",),
+        }
+        if symbol in fx_lists:
+            parts = first_sina_fields(fx_lists[symbol])
+            parsed = parse_fx(parts, fallback_name, time_str) if parts else None
+            return self._tick_from_slice(symbol, now, parsed) if parsed else None
         return None
 
     def _fetch_binance_last(self, symbol: str) -> Optional[MarketTick]:
@@ -153,12 +132,10 @@ class RealtimeFeedAdapter:
         now = time.time()
         time_str = time.strftime("%H:%M:%S", time.localtime(now))
         cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol, "tick": 0.1})
-        tick_sz = float(cfg.get("tick") or 0.1)
         return MarketTick(
             symbol=symbol, name=str(cfg.get("name") or symbol), timestamp=now, time_str=time_str,
             price=px, open=px, high=px, low=px, close=px, volume=0.0, amount=0.0,
-            bid1=max(tick_sz, px - tick_sz), ask1=px + tick_sz,
-            bid_vol1=0.0, ask_vol1=0.0, change_pct=0.0,
+            bid1=px, ask1=px, bid_vol1=0.0, ask_vol1=0.0, change_pct=0.0,
             is_live=True, source="BINANCE_PUBLIC_TICKER"
         )
 

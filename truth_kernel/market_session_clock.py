@@ -89,7 +89,7 @@ class MarketSessionClock:
             )
 
         # 2. 全球外汇市场 (FOREX)
-        if any(fx in sym for fx in ("USDCNH", "EURUSD", "USDJPY", "GBPUSD")):
+        if any(fx in sym for fx in ("USDCNH", "EURUSD", "USDJPY", "GBPUSD", "DXY")):
             # 周六 05:00 至 周一 06:00 闭市
             is_fx_weekend = (weekday == 5 and cur_t >= dtime(5, 0)) or (weekday == 6) or (weekday == 0 and cur_t < dtime(6, 0))
             if is_fx_weekend:
@@ -113,7 +113,7 @@ class MarketSessionClock:
             )
 
         # 3. 国内期货市场 (CN_FUTURE) - 如 SA (纯碱), C (玉米), RB (螺纹钢)
-        is_future = any(sym.startswith(p) for p in ("SA", "C", "RB", "AG", "IF", "M", "P"))
+        is_future = any(sym.startswith(p) for p in ("SA", "C", "RB", "AU", "AG", "IF", "M", "P"))
         if is_future:
             # 周日完全闭市
             if weekday == 6:
