@@ -7,9 +7,11 @@ from typing import Dict, List, Optional, Sequence
 
 from truth_kernel.sina_field_probe import (
     ASHARE_SLOTS,
+    CFFEX_SLOTS,
     FUTURES_SLOTS,
     FX_SLOTS,
     curl_sina_fields,
+    is_numeric_token,
     safe_float,
 )
 
@@ -89,7 +91,52 @@ def parse_ashare(parts: List[str], fallback_time: str) -> Optional[SinaSlice]:
     )
 
 
+def _looks_cffex(parts: List[str]) -> bool:
+    if not parts:
+        return False
+    return is_numeric_token(parts[0]) and safe_float(parts[0]) > 0.0
+
+
+def _cjk_name(parts: List[str], fallback: str) -> str:
+    for tok in reversed(parts):
+        text = (tok or "").strip()
+        if any("\u4e00" <= ch <= "\u9fff" for ch in text):
+            return text
+    return fallback
+
+
+def _hhmmss(parts: List[str], fallback: str) -> str:
+    for tok in parts:
+        if (tok or "").count(":") == 2:
+            return tok.strip()
+    return fallback
+
+
+def _parse_cffex_futures(
+    parts: List[str], fallback_name: str, fallback_time: str,
+) -> Optional[SinaSlice]:
+    last = _slot(parts, CFFEX_SLOTS, "last")
+    if last <= 0.0:
+        return None
+    prev = _slot(parts, CFFEX_SLOTS, "prev")
+    chg = round(((last - prev) / prev) * 100.0, 2) if prev > 0.0 else 0.0
+    high_px = _slot(parts, CFFEX_SLOTS, "high")
+    low_px = _slot(parts, CFFEX_SLOTS, "low")
+    return SinaSlice(
+        name=_cjk_name(parts, fallback_name), last=last,
+        open=last, high=high_px or last, low=low_px or last,
+        volume=_slot(parts, CFFEX_SLOTS, "volume"),
+        open_interest=_slot(parts, CFFEX_SLOTS, "hold"),
+        amount=_slot(parts, CFFEX_SLOTS, "amount"),
+        bid1=0.0, ask1=0.0, bid_vol1=0.0, ask_vol1=0.0,
+        change_pct=chg, time_str=_hhmmss(parts, fallback_time),
+        source="SINA_FUTURES_LIVE",
+    )
+
+
 def parse_futures(parts: List[str], fallback_name: str, fallback_time: str) -> Optional[SinaSlice]:
+    if _looks_cffex(parts):
+        return _parse_cffex_futures(parts, fallback_name, fallback_time)
     last = _slot(parts, FUTURES_SLOTS, "last")
     if last <= 0.0:
         last = _slot(parts, FUTURES_SLOTS, "bid")

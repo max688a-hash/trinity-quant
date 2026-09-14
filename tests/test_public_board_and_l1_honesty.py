@@ -23,10 +23,15 @@ class TestPublicBoardAndL1Honesty(unittest.TestCase):
     def test_adapter_must_use_sina_continuous_and_fx_lists(self) -> None:
         src = self._src("truth_kernel/realtime_feed_adapter.py")
         self.assertIn("nf_SA0", src)
+        self.assertIn("nf_IF0", src)
+        self.assertIn("sina_continuous_symbol", src)
         self.assertIn("fx_susdcnh", src)
         self.assertIn("DINIW", src)
         self.assertNotIn("bid_vol1=10.0", src)
         self.assertNotIn("else 1000.0", src)
+        self.assertNotIn("127.0.0.1:8888", src)
+        self.assertNotIn(":8771", src)
+        self.assertNotIn("TianyiEntry", src)
 
     def test_usdcnh_dxy_sa_quotes_are_live_or_unavailable(self) -> None:
         from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
@@ -56,6 +61,39 @@ class TestPublicBoardAndL1Honesty(unittest.TestCase):
                 self.assertEqual(row.get("status"), "DATA_UNAVAILABLE")
             else:
                 self.assertGreater(float(row["last"]), 0.0)
+
+    def test_if00_quotes_are_live_or_unavailable_not_tianyi(self) -> None:
+        from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
+        from entropy_execution.board_quotes_service import handle_get_board_quotes
+
+        adapter = RealtimeFeedAdapter()
+        tick = adapter.get_tick("IF00")
+        if tick.price > 0.0:
+            self.assertGreater(tick.price, 2000.0)
+            self.assertLess(tick.price, 8000.0)
+            blob = tick.source.upper()
+            self.assertTrue(
+                any(token in blob for token in ("SINA", "FROZEN", "CACHE")),
+                msg=f"IF00 有价却来源不明: {tick.source}",
+            )
+            self.assertNotIn("TIANYI", blob)
+            self.assertNotEqual(tick.source, "DATA_UNAVAILABLE")
+        else:
+            self.assertEqual(tick.source, "DATA_UNAVAILABLE")
+
+        payload = handle_get_board_quotes("IF00,NHCI")
+        by_sym = {row["symbol"]: row for row in payload["quotes"]}
+        if00 = by_sym["IF00"]
+        if if00.get("available"):
+            self.assertGreater(float(if00["last"]), 2000.0)
+            self.assertLess(float(if00["last"]), 8000.0)
+        else:
+            self.assertIsNone(if00.get("last"))
+            self.assertEqual(if00.get("status"), "DATA_UNAVAILABLE")
+        nhci = by_sym["NHCI"]
+        if not nhci.get("available"):
+            self.assertIsNone(nhci.get("last"))
+            self.assertEqual(nhci.get("status"), "DATA_UNAVAILABLE")
 
     def test_microstructure_must_not_claim_l1_without_book(self) -> None:
         from entropy_execution.battlefield_api_service import handle_get_microstructure_flow

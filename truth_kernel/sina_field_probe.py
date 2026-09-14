@@ -19,6 +19,13 @@ FUTURES_SLOTS: Dict[str, int] = {
     # evidence:ok last[8]=1037 hold[13]=1298106 volume[14]=1000646；串成 volume=13 会把持仓当成交
     "hold": 13, "volume": 14,
 }
+CFFEX_SLOTS: Dict[str, int] = {
+    "last": 0, "high": 1, "low": 2, "prev": 3,
+    "volume": 4, "amount": 5, "hold": 6,
+    # ref: 本机 curl --noproxy * https://hq.sinajs.cn/list=nf_IF0 2026-09-14 10:19
+    # evidence:ok last[0]=4379.600 high[1]=4394.000 low[2]=4369.200 hold[6]=118917
+    # 商品槽 last[8] 在此布局为 0；误用会把期指打成死基准
+}
 FX_SLOTS: Dict[str, int] = {"last": 8, "bid": 1, "ask": 2}
 ASHARE_SLOTS: Dict[str, int] = {
     "last": 3, "prev": 2, "open": 1, "high": 4, "low": 5,
@@ -26,6 +33,7 @@ ASHARE_SLOTS: Dict[str, int] = {
 }
 SLOTS_BY_KIND: Dict[str, Dict[str, int]] = {
     "FUTURES": FUTURES_SLOTS,
+    "FUTURES_CFFEX": CFFEX_SLOTS,
     "FX": FX_SLOTS,
     "ASHARE": ASHARE_SLOTS,
 }
@@ -33,6 +41,7 @@ WIRED_LISTS: Tuple[Tuple[str, str], ...] = (
     ("nf_SA0", "FUTURES"),
     ("nf_RB0", "FUTURES"),
     ("nf_AU0", "FUTURES"),
+    ("nf_IF0", "FUTURES_CFFEX"),
     ("fx_susdcnh", "FX"),
     ("DINIW", "FX"),
     ("sh600519", "ASHARE"),

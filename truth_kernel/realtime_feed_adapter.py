@@ -78,7 +78,8 @@ class RealtimeFeedAdapter:
         )
 
     def _fetch_sina_live_quote(self, symbol: str) -> Optional[MarketTick]:
-        """拉取 A 股/期货/外汇真实快照；连续合约走 nf_SA0，外汇走 fx_susdcnh 与 DINIW。"""
+        """拉取 A 股/期货/外汇真实快照；连续合约走 nf_SA0/nf_IF0，外汇走 fx_susdcnh 与 DINIW。"""
+        from truth_kernel.futures_kline_service import sina_continuous_symbol
         from truth_kernel.sina_public_quotes import (
             first_sina_fields, parse_ashare, parse_futures, parse_fx,
         )
@@ -93,13 +94,9 @@ class RealtimeFeedAdapter:
             parts = first_sina_fields((f"{prefix}{code}",))
             parsed = parse_ashare(parts, time_str) if parts else None
             return self._tick_from_slice(symbol, now, parsed) if parsed else None
-        fut_lists = {
-            "SA": ("nf_SA0",),
-            "RB": ("nf_RB0",),
-            "AU": ("nf_AU0",),
-        }
-        if symbol in fut_lists:
-            parts = first_sina_fields(fut_lists[symbol])
+        cont = sina_continuous_symbol(symbol)
+        if cont:
+            parts = first_sina_fields((f"nf_{cont}",))
             parsed = parse_futures(parts, fallback_name, time_str) if parts else None
             return self._tick_from_slice(symbol, now, parsed) if parsed else None
         fx_lists = {

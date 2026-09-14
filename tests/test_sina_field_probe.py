@@ -31,6 +31,7 @@ class TestSinaFieldProbe(unittest.TestCase):
         quotes = self._src("truth_kernel/sina_public_quotes.py")
         self.assertIn("sina_field_probe", quotes)
         self.assertIn("FUTURES_SLOTS", quotes)
+        self.assertIn("CFFEX_SLOTS", quotes)
         self.assertIn("FX_SLOTS", quotes)
         self.assertIn("ASHARE_SLOTS", quotes)
 
@@ -47,12 +48,34 @@ class TestSinaFieldProbe(unittest.TestCase):
         self.assertTrue(sa.numeric["last"])
         self.assertTrue(sa.numeric["bid"])
         self.assertTrue(sa.numeric["ask"])
+        if0 = by_code["nf_IF0"]
+        self.assertGreater(if0.values["last"], 2000.0)
+        self.assertLess(if0.values["last"], 8000.0)
+        self.assertTrue(if0.numeric["last"])
         fx = by_code["fx_susdcnh"]
         self.assertGreater(fx.values["last"], 5.0)
         self.assertLess(fx.values["last"], 10.0)
         dxy = by_code["DINIW"]
         self.assertGreater(dxy.values["last"], 80.0)
         self.assertLess(dxy.values["last"], 130.0)
+
+    def test_cffex_layout_must_use_slot_zero_not_commodity_eight(self) -> None:
+        from truth_kernel.sina_field_probe import CFFEX_SLOTS
+        from truth_kernel.sina_public_quotes import parse_futures
+
+        self.assertEqual(CFFEX_SLOTS["last"], 0)
+        self.assertEqual(CFFEX_SLOTS["hold"], 6)
+        parts = [
+            "4379.600", "4394.000", "4369.200", "4393.600", "11579",
+            "50716872.200", "118917.000", "0.000", "0.000",
+        ] + [""] * 28 + ["沪深300指数期货连续"]
+        sliced = parse_futures(parts, "IF00", "00:00:00")
+        self.assertIsNotNone(sliced)
+        assert sliced is not None
+        self.assertAlmostEqual(sliced.last, 4379.6)
+        self.assertEqual(sliced.name, "沪深300指数期货连续")
+        self.assertEqual(sliced.bid1, 0.0)
+        self.assertAlmostEqual(sliced.open_interest, 118917.0)
 
     def test_futures_hold_is_slot_13_volume_is_slot_14(self) -> None:
         from truth_kernel.sina_field_probe import FUTURES_SLOTS, curl_sina_fields
