@@ -17,7 +17,9 @@ export type Candle = {
   close: number;
   volume: number;
   ma5?: number;
+  ma10?: number;
   ma20?: number;
+  ma60?: number;
   signal?: { type: "BUY" | "SELL"; text: string; color: string };
 };
 

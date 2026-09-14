@@ -3,7 +3,7 @@ import { MARKET_SECTORS } from "../lib/markets";
 import { fetchBoardQuotes } from "../lib/api";
 import { formatBoardLast, quotesBySymbol } from "../lib/boardQuotes";
 import { listedKlineSignals, loadRealKlineData } from "../lib/klineSignals";
-import { paintKline } from "../lib/klineCanvasDraw";
+import { paintKline, type KlineOverlays } from "../lib/klineCanvasDraw";
 import { registerKlineDrawer } from "../lib/viewport";
 import { openAdmissionDocketModal } from "./DocketModal";
 import { Button } from "./ui/button";
@@ -47,6 +47,10 @@ export function KlineChart() {
   const [loading, setLoading] = useState(true);
   const [boardQuotes, setBoardQuotes] = useState<Record<string, BoardQuote>>({});
   const [boardLoading, setBoardLoading] = useState(true);
+  const [ma5, setMa5] = useState(true);
+  const [ma10, setMa10] = useState(true);
+  const [ma20, setMa20] = useState(true);
+  const [ma60, setMa60] = useState(true);
   const candlesRef = useRef<Candle[]>([]);
   const tooltipDismissTimer = useRef<number | null>(null);
   let touchStartX = 0;
@@ -124,11 +128,12 @@ export function KlineChart() {
         return;
       }
       ctx.scale(dpr, dpr);
-      paintKline(ctx, candlesRef.current, rect.width, 360);
+      const overlays: KlineOverlays = { ma5, ma10, ma20, ma60 };
+      paintKline(ctx, candlesRef.current, rect.width, 360, overlays);
     };
     registerKlineDrawer(drawKlineChart);
     requestAnimationFrame(drawKlineChart);
-  }, [candles]);
+  }, [candles, ma5, ma10, ma20, ma60]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -260,10 +265,18 @@ export function KlineChart() {
         ))}
       </div>
       <div className="flex gap-3 text-[13px] text-muted-foreground">
-        <label className="flex items-center gap-1"><Checkbox defaultChecked /> MA5</label>
-        <label className="flex items-center gap-1"><Checkbox defaultChecked /> MA10</label>
-        <label className="flex items-center gap-1"><Checkbox defaultChecked /> MA20</label>
-        <label className="flex items-center gap-1"><Checkbox defaultChecked /> MA60</label>
+        <label className="flex items-center gap-1">
+          <Checkbox checked={ma5} onCheckedChange={(v) => setMa5(v === true)} /> MA5
+        </label>
+        <label className="flex items-center gap-1">
+          <Checkbox checked={ma10} onCheckedChange={(v) => setMa10(v === true)} /> MA10
+        </label>
+        <label className="flex items-center gap-1">
+          <Checkbox checked={ma20} onCheckedChange={(v) => setMa20(v === true)} /> MA20
+        </label>
+        <label className="flex items-center gap-1">
+          <Checkbox checked={ma60} onCheckedChange={(v) => setMa60(v === true)} /> MA60
+        </label>
       </div>
       {loading ? <p className="text-[13px] text-muted-foreground">正在拉取交易所历史K线…</p> : null}
       {error ? <p className="text-[13px] text-buy">{error}</p> : null}

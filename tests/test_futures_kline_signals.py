@@ -39,6 +39,26 @@ class TestFuturesKlineSignals(unittest.TestCase):
         self.assertIn("paintKline", chart)
         self.assertIn("setCandles([])", chart)
 
+    def test_kline_must_paint_real_ma_and_volume_not_dummy_switches(self) -> None:
+        draw = self._src("web/src/lib/klineCanvasDraw.ts")
+        self.assertIn("ma5", draw)
+        self.assertIn("ma10", draw)
+        self.assertIn("ma20", draw)
+        self.assertIn("ma60", draw)
+        self.assertIn("volume", draw)
+        self.assertIn("overlays", draw)
+        self.assertNotIn("均线金叉", draw)
+        chart = self._src("web/src/components/KlineChart.tsx")
+        self.assertNotIn("defaultChecked", chart)
+        self.assertIn("setMa5", chart)
+        self.assertIn("overlays", chart)
+        sig = self._src("web/src/lib/klineSignals.ts")
+        self.assertIn("ma10:", sig)
+        self.assertIn("ma60:", sig)
+        types = self._src("web/src/lib/types.ts")
+        self.assertIn("ma10?:", types)
+        self.assertIn("ma60?:", types)
+
     def test_breakout_engine_requires_volume_and_rejects_oi_fade(self) -> None:
         from gravity_brain.kline_breakout_signals import attach_breakout_signals
 

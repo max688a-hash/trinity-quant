@@ -6,7 +6,8 @@ TRINITY QUANT 真实物理交易所交易时钟与休市防火墙。
 最高宪法立宪铁律：
 严禁脱离交易所物理开闭市时钟伪造成交！
 1. A 股市场 (CN_EQUITY): 周一至周五 09:30-11:30, 13:00-15:00，法定节假日与周末闭市休盘;
-2. 国内期货 (CN_FUTURE): 日盘 (09:00-10:15, 10:30-11:30, 13:30-15:00), 夜盘 (21:00-23:00/01:00/02:30)，周末严禁偷跑;
+2. 国内商品期货: 日盘 09:00-10:15 / 10:30-11:30 / 13:30-15:00，夜盘 21:00-02:30；
+   中金所股指 09:30-11:30 / 13:00-15:00 无夜盘；国债 09:15-11:30 / 13:00-15:15 无夜盘;
 3. 全球外汇 (FOREX): 周一 06:00 至周六 05:00 连续运转，周末闭市;
 4. 全球加密资产 (CRYPTO): 7x24x365 全球无休物理实时开市;
 5. 闭市时段若非显式开启【历史回放测试模式】，物理撮合引擎绝对禁止受理报单！
@@ -15,7 +16,7 @@ TRINITY QUANT 真实物理交易所交易时钟与休市防火墙。
 from dataclasses import dataclass
 from datetime import datetime, time as dtime, timezone, timedelta
 from enum import Enum
-from typing import Optional, Tuple
+from typing import Optional
 
 
 class MarketSessionStatus(str, Enum):
@@ -112,70 +113,21 @@ class MarketSessionClock:
                 can_execute_live=True
             )
 
-        # 3. 国内期货市场 (CN_FUTURE) - 如 SA (纯碱), C (玉米), RB (螺纹钢)
-        is_future = any(sym.startswith(p) for p in ("SA", "C", "RB", "AU", "AG", "IF", "M", "P"))
-        if is_future:
-            # 周日完全闭市
-            if weekday == 6:
-                return MarketClockCheckResult(
-                    symbol=sym,
-                    venue="CN_FUTURE",
-                    is_open=False,
-                    status=MarketSessionStatus.CLOSED_WEEKEND,
-                    current_beijing_time=time_str,
-                    reason="国内期货市场周日全天休市！严禁在休盘时段产生虚假成交！",
-                    can_execute_live=False
-                )
-            # 周六凌晨 02:30 之后进入周末休市
-            if weekday == 5 and cur_t > dtime(2, 30):
-                return MarketClockCheckResult(
-                    symbol=sym,
-                    venue="CN_FUTURE",
-                    is_open=False,
-                    status=MarketSessionStatus.CLOSED_WEEKEND,
-                    current_beijing_time=time_str,
-                    reason="国内期货市场周末休市，下周一 09:00 开盘",
-                    can_execute_live=False
-                )
-            # 周一早间 09:00 前无夜盘
-            if weekday == 0 and cur_t < dtime(9, 0):
-                return MarketClockCheckResult(
-                    symbol=sym,
-                    venue="CN_FUTURE",
-                    is_open=False,
-                    status=MarketSessionStatus.CLOSED_NIGHT,
-                    current_beijing_time=time_str,
-                    reason="国内期货周一早盘未开市，开盘时间为 09:00",
-                    can_execute_live=False
-                )
+        # 3. 国内期货：中金所股指/国债与商品时段分轨，禁止前缀硬编码串场
+        from truth_kernel.cn_futures_session import evaluate_cn_future
 
-            # 周一至周五常规日盘
-            in_day_1 = dtime(9, 0) <= cur_t <= dtime(10, 15)
-            in_day_2 = dtime(10, 30) <= cur_t <= dtime(11, 30)
-            in_day_3 = dtime(13, 30) <= cur_t <= dtime(15, 0)
-            # 正确夜盘: 周一至周五 21:00-24:00, 周二至周六 00:00-02:30
-            in_night = (cur_t >= dtime(21, 0) and weekday in (0, 1, 2, 3, 4)) or (cur_t <= dtime(2, 30) and weekday in (1, 2, 3, 4, 5))
-
-            if in_day_1 or in_day_2 or in_day_3 or in_night:
-                return MarketClockCheckResult(
-                    symbol=sym,
-                    venue="CN_FUTURE",
-                    is_open=True,
-                    status=MarketSessionStatus.OPEN,
-                    current_beijing_time=time_str,
-                    reason="国内商品期货连续竞价撮合中",
-                    can_execute_live=True
-                )
-            else:
-                return MarketClockCheckResult(
-                    symbol=sym,
-                    venue="CN_FUTURE",
-                    is_open=False,
-                    status=MarketSessionStatus.CLOSED_NIGHT,
-                    current_beijing_time=time_str,
-                    reason="国内期货非交易时段 (休盘中)，开市时间: 09:00 / 21:00",
-                    can_execute_live=False
-                )
+        fut = evaluate_cn_future(sym, weekday, cur_t)
+        if fut is not None:
+            is_open, status_name, reason = fut
+            return MarketClockCheckResult(
+                symbol=sym,
+                venue="CN_FUTURE",
+                is_open=is_open,
+                status=MarketSessionStatus[status_name],
+                current_beijing_time=time_str,
+                reason=reason,
+                can_execute_live=is_open,
+            )
 
         # 4. 美股股票市场 (US_EQUITY)
         is_us_stock = ".US" in sym or sym in ("AAPL", "TSLA", "NVDA", "MSFT", "GOOGL", "AMZN", "META")

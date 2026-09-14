@@ -21,7 +21,9 @@ export function attachMovingAverages(candles: Candle[]): Candle[] {
   return candles.map((c, i) => ({
     ...c,
     ma5: sma(closes, i, 5),
+    ma10: sma(closes, i, 10),
     ma20: sma(closes, i, 20),
+    ma60: sma(closes, i, 60),
   }));
 }
 

@@ -60,6 +60,41 @@ class TestMarketSessionClock(unittest.TestCase):
         moutai_res = MarketSessionClock.evaluate_symbol("600519.SH", simulated_dt=self.monday_morning)
         self.assertTrue(moutai_res.is_open)
 
+    def test_cffex_stays_open_in_commodity_break(self) -> None:
+        """商品 10:15-10:30 休盘；中金所期指连续竞价，不得被套成休市。"""
+        break_dt = datetime(2026, 9, 14, 10, 20, 0, tzinfo=self.tz_beijing)
+        sa = MarketSessionClock.evaluate_symbol("SA", simulated_dt=break_dt)
+        self.assertFalse(sa.is_open)
+        if00 = MarketSessionClock.evaluate_symbol("IF00", simulated_dt=break_dt)
+        self.assertTrue(if00.is_open)
+        self.assertEqual(if00.venue, "CN_FUTURE")
+
+    def test_cffex_index_closed_before_0930_commodity_already_open(self) -> None:
+        early = datetime(2026, 9, 14, 9, 20, 0, tzinfo=self.tz_beijing)
+        self.assertTrue(MarketSessionClock.evaluate_symbol("SA", simulated_dt=early).is_open)
+        self.assertFalse(MarketSessionClock.evaluate_symbol("IF00", simulated_dt=early).is_open)
+        self.assertTrue(MarketSessionClock.evaluate_symbol("T", simulated_dt=early).is_open)
+
+    def test_cffex_has_no_night_session(self) -> None:
+        night = datetime(2026, 9, 14, 21, 30, 0, tzinfo=self.tz_beijing)
+        self.assertTrue(MarketSessionClock.evaluate_symbol("SA", simulated_dt=night).is_open)
+        self.assertFalse(MarketSessionClock.evaluate_symbol("IF00", simulated_dt=night).is_open)
+        self.assertFalse(MarketSessionClock.evaluate_symbol("T", simulated_dt=night).is_open)
+
+    def test_energy_and_iron_use_commodity_clock_not_ashare(self) -> None:
+        night = datetime(2026, 9, 14, 21, 30, 0, tzinfo=self.tz_beijing)
+        sc = MarketSessionClock.evaluate_symbol("SC", simulated_dt=night)
+        self.assertTrue(sc.is_open)
+        self.assertEqual(sc.venue, "CN_FUTURE")
+        iron = MarketSessionClock.evaluate_symbol("I", simulated_dt=night)
+        self.assertTrue(iron.is_open)
+        self.assertEqual(iron.venue, "CN_FUTURE")
+
+    def test_cffex_afternoon_starts_at_1300_commodity_at_1330(self) -> None:
+        pm = datetime(2026, 9, 14, 13, 10, 0, tzinfo=self.tz_beijing)
+        self.assertFalse(MarketSessionClock.evaluate_symbol("SA", simulated_dt=pm).is_open)
+        self.assertTrue(MarketSessionClock.evaluate_symbol("IF00", simulated_dt=pm).is_open)
+
     def test_paper_trading_anti_fabrication_rejection(self) -> None:
         # 开启严格物理时钟检查的模拟盘引擎
         engine = PaperTradingEngine(initial_capital=10_000_000.0, enforce_trading_hours=True)
