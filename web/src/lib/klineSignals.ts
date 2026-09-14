@@ -11,6 +11,11 @@ function sma(values: number[], end: number, window: number): number | undefined 
   return s / window;
 }
 
+function holdOf(candle: Candle): number {
+  const raw = (candle as Candle & { hold?: number }).hold;
+  return typeof raw === "number" && Number.isFinite(raw) ? raw : 0;
+}
+
 export function attachMovingAverages(candles: Candle[]): Candle[] {
   const closes = candles.map((c) => c.close);
   return candles.map((c, i) => ({
@@ -20,22 +25,50 @@ export function attachMovingAverages(candles: Candle[]): Candle[] {
   }));
 }
 
-export function calculateDynamicSignals(candles: Candle[]): void {
-  if (!candles || candles.length < 10) {
+export function calculateDynamicSignals(candles: Candle[], allowShort = true): void {
+  const window = 20;
+  if (!candles || candles.length < window + 1) {
     return;
   }
-  for (let i = 5; i < candles.length; i += 1) {
-    const prev = candles[i - 1];
+  for (let i = window; i < candles.length; i += 1) {
+    const prev = candles.slice(i - window, i);
+    const avgVol = prev.reduce((s, row) => s + row.volume, 0) / prev.length;
     const curr = candles[i];
-    if (!prev.ma5 || !curr.ma5 || !prev.ma20 || !curr.ma20) {
+    if (avgVol <= 0 || curr.volume < avgVol || curr.close <= 0) {
       continue;
     }
-    if (prev.ma5 <= prev.ma20 && curr.ma5 > curr.ma20 && curr.close > curr.open) {
-      curr.signal = { type: 'BUY', text: "🔴 均线金叉(叮)", color: "#e11d48" };
-    } else if (prev.ma5 >= prev.ma20 && curr.ma5 < curr.ma20 && curr.close < curr.open) {
-      curr.signal = { type: 'SELL', text: "🟢 趋势破位", color: "#10b981" };
+    const priorHigh = Math.max(...prev.map((row) => row.high));
+    const priorLow = Math.min(...prev.map((row) => row.low));
+    const holdNow = holdOf(curr);
+    const holdWas = holdOf(candles[i - 1]);
+    const oiKnown = holdNow > 0 && holdWas > 0;
+    const oiUp = oiKnown ? holdNow > holdWas : null;
+    if (oiUp === false) {
+      continue;
+    }
+    if (curr.close > priorHigh) {
+      const tagged = oiUp === true;
+      curr.signal = {
+        type: 'BUY',
+        text: allowShort
+          ? (tagged ? "🔴 放量增仓做多" : "🔴 放量突破做多")
+          : (tagged ? "🔴 放量增仓买入" : "🔴 放量突破买入"),
+        color: "#e11d48",
+      };
+    } else if (curr.close < priorLow) {
+      curr.signal = {
+        type: 'SELL',
+        text: allowShort
+          ? (oiUp === true ? "🟢 放量增仓做空" : "🟢 放量破位做空")
+          : "🟢 放量破位卖出",
+        color: "#10b981",
+      };
     }
   }
+}
+
+export function listedKlineSignals(candles: Candle[]): Candle[] {
+  return candles.filter((row) => row.signal?.type === 'BUY' || row.signal?.type === 'SELL');
 }
 
 export async function loadRealKlineData(tf: string, sym: string): Promise<Candle[]> {
@@ -46,6 +79,7 @@ export async function loadRealKlineData(tf: string, sym: string): Promise<Candle
   }
   const data = (await res.json()) as { candles?: Candle[] };
   const candles = attachMovingAverages(data.candles ?? []);
-  calculateDynamicSignals(candles);
+  const allowShort = !/\.(SH|SZ)$/i.test(sym);
+  calculateDynamicSignals(candles, allowShort);
   return candles;
 }

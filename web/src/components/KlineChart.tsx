@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { MARKET_SECTORS } from "../lib/markets";
 import { fetchBoardQuotes } from "../lib/api";
 import { formatBoardLast, quotesBySymbol } from "../lib/boardQuotes";
-import { loadRealKlineData } from "../lib/klineSignals";
+import { listedKlineSignals, loadRealKlineData } from "../lib/klineSignals";
+import { paintKline } from "../lib/klineCanvasDraw";
 import { registerKlineDrawer } from "../lib/viewport";
 import { openAdmissionDocketModal } from "./DocketModal";
 import { Button } from "./ui/button";
@@ -80,6 +81,8 @@ export function KlineChart() {
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
+    candlesRef.current = [];
+    setCandles([]);
     loadRealKlineData(tf, symbol)
       .then((rows) => {
         if (!cancelled) {
@@ -121,41 +124,7 @@ export function KlineChart() {
         return;
       }
       ctx.scale(dpr, dpr);
-      const rows = candlesRef.current;
-      ctx.fillStyle = "#121a24";
-      ctx.fillRect(0, 0, rect.width, 360);
-      if (rows.length < 2) {
-        ctx.fillStyle = "#9fb0c0";
-        ctx.fillText("DATA_UNAVAILABLE", 16, 24);
-        return;
-      }
-      const highs = rows.map((c) => c.high);
-      const lows = rows.map((c) => c.low);
-      const maxH = Math.max(...highs);
-      const minL = Math.min(...lows);
-      const span = Math.max(0.01, maxH - minL);
-      const w = rect.width / rows.length;
-      rows.forEach((c, i) => {
-        const x = i * w + w * 0.2;
-        const yHigh = 20 + ((maxH - c.high) / span) * 300;
-        const yLow = 20 + ((maxH - c.low) / span) * 300;
-        const yO = 20 + ((maxH - c.open) / span) * 300;
-        const yC = 20 + ((maxH - c.close) / span) * 300;
-        const up = c.close >= c.open;
-        ctx.strokeStyle = up ? "#be4a40" : "#2f9a6c";
-        ctx.fillStyle = up ? "#be4a40" : "#2f9a6c";
-        ctx.beginPath();
-        ctx.moveTo(x + w * 0.3, yHigh);
-        ctx.lineTo(x + w * 0.3, yLow);
-        ctx.stroke();
-        const top = Math.min(yO, yC);
-        const h = Math.max(1, Math.abs(yC - yO));
-        ctx.fillRect(x, top, w * 0.6, h);
-        if (c.signal) {
-          ctx.fillStyle = c.signal.color;
-          ctx.fillText(c.signal.text, x, top - 6);
-        }
-      });
+      paintKline(ctx, candlesRef.current, rect.width, 360);
     };
     registerKlineDrawer(drawKlineChart);
     requestAnimationFrame(drawKlineChart);
@@ -280,7 +249,7 @@ export function KlineChart() {
           {meta.assets.find((a) => a.code === symbol)?.rule ?? "自然人客户禁止进入交割月"}
         </div>
         <p className="mt-2 text-[13px] text-muted-foreground">
-          均线金叉是真实K线上的动量标注，不是入池与纸上成交依据。
+          多空来自真实日K的放量通道突破；有持仓则必须增仓。不是入池与纸上成交依据，分钟线源未通则 DATA_UNAVAILABLE。
         </p>
       </Card>
       <div className="flex flex-wrap gap-2">
@@ -300,6 +269,18 @@ export function KlineChart() {
       {error ? <p className="text-[13px] text-buy">{error}</p> : null}
       <div id="klineCanvasWrapper" className="overflow-hidden rounded-[16px] border border-border">
         <canvas id="klineCanvas" ref={canvasRef} className="h-[360px] w-full" />
+      </div>
+      <div id="klineSignalList" className="space-y-1 text-[13px]">
+        <p className="text-muted-foreground">最近多空（画布外，不挡蜡烛）</p>
+        {listedKlineSignals(candles).length === 0 && !loading ? (
+          <p>无放量增仓突破，禁止把均线当进场</p>
+        ) : (
+          listedKlineSignals(candles).map((row) => (
+            <p key={`${row.date}-${row.signal?.type}`} className={row.signal?.type === 'BUY' ? "text-buy" : "text-sell"}>
+              {row.date} {row.signal?.text}
+            </p>
+          ))
+        )}
       </div>
       <div id="klineTooltip" className="hidden text-[11px]" />
     </div>

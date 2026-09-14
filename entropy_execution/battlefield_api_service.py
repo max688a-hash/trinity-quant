@@ -22,9 +22,6 @@ from entropy_execution.gateway_connection_manager import GatewayConnectionManage
 from gravity_brain.market_regime_classifier import MarketRegimeClassifier
 from gravity_brain.meta_kelly_allocator import MetaKellyAllocator
 from gravity_brain.regime_multi_strategy_engine import RegimeMultiStrategyEngine
-from truth_kernel.iceberg_detector import IcebergDetector
-from truth_kernel.institutional_flow_tracker import InstitutionalFlowTracker, TickTradeItem
-from truth_kernel.order_flow_imbalance import Level2DepthSnapshot, OrderFlowImbalanceEngine
 
 _GLOBAL_VAULT = CredentialVault()
 _GLOBAL_ALERT_RELAY = AlertRelayGateway()
@@ -117,6 +114,11 @@ def handle_get_kline(symbol: Optional[str] = None, timeframe: str = "D") -> Dict
     from truth_kernel.historical_kline_service import HistoricalKlineService
     sym = (symbol or "600519.SH").strip().upper()
     candles = HistoricalKlineService.get_kline(sym, timeframe=timeframe, count=60)
+    from gravity_brain.kline_breakout_signals import attach_breakout_signals
+    from truth_kernel.futures_kline_service import sina_continuous_symbol
+    attach_breakout_signals(
+        candles, allow_short=sina_continuous_symbol(sym) is not None,
+    )
     return {"symbol": sym, "timeframe": timeframe, "candles": candles, "count": len(candles)}
 
 
@@ -150,7 +152,7 @@ def _micro_shell(
             "symbol": sym,
             "main_force_ratio_pct": main_ratio,
             "signal_judgment": judgment,
-            "super_large_orders_net": ofi_net * 50 if grade == "REAL_EXCHANGE_L1" else 0,
+            "super_large_orders_net": 0,
         },
     }
 
@@ -172,20 +174,17 @@ def handle_get_microstructure_flow(symbol: Optional[str] = None) -> Dict[str, An
         )
     if tick.bid_vol1 <= 0.0 and tick.ask_vol1 <= 0.0:
         return _micro_shell(
-            sym, "LAST_ONLY_NO_L1", "无买一卖一量，禁止演播主力", 0, "UNKNOWN",
+            sym, "LAST_ONLY_NO_L1", "无买一卖一量，禁止演播订单流", 0, "UNKNOWN",
             None, "NONE", 0, tick.price, None,
         )
-    diff_vol = int(tick.bid_vol1 - tick.ask_vol1)
-    ofi_net = diff_vol * 10
-    next_momentum = "UPWARD_PRESSURE" if ofi_net > 0 else "DOWNWARD_PRESSURE" if ofi_net < 0 else "BALANCED"
-    ice_vol = int(tick.bid_vol1 * 8) if tick.bid_vol1 > 80 else 0
-    ice_type = "BID_ACCUMULATION" if ice_vol > 0 else "NONE"
-    book = max(1.0, float(tick.bid_vol1 + tick.ask_vol1))
-    main_ratio = round(float(diff_vol) / book * 40.0, 1)
-    sig_judgment = "主力温和吸筹" if main_ratio > 0 else "空方主导抛售" if main_ratio < 0 else "多空势均力敌"
+    tot = float(tick.bid_vol1 + tick.ask_vol1)
+    imb = round((float(tick.bid_vol1) - float(tick.ask_vol1)) / tot, 4) if tot > 0.0 else None
+    # ref: Cont, Kukanov, Stoikov 2014 OFI 需要连续盘口；单档量差不是 OFI
+    # evidence:ok 禁止 bid_vol1*8 / diff*10 演播冰山与主力
     return _micro_shell(
-        sym, "REAL_EXCHANGE_L1", sig_judgment, ofi_net, next_momentum,
-        round(float(diff_vol) / book, 2), ice_type, ice_vol, tick.bid1, main_ratio,
+        sym, "SINGLE_SNAPSHOT_L1",
+        "单档买一卖一量，禁止演播OFI/冰山/吸筹",
+        0, "UNKNOWN", imb, "NONE", 0, tick.bid1, None,
     )
 
 

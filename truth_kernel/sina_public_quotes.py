@@ -24,6 +24,7 @@ class SinaSlice:
     high: float
     low: float
     volume: float
+    open_interest: float
     amount: float
     bid1: float
     ask1: float
@@ -78,6 +79,7 @@ def parse_ashare(parts: List[str], fallback_time: str) -> Optional[SinaSlice]:
         high=max(_slot(parts, ASHARE_SLOTS, "high"), last),
         low=min(low_raw, last) if low_raw > 0.0 else last,
         volume=_slot(parts, ASHARE_SLOTS, "volume"),
+        open_interest=0.0,
         amount=_slot(parts, ASHARE_SLOTS, "amount"),
         bid1=_slot(parts, ASHARE_SLOTS, "bid"),
         ask1=_slot(parts, ASHARE_SLOTS, "ask"),
@@ -100,7 +102,9 @@ def parse_futures(parts: List[str], fallback_name: str, fallback_time: str) -> O
     ttxt = _clock_text(parts[1] if len(parts) > 1 else "", fallback_time)
     return SinaSlice(
         name=name, last=last, open=open_px or last, high=high_px or last,
-        low=low_px or last, volume=_slot(parts, FUTURES_SLOTS, "volume"),
+        low=low_px or last,
+        volume=_slot(parts, FUTURES_SLOTS, "volume"),
+        open_interest=_slot(parts, FUTURES_SLOTS, "hold"),
         amount=0.0, bid1=_slot(parts, FUTURES_SLOTS, "bid"),
         ask1=_slot(parts, FUTURES_SLOTS, "ask"),
         bid_vol1=_slot(parts, FUTURES_SLOTS, "bid_vol"),
@@ -119,6 +123,7 @@ def parse_fx(parts: List[str], fallback_name: str, fallback_time: str) -> Option
     ttxt = parts[0] if parts and ":" in parts[0] else fallback_time
     return SinaSlice(
         name=name, last=last, open=last, high=last, low=last, volume=0.0,
+        open_interest=0.0,
         amount=0.0, bid1=_slot(parts, FX_SLOTS, "bid"),
         ask1=_slot(parts, FX_SLOTS, "ask"), bid_vol1=0.0, ask_vol1=0.0,
         change_pct=0.0, time_str=ttxt, source="SINA_FX_LIVE",

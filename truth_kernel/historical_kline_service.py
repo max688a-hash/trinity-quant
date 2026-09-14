@@ -42,6 +42,7 @@ class KlineCandle:
     ma10: Optional[float] = None
     ma20: Optional[float] = None
     ma60: Optional[float] = None
+    hold: float = 0.0
 
 
 class HistoricalKlineService:
@@ -219,7 +220,8 @@ class HistoricalKlineService:
                 ma5=get_ma(5),
                 ma10=get_ma(10),
                 ma20=get_ma(20),
-                ma60=get_ma(60)
+                ma60=get_ma(60),
+                hold=float(item.get("hold") or 0.0),
             ))
         return candles
 
@@ -232,6 +234,15 @@ class HistoricalKlineService:
         sym = (symbol or "600519.SH").strip().upper()
         scale_map = {"D": 240, "1H": 60, "15M": 15, "5M": 5}
         scale = scale_map.get(timeframe, 240)
+
+        if timeframe == "D":
+            from truth_kernel.futures_kline_service import fetch_futures_daily
+            fut_raw = fetch_futures_daily(sym, count)
+            if fut_raw:
+                live_fut = cls._build_candles_with_ma(fut_raw)
+                with cls._CACHE_LOCK:
+                    cls._CACHE[f"{sym}_{timeframe}"] = live_fut
+                return [asdict(c) for c in live_fut]
 
         # 1. 尝试网络真实行情历史
         live_candles = cls._fetch_sina_kline(sym, scale=scale, datalen=count)

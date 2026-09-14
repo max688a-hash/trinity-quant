@@ -39,7 +39,11 @@ class TestAutonomousLearningSandbox(unittest.TestCase):
             is_replay_mode=True
         )
         self.assertIn("executed", res)
-        self.assertIn("action", res)
+        if res.get("action"):
+            return
+        self.assertFalse(res["executed"])
+        why = str(res.get("reason") or res.get("veto_reason") or "")
+        self.assertTrue(why, msg=f"拒绝成交必须写明原因: {res}")
 
     def test_trade_autopsy_and_parameter_calibration(self) -> None:
         """测试逐笔复盘归因与贝叶斯参数在线迭代"""

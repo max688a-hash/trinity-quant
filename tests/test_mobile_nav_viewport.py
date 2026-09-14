@@ -115,10 +115,9 @@ class TestMobileNavViewport(unittest.TestCase):
     def test_kline_signal_follows_cn_buy_red_sell_green(self) -> None:
         """K 线动态信号必须红买绿卖，禁止西式绿买红卖。"""
         body = _extract_function(self.html, "calculateDynamicSignals")
-        self.assertNotIn("🟢 均线金叉", body)
-        self.assertNotIn("🔴 趋势破位", body)
-        self.assertIn("🔴 均线金叉", body)
-        self.assertIn("🟢 趋势破位", body)
+        self.assertNotIn("均线金叉", body)
+        self.assertIn("🔴 放量", body)
+        self.assertIn("🟢 放量", body)
         self.assertIn("type: 'BUY'", body)
         self.assertIn("type: 'SELL'", body)
 

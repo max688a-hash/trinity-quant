@@ -161,31 +161,7 @@ class LivePipelineOrchestrator:
                 receipt=None
             )
 
-        trap_rep = self.trap_detector.audit_manipulator_traps(
-            symbol=sym,
-            price_change_pct=0.05 if current_breakout_volume > recent_avg_volume * 1.5 else 0.01,
-            recent_avg_volume=recent_avg_volume,
-            current_breakout_volume=current_breakout_volume,
-            bid_volume_top3=1000.0,
-            ask_volume_top3=1000.0,
-            real_executed_sell_volume=100.0,
-            real_executed_buy_volume=100.0
-        )
-        trace["trap_detector"] = trap_rep.trap_detected.value
-        if not trap_rep.is_safe_to_enter:
-            return PipelineCycleResult(
-                symbol=sym,
-                is_executed=False,
-                action="VETO_TRAP",
-                stage_immune_passed=False,
-                stage_gravity_passed=False,
-                stage_execution_passed=False,
-                veto_reason=f"庄家陷阱识别熔断: {trap_rep.evidence_details}",
-                alert_type="CRISIS_ALARM",
-                alert_color="rose-strobe",
-                audit_trace=trace,
-                receipt=None
-            )
+        trace["trap_detector"] = "SKIPPED_NO_L1"
 
         # 3. 第三级：真值引力大脑与分形共振 (Gravity Brain)
         frac_res = self.fractal_engine.evaluate_fractal_resonance(

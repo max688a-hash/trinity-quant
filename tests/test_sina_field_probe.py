@@ -54,6 +54,22 @@ class TestSinaFieldProbe(unittest.TestCase):
         self.assertGreater(dxy.values["last"], 80.0)
         self.assertLess(dxy.values["last"], 130.0)
 
+    def test_futures_hold_is_slot_13_volume_is_slot_14(self) -> None:
+        from truth_kernel.sina_field_probe import FUTURES_SLOTS, curl_sina_fields
+        from truth_kernel.sina_public_quotes import parse_futures
+
+        self.assertEqual(FUTURES_SLOTS["hold"], 13)
+        self.assertEqual(FUTURES_SLOTS["volume"], 14)
+        parts = curl_sina_fields("nf_SA0")
+        self.assertIsNotNone(parts)
+        assert parts is not None
+        sliced = parse_futures(parts, "纯碱连续", "00:00:00")
+        self.assertIsNotNone(sliced)
+        assert sliced is not None
+        self.assertAlmostEqual(sliced.open_interest, float(parts[13]))
+        self.assertAlmostEqual(sliced.volume, float(parts[14]))
+        self.assertNotAlmostEqual(sliced.volume, sliced.open_interest)
+
     def test_probe_cli_exits_zero_on_numeric_fields(self) -> None:
         script = os.path.join(self.root, "truth_kernel", "sina_field_probe.py")
         env = {k: v for k, v in os.environ.items() if "proxy" not in k.lower()}
@@ -68,6 +84,8 @@ class TestSinaFieldProbe(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, proc.stderr + proc.stdout)
         self.assertIn("NUMERIC_OK", proc.stdout)
+        self.assertIn("hq.sinajs.cn", proc.stdout)
+        self.assertRegex(proc.stdout, r'"last"\s*:\s*-?[0-9]')
 
 
 if __name__ == "__main__":

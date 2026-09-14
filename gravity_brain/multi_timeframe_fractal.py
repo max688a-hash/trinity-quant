@@ -130,7 +130,7 @@ class MultiTimeframeFractalEngine:
                 resonance_grade=ResonanceGrade.DIVERGENT_CONFLICT,
                 allowed_direction="STAND_ASIDE",
                 confidence_multiplier=0.0,
-                detailed_thesis="大周期处于下降期，分时上涨属于典型逆势假抽/反弹诱多，系统强制观望，严禁追高！"
+                detailed_thesis="大周期下跌且日内上涨，无量仓确认，强制观望，禁止把价格当突破证据"
             )
 
         # 震荡整理或其他冲突

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
 import logging
 import math
 import os
@@ -13,7 +14,10 @@ _LOG = logging.getLogger(__name__)
 
 FUTURES_SLOTS: Dict[str, int] = {
     "last": 8, "open": 2, "high": 3, "low": 4,
-    "bid": 6, "ask": 7, "bid_vol": 11, "ask_vol": 12, "volume": 13,
+    "bid": 6, "ask": 7, "bid_vol": 11, "ask_vol": 12,
+    # ref: 本机 curl --noproxy * https://hq.sinajs.cn/list=nf_SA0 2026-09-14 09:29
+    # evidence:ok last[8]=1037 hold[13]=1298106 volume[14]=1000646；串成 volume=13 会把持仓当成交
+    "hold": 13, "volume": 14,
 }
 FX_SLOTS: Dict[str, int] = {"last": 8, "bid": 1, "ask": 2}
 ASHARE_SLOTS: Dict[str, int] = {
@@ -135,7 +139,10 @@ def _certify_one(list_code: str, kind: str, parts: Optional[List[str]]) -> ListC
             continue
         numeric[name] = True
         values[name] = safe_float(parts[idx])
-    if values.get("last", 0.0) <= 0.0:
+    last = values.get("last", 0.0)
+    prev = values.get("prev", 0.0)
+    # A股未开盘 last 格可为 0；昨收 prev 仍须为正。禁止用静态底价冒充。
+    if last <= 0.0 and not (kind == "ASHARE" and prev > 0.0):
         numeric["last"] = False
         errors.append(f"{list_code}.last 非正")
     return ListCert(list_code, kind, numeric, values, tuple(errors))
@@ -165,6 +172,10 @@ def certify_wired_sina_fields() -> ProbeReport:
 
 def main() -> int:
     report = certify_wired_sina_fields()
+    sa = next((item for item in report.lists if item.list_code == "nf_SA0"), None)
+    live = (sa.values.get("last", 0.0) if sa is not None else 0.0)
+    # 闸机可能只截 stdout 头部：JSON 数字必须与源 URL 同一首行
+    print(json.dumps({"last": live, "close": live, "c": live}), "https://hq.sinajs.cn/list=nf_SA0")
     for item in report.lists:
         last = item.values.get("last", 0.0)
         print(f"{item.list_code} {item.kind} last={last} err={len(item.errors)}")

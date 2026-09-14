@@ -3,7 +3,7 @@ import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../components/ui/select";
-import { fetchBoardQuotes, fetchPaperState, fetchPoolDockets, fetchScreener, postPaperTrade } from "../lib/api";
+import { fetchBoardQuotes, fetchKline, fetchPaperState, fetchPoolDockets, fetchScreener, postPaperTrade } from "../lib/api";
 import { toListedSymbol } from "../lib/listedSymbol";
 import { scrollToPaperSection } from "../lib/viewport";
 import type { AdmissionDocket, PaperState, ScreenerCandidate } from "../lib/types";
@@ -19,6 +19,7 @@ export function PaperPage() {
   const [symbol, setSymbol] = useState("");
   const [last, setLast] = useState<number | null>(null);
   const [quoteStatus, setQuoteStatus] = useState("DATA_UNAVAILABLE");
+  const [systemSignal, setSystemSignal] = useState("DATA_UNAVAILABLE");
   const [dockets, setDockets] = useState<AdmissionDocket[]>([]);
 
   const vetoRoots = useMemo(
@@ -88,6 +89,39 @@ export function PaperPage() {
         }
         setLast(null);
         setQuoteStatus("DATA_UNAVAILABLE");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [listed]);
+
+  useEffect(() => {
+    if (!listed) {
+      setSystemSignal("DATA_UNAVAILABLE");
+      return;
+    }
+    let cancelled = false;
+    fetchKline(listed, "D")
+      .then((res) => {
+        if (cancelled) {
+          return;
+        }
+        const rows = res.candles ?? [];
+        let found = "";
+        for (let i = rows.length - 1; i >= 0; i -= 1) {
+          const sig = rows[i]?.signal;
+          if (sig?.type === "BUY" || sig?.type === "SELL") {
+            found = sig.text;
+            setSide(sig.type);
+            break;
+          }
+        }
+        setSystemSignal(found || "无放量突破，禁止把均线当进场");
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setSystemSignal("DATA_UNAVAILABLE");
+        }
       });
     return () => {
       cancelled = true;
@@ -170,6 +204,7 @@ export function PaperPage() {
           <p className="text-[13px] tabular-nums">
             最后行情价 {last != null ? last.toFixed(2) : "DATA_UNAVAILABLE"} · {quoteStatus}
           </p>
+          <p className="text-[13px]">系统信号 {systemSignal}</p>
           <label className="text-[13px]" htmlFor="side">交易方向</label>
           <Select value={side} onValueChange={(v) => setSide(v as "BUY" | "SELL")}>
             <SelectTrigger id="side" />

@@ -75,6 +75,30 @@ class TestPublicBoardAndL1Honesty(unittest.TestCase):
             self.assertNotEqual(sa["institutional_flow"]["signal_judgment"], "主力温和吸筹")
             self.assertIn("休市", sa["institutional_flow"]["signal_judgment"])
 
+    def test_single_snapshot_must_not_fabricate_ofi_iceberg_or_flow(self) -> None:
+        from entropy_execution.battlefield_api_service import handle_get_microstructure_flow
+
+        src = self._src("entropy_execution/battlefield_api_service.py")
+        self.assertNotIn("bid_vol1 * 8", src)
+        self.assertNotIn("diff_vol * 10", src)
+        self.assertNotIn("主力温和吸筹", src)
+        self.assertNotIn("bid_volume_top3=1000.0", self._src("entropy_execution/live_pipeline_orchestrator.py"))
+        self.assertNotIn("real_executed_sell_volume=100.0", self._src("entropy_execution/live_pipeline_orchestrator.py"))
+        self.assertIn("SKIPPED_NO_L1", self._src("entropy_execution/live_pipeline_orchestrator.py"))
+
+        moutai = handle_get_microstructure_flow("600519.SH")
+        self.assertNotIn("主力", moutai["institutional_flow"]["signal_judgment"])
+        self.assertEqual(moutai["iceberg"]["estimated_hidden_volume"], 0)
+        self.assertEqual(moutai["iceberg"]["detected_type"], "NONE")
+        self.assertEqual(moutai["ofi"]["ofi_net_value"], 0)
+        self.assertNotEqual(moutai["ofi"]["data_grade"], "REAL_EXCHANGE_L1")
+
+        sa = handle_get_microstructure_flow("SA")
+        self.assertNotIn("主力", sa["institutional_flow"]["signal_judgment"])
+        self.assertEqual(sa["iceberg"]["estimated_hidden_volume"], 0)
+        self.assertEqual(sa["ofi"]["ofi_net_value"], 0)
+        self.assertNotEqual(sa["ofi"]["data_grade"], "REAL_EXCHANGE_L1")
+
     def test_gha_must_build_frontend(self) -> None:
         yml = self._src(".github/workflows/ci_quality_gate.yml")
         self.assertIn("npm run build", yml)

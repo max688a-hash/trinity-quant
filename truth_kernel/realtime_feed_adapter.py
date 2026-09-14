@@ -40,6 +40,7 @@ class MarketTick:
     source: str
     is_closed: bool = False
     status_desc: str = ""
+    open_interest: float = 0.0
 
 
 class RealtimeFeedAdapter:
@@ -73,6 +74,7 @@ class RealtimeFeedAdapter:
             bid1=slice_row.bid1, ask1=slice_row.ask1,
             bid_vol1=slice_row.bid_vol1, ask_vol1=slice_row.ask_vol1,
             change_pct=slice_row.change_pct, is_live=True, source=slice_row.source,
+            open_interest=float(getattr(slice_row, "open_interest", 0.0) or 0.0),
         )
 
     def _fetch_sina_live_quote(self, symbol: str) -> Optional[MarketTick]:
@@ -166,7 +168,8 @@ class RealtimeFeedAdapter:
                     bid_vol1=live_tick.bid_vol1, ask_vol1=live_tick.ask_vol1,
                     change_pct=live_tick.change_pct, is_live=False, is_closed=True,
                     source="REAL_LAST_CLOSE_FROZEN",
-                    status_desc=f"【交易所已休市】{clock.reason} · 真实最后收盘价已冻结"
+                    status_desc=f"【交易所已休市】{clock.reason} · 真实最后收盘价已冻结",
+                    open_interest=live_tick.open_interest,
                 )
                 with self._cache_lock:
                     self._cache[symbol] = closed_tick
@@ -186,7 +189,8 @@ class RealtimeFeedAdapter:
                     bid_vol1=cached.bid_vol1, ask_vol1=cached.ask_vol1,
                     change_pct=cached.change_pct, is_live=False, is_closed=not clock.is_open,
                     source="REAL_LAST_CLOSE_FROZEN" if not clock.is_open else "CACHE_STATIC_WAITING_TRADE",
-                    status_desc="【缓存真实切片】外部网络断开，维持最后真实行情切片，零意淫跳动"
+                    status_desc="【缓存真实切片】外部网络断开，维持最后真实行情切片，零意淫跳动",
+                    open_interest=cached.open_interest,
                 )
 
         cfg = self._ASSET_BASE_PARAMS.get(symbol, {"name": symbol})

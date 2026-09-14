@@ -85,7 +85,8 @@ class TestMultiTimeframeFractalEngine(unittest.TestCase):
         self.assertEqual(verdict.resonance_grade, ResonanceGrade.DIVERGENT_CONFLICT)
         self.assertEqual(verdict.allowed_direction, "STAND_ASIDE")
         self.assertEqual(verdict.confidence_multiplier, 0.0)
-        self.assertIn("逆势假抽/反弹诱多", verdict.detailed_thesis)
+        self.assertNotIn("诱多", verdict.detailed_thesis)
+        self.assertIn("无量仓", verdict.detailed_thesis)
 
 
 if __name__ == "__main__":
