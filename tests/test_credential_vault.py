@@ -22,8 +22,10 @@ class TestCredentialVault(unittest.TestCase):
         self.temp_dir = tempfile.mkdtemp()
         self.vault_file = os.path.join(self.temp_dir, "test_vault.enc.json")
         self.vault = CredentialVault(self.vault_file)
+        os.environ["TRINITY_VAULT_MASTER_KEY"] = "unit-test-vault-master-key"
 
     def tearDown(self) -> None:
+        os.environ.pop("TRINITY_VAULT_MASTER_KEY", None)
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_save_and_retrieve_credentials(self) -> None:
@@ -62,6 +64,24 @@ class TestCredentialVault(unittest.TestCase):
         self.assertIsInstance(info, dict)
         self.assertIn("account_id", info)
         self.assertIn("...", info["account_id"])
+
+    def test_missing_master_key_fails_closed(self) -> None:
+        """未配置主密钥：保存与读取一律失败"""
+        os.environ.pop("TRINITY_VAULT_MASTER_KEY", None)
+        self.assertFalse(self.vault.save_gateway_credentials("QMT_STOCK", {"account_id": "1"}))
+        self.assertIsNone(self.vault.get_gateway_credentials("QMT_STOCK"))
+
+    def test_tampered_ciphertext_rejected(self) -> None:
+        """密文被篡改必须解密失败"""
+        import json
+        self.vault.save_gateway_credentials("BINANCE_CRYPTO", {"api_key": "k", "api_secret": "s"})
+        with open(self.vault_file, "r", encoding="utf-8") as f:
+            raw = json.load(f)
+        blob = raw["BINANCE_CRYPTO"]
+        raw["BINANCE_CRYPTO"] = blob[:-6] + ("AAAA==" if not blob.endswith("AAAA==") else "BBBB==")
+        with open(self.vault_file, "w", encoding="utf-8") as f:
+            json.dump(raw, f)
+        self.assertIsNone(self.vault.get_gateway_credentials("BINANCE_CRYPTO"))
 
     def test_clear_credentials(self) -> None:
         """测试物理抹除凭据"""

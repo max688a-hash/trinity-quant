@@ -3,7 +3,7 @@
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "1998-12-31",
-    "disclosure_date": "1999-04-25",
+    "disclosure_date": "1999-04-30",
     "revenue": 628000000.0,
     "operating_profit": 219000000.0,
     "net_profit": 147000000.0,
@@ -20,13 +20,15 @@
     "short_term_debt": 147000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "1999-12-31",
-    "disclosure_date": "2000-04-25",
+    "disclosure_date": "2000-04-30",
     "revenue": 891000000.0,
     "operating_profit": 354000000.0,
     "net_profit": 216000000.0,
@@ -43,13 +45,15 @@
     "short_term_debt": 117000000.0,
     "long_term_debt_due_within_1y": 57360000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2000-12-31",
-    "disclosure_date": "2001-04-25",
+    "disclosure_date": "2001-04-30",
     "revenue": 1114000000.0,
     "operating_profit": 446000000.0,
     "net_profit": 254999999.99999997,
@@ -66,13 +70,15 @@
     "short_term_debt": 129000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2001-06-30",
-    "disclosure_date": "2001-08-28",
+    "disclosure_date": "2001-08-31",
     "revenue": 874000000.0,
     "operating_profit": 374000000.0,
     "net_profit": 229999999.99999997,
@@ -89,13 +95,15 @@
     "short_term_debt": 109000000.00000001,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2001-12-31",
-    "disclosure_date": "2002-04-25",
+    "disclosure_date": "2002-04-30",
     "revenue": 1618000000.0,
     "operating_profit": 610000000.0,
     "net_profit": 342000000.0,
@@ -112,13 +120,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2002-03-31",
-    "disclosure_date": "2002-04-28",
+    "disclosure_date": "2002-04-30",
     "revenue": 718000000.0,
     "operating_profit": 338000000.0,
     "net_profit": 214000000.0,
@@ -135,13 +145,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2002-06-30",
-    "disclosure_date": "2002-08-28",
+    "disclosure_date": "2002-08-31",
     "revenue": 956000000.0,
     "operating_profit": 401999999.99999994,
     "net_profit": 246000000.0,
@@ -158,13 +170,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2002-09-30",
-    "disclosure_date": "2002-10-28",
+    "disclosure_date": "2002-10-31",
     "revenue": 1364000000.0,
     "operating_profit": 528000000.0,
     "net_profit": 320000000.0,
@@ -181,13 +195,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2002-12-31",
-    "disclosure_date": "2003-04-25",
+    "disclosure_date": "2003-04-30",
     "revenue": 1835000000.0000002,
     "operating_profit": 648000000.0,
     "net_profit": 392000000.0,
@@ -204,13 +220,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2003-03-31",
-    "disclosure_date": "2003-04-28",
+    "disclosure_date": "2003-04-30",
     "revenue": 734000000.0,
     "operating_profit": 341000000.0,
     "net_profit": 225000000.0,
@@ -227,13 +245,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2003-06-30",
-    "disclosure_date": "2003-08-28",
+    "disclosure_date": "2003-08-31",
     "revenue": 1009000000.0,
     "operating_profit": 411000000.00000006,
     "net_profit": 262000000.0,
@@ -250,13 +270,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2003-09-30",
-    "disclosure_date": "2003-10-28",
+    "disclosure_date": "2003-10-31",
     "revenue": 1553000000.0,
     "operating_profit": 595000000.0,
     "net_profit": 370000000.0,
@@ -273,13 +295,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2003-12-31",
-    "disclosure_date": "2004-04-25",
+    "disclosure_date": "2004-04-30",
     "revenue": 2401000000.0,
     "operating_profit": 975000000.0,
     "net_profit": 609000000.0,
@@ -296,13 +320,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2004-03-31",
-    "disclosure_date": "2004-04-28",
+    "disclosure_date": "2004-04-30",
     "revenue": 852999999.9999999,
     "operating_profit": 401000000.0,
     "net_profit": 271000000.0,
@@ -319,13 +345,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2004-06-30",
-    "disclosure_date": "2004-08-28",
+    "disclosure_date": "2004-08-31",
     "revenue": 1314000000.0,
     "operating_profit": 570000000.0,
     "net_profit": 364000000.0,
@@ -342,13 +370,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2004-09-30",
-    "disclosure_date": "2004-10-28",
+    "disclosure_date": "2004-10-31",
     "revenue": 2070000000.0,
     "operating_profit": 876000000.0,
     "net_profit": 538000000.0,
@@ -365,13 +395,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2004-12-31",
-    "disclosure_date": "2005-04-25",
+    "disclosure_date": "2005-04-30",
     "revenue": 3010000000.0,
     "operating_profit": 1488000000.0,
     "net_profit": 853999999.9999999,
@@ -388,13 +420,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2005-03-31",
-    "disclosure_date": "2005-04-28",
+    "disclosure_date": "2005-04-30",
     "revenue": 1144000000.0,
     "operating_profit": 557000000.0,
     "net_profit": 384000000.0,
@@ -411,13 +445,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2005-06-30",
-    "disclosure_date": "2005-08-28",
+    "disclosure_date": "2005-08-31",
     "revenue": 1686000000.0,
     "operating_profit": 756000000.0,
     "net_profit": 503000000.0,
@@ -434,13 +470,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2005-09-30",
-    "disclosure_date": "2005-10-28",
+    "disclosure_date": "2005-10-31",
     "revenue": 2580000000.0,
     "operating_profit": 1149000000.0,
     "net_profit": 735000000.0,
@@ -457,13 +495,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2005-12-31",
-    "disclosure_date": "2006-04-25",
+    "disclosure_date": "2006-04-30",
     "revenue": 3931000000.0,
     "operating_profit": 1919000000.0000002,
     "net_profit": 1169000000.0,
@@ -480,13 +520,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2006-03-31",
-    "disclosure_date": "2006-04-28",
+    "disclosure_date": "2006-04-30",
     "revenue": 1353000000.0,
     "operating_profit": 670000000.0,
     "net_profit": 451000000.0,
@@ -503,13 +545,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2006-06-30",
-    "disclosure_date": "2006-08-28",
+    "disclosure_date": "2006-08-31",
     "revenue": 2013000000.0,
     "operating_profit": 958000000.0,
     "net_profit": 603000000.0,
@@ -526,13 +570,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2006-09-30",
-    "disclosure_date": "2006-10-28",
+    "disclosure_date": "2006-10-31",
     "revenue": 3252000000.0000005,
     "operating_profit": 1688000000.0,
     "net_profit": 1057000000.0,
@@ -549,13 +595,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2006-12-31",
-    "disclosure_date": "2007-04-25",
+    "disclosure_date": "2007-04-30",
     "revenue": 4903000000.0,
     "operating_profit": 2487000000.0,
     "net_profit": 1616000000.0,
@@ -572,13 +620,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2007-03-31",
-    "disclosure_date": "2007-04-28",
+    "disclosure_date": "2007-04-30",
     "revenue": 1588000000.0,
     "operating_profit": 873000000.0,
     "net_profit": 561000000.0,
@@ -595,13 +645,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2007-06-30",
-    "disclosure_date": "2007-08-28",
+    "disclosure_date": "2007-08-31",
     "revenue": 2629000000.0,
     "operating_profit": 1359000000.0,
     "net_profit": 894000000.0,
@@ -618,13 +670,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2007-09-30",
-    "disclosure_date": "2007-10-28",
+    "disclosure_date": "2007-10-31",
     "revenue": 4458000000.0,
     "operating_profit": 2506000000.0,
     "net_profit": 1669000000.0000002,
@@ -641,13 +695,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2007-12-31",
-    "disclosure_date": "2008-04-25",
+    "disclosure_date": "2008-04-30",
     "revenue": 7237000000.0,
     "operating_profit": 4525000000.0,
     "net_profit": 2966000000.0,
@@ -664,13 +720,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2008-03-31",
-    "disclosure_date": "2008-04-28",
+    "disclosure_date": "2008-04-30",
     "revenue": 1993000000.0,
     "operating_profit": 1222000000.0,
     "net_profit": 917000000.0,
@@ -687,13 +745,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2008-06-30",
-    "disclosure_date": "2008-08-28",
+    "disclosure_date": "2008-08-31",
     "revenue": 4620000000.0,
     "operating_profit": 3144000000.0,
     "net_profit": 2352000000.0,
@@ -710,13 +770,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2008-09-30",
-    "disclosure_date": "2008-10-28",
+    "disclosure_date": "2008-10-31",
     "revenue": 6487000000.0,
     "operating_profit": 4411000000.0,
     "net_profit": 3304000000.0,
@@ -733,13 +795,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2008-12-31",
-    "disclosure_date": "2009-04-25",
+    "disclosure_date": "2009-04-30",
     "revenue": 8242000000.0,
     "operating_profit": 5390000000.0,
     "net_profit": 4001000000.0,
@@ -756,13 +820,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2009-03-31",
-    "disclosure_date": "2009-04-28",
+    "disclosure_date": "2009-04-30",
     "revenue": 2513000000.0,
     "operating_profit": 1705000000.0,
     "net_profit": 1279000000.0,
@@ -779,13 +845,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2009-06-30",
-    "disclosure_date": "2009-08-28",
+    "disclosure_date": "2009-08-31",
     "revenue": 5546000000.0,
     "operating_profit": 3904999999.9999995,
     "net_profit": 2929000000.0,
@@ -802,13 +870,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2009-09-30",
-    "disclosure_date": "2009-10-28",
+    "disclosure_date": "2009-10-31",
     "revenue": 7806999999.999999,
     "operating_profit": 5306000000.0,
     "net_profit": 3979999999.9999995,
@@ -825,13 +895,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2009-12-31",
-    "disclosure_date": "2010-04-25",
+    "disclosure_date": "2010-04-30",
     "revenue": 9670000000.0,
     "operating_profit": 6076000000.0,
     "net_profit": 4553000000.0,
@@ -848,13 +920,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2010-03-31",
-    "disclosure_date": "2010-04-28",
+    "disclosure_date": "2010-04-30",
     "revenue": 3040000000.0,
     "operating_profit": 1796000000.0,
     "net_profit": 1344000000.0,
@@ -871,13 +945,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2010-06-30",
-    "disclosure_date": "2010-08-28",
+    "disclosure_date": "2010-08-31",
     "revenue": 6587000000.0,
     "operating_profit": 4381000000.0,
     "net_profit": 3275000000.0,
@@ -894,13 +970,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2010-09-30",
-    "disclosure_date": "2010-10-28",
+    "disclosure_date": "2010-10-31",
     "revenue": 9328000000.0,
     "operating_profit": 5898000000.0,
     "net_profit": 4411000000.0,
@@ -917,13 +995,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2010-12-31",
-    "disclosure_date": "2011-04-25",
+    "disclosure_date": "2011-04-30",
     "revenue": 11633000000.0,
     "operating_profit": 7161000000.0,
     "net_profit": 5340000000.0,
@@ -940,13 +1020,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2011-03-31",
-    "disclosure_date": "2011-04-28",
+    "disclosure_date": "2011-04-30",
     "revenue": 4221000000.0,
     "operating_profit": 2652000000.0,
     "net_profit": 1991000000.0,
@@ -963,13 +1045,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2011-06-30",
-    "disclosure_date": "2011-08-28",
+    "disclosure_date": "2011-08-31",
     "revenue": 9826000000.0,
     "operating_profit": 6890000000.000001,
     "net_profit": 5166000000.0,
@@ -986,13 +1070,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2011-09-30",
-    "disclosure_date": "2011-10-28",
+    "disclosure_date": "2011-10-31",
     "revenue": 13641999999.999998,
     "operating_profit": 9282000000.0,
     "net_profit": 6931000000.0,
@@ -1009,13 +1095,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2011-12-31",
-    "disclosure_date": "2012-04-25",
+    "disclosure_date": "2012-04-30",
     "revenue": 18402000000.0,
     "operating_profit": 12336000000.0,
     "net_profit": 9250000000.0,
@@ -1032,13 +1120,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2012-03-31",
-    "disclosure_date": "2012-04-28",
+    "disclosure_date": "2012-04-30",
     "revenue": 6016000000.0,
     "operating_profit": 4172999999.9999995,
     "net_profit": 3129000000.0,
@@ -1055,13 +1145,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2012-06-30",
-    "disclosure_date": "2012-08-28",
+    "disclosure_date": "2012-08-31",
     "revenue": 13263999999.999998,
     "operating_profit": 9800000000.0,
     "net_profit": 7348999999.999999,
@@ -1078,13 +1170,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2012-09-30",
-    "disclosure_date": "2012-10-28",
+    "disclosure_date": "2012-10-31",
     "revenue": 19931000000.0,
     "operating_profit": 14687000000.0,
     "net_profit": 10938000000.0,
@@ -1101,13 +1195,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2012-12-31",
-    "disclosure_date": "2013-04-25",
+    "disclosure_date": "2013-04-30",
     "revenue": 26455000000.0,
     "operating_profit": 18831000000.0,
     "net_profit": 14008000000.000002,
@@ -1124,13 +1220,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2013-03-31",
-    "disclosure_date": "2013-04-28",
+    "disclosure_date": "2013-04-30",
     "revenue": 7166000000.0,
     "operating_profit": 5370000000.0,
     "net_profit": 3772999999.9999995,
@@ -1147,13 +1245,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2013-06-30",
-    "disclosure_date": "2013-08-28",
+    "disclosure_date": "2013-08-31",
     "revenue": 14137000000.0,
     "operating_profit": 10398000000.0,
     "net_profit": 7620999999.999999,
@@ -1170,13 +1270,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2013-09-30",
-    "disclosure_date": "2013-10-28",
+    "disclosure_date": "2013-10-31",
     "revenue": 22002000000.0,
     "operating_profit": 16013000000.0,
     "net_profit": 11662000000.0,
@@ -1193,13 +1295,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2013-12-31",
-    "disclosure_date": "2014-04-25",
+    "disclosure_date": "2014-04-30",
     "revenue": 31070999999.999996,
     "operating_profit": 21792000000.0,
     "net_profit": 15965000000.0,
@@ -1216,13 +1320,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2014-03-31",
-    "disclosure_date": "2014-04-28",
+    "disclosure_date": "2014-04-30",
     "revenue": 7581999999.999999,
     "operating_profit": 5320000000.0,
     "net_profit": 3953000000.0,
@@ -1239,13 +1345,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2014-06-30",
-    "disclosure_date": "2014-08-28",
+    "disclosure_date": "2014-08-31",
     "revenue": 14616000000.0,
     "operating_profit": 10251000000.0,
     "net_profit": 7665000000.000001,
@@ -1262,13 +1370,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2014-09-30",
-    "disclosure_date": "2014-10-28",
+    "disclosure_date": "2014-10-31",
     "revenue": 22173000000.0,
     "operating_profit": 15316000000.0,
     "net_profit": 11376000000.0,
@@ -1285,13 +1395,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2014-12-31",
-    "disclosure_date": "2015-04-25",
+    "disclosure_date": "2015-04-30",
     "revenue": 32217000000.0,
     "operating_profit": 22103000000.0,
     "net_profit": 16269000000.0,
@@ -1308,13 +1420,15 @@
     "short_term_debt": 62552500.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2015-03-31",
-    "disclosure_date": "2015-04-28",
+    "disclosure_date": "2015-04-30",
     "revenue": 8760000000.0,
     "operating_profit": 6204000000.0,
     "net_profit": 4628000000.0,
@@ -1331,13 +1445,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2015-06-30",
-    "disclosure_date": "2015-08-28",
+    "disclosure_date": "2015-08-31",
     "revenue": 16186000000.000002,
     "operating_profit": 11152000000.0,
     "net_profit": 8365000000.000001,
@@ -1354,13 +1470,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2015-09-30",
-    "disclosure_date": "2015-10-28",
+    "disclosure_date": "2015-10-31",
     "revenue": 23734000000.0,
     "operating_profit": 16294999999.999998,
     "net_profit": 12127000000.0,
@@ -1377,13 +1495,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2015-12-31",
-    "disclosure_date": "2016-04-25",
+    "disclosure_date": "2016-04-30",
     "revenue": 33447000000.000004,
     "operating_profit": 22159000000.0,
     "net_profit": 16455000000.000002,
@@ -1400,13 +1520,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2016-03-31",
-    "disclosure_date": "2016-04-28",
+    "disclosure_date": "2016-04-30",
     "revenue": 10251000000.0,
     "operating_profit": 7203000000.0,
     "net_profit": 5212000000.0,
@@ -1423,13 +1545,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2016-06-30",
-    "disclosure_date": "2016-08-28",
+    "disclosure_date": "2016-08-31",
     "revenue": 18738000000.0,
     "operating_profit": 12760000000.0,
     "net_profit": 9377000000.0,
@@ -1446,13 +1570,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2016-09-30",
-    "disclosure_date": "2016-10-28",
+    "disclosure_date": "2016-10-31",
     "revenue": 27533000000.0,
     "operating_profit": 18150000000.0,
     "net_profit": 13330000000.000002,
@@ -1469,13 +1595,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2016-12-31",
-    "disclosure_date": "2017-04-25",
+    "disclosure_date": "2017-04-30",
     "revenue": 40155000000.0,
     "operating_profit": 24266000000.0,
     "net_profit": 17931000000.0,
@@ -1492,13 +1620,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2017-03-31",
-    "disclosure_date": "2017-04-28",
+    "disclosure_date": "2017-04-30",
     "revenue": 13913000000.0,
     "operating_profit": 8790000000.0,
     "net_profit": 6545000000.0,
@@ -1515,13 +1645,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2017-06-30",
-    "disclosure_date": "2017-08-28",
+    "disclosure_date": "2017-08-31",
     "revenue": 25494000000.0,
     "operating_profit": 16124000000.0,
     "net_profit": 12044000000.0,
@@ -1538,13 +1670,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2017-09-30",
-    "disclosure_date": "2017-10-28",
+    "disclosure_date": "2017-10-31",
     "revenue": 44487000000.0,
     "operating_profit": 28637000000.0,
     "net_profit": 21361000000.0,
@@ -1561,13 +1695,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2017-12-31",
-    "disclosure_date": "2018-04-25",
+    "disclosure_date": "2018-04-30",
     "revenue": 61063000000.0,
     "operating_profit": 38940000000.0,
     "net_profit": 29006000000.0,
@@ -1584,13 +1720,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2018-03-31",
-    "disclosure_date": "2018-04-28",
+    "disclosure_date": "2018-04-30",
     "revenue": 18395000000.0,
     "operating_profit": 12178000000.0,
     "net_profit": 9131000000.0,
@@ -1607,13 +1745,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2018-06-30",
-    "disclosure_date": "2018-08-28",
+    "disclosure_date": "2018-08-31",
     "revenue": 35251000000.0,
     "operating_profit": 22880000000.0,
     "net_profit": 16921000000.0,
@@ -1630,13 +1770,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2018-09-30",
-    "disclosure_date": "2018-10-28",
+    "disclosure_date": "2018-10-31",
     "revenue": 54969000000.00001,
     "operating_profit": 35838000000.0,
     "net_profit": 26570999999.999996,
@@ -1653,13 +1795,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2018-12-31",
-    "disclosure_date": "2019-04-25",
+    "disclosure_date": "2019-04-30",
     "revenue": 77199000000.0,
     "operating_profit": 51342999999.99999,
     "net_profit": 37830000000.0,
@@ -1676,13 +1820,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2019-03-31",
-    "disclosure_date": "2019-04-28",
+    "disclosure_date": "2019-04-30",
     "revenue": 22481000000.0,
     "operating_profit": 15996000000.0,
     "net_profit": 11916000000.0,
@@ -1699,13 +1845,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2019-06-30",
-    "disclosure_date": "2019-08-28",
+    "disclosure_date": "2019-08-31",
     "revenue": 41173000000.0,
     "operating_profit": 28398000000.0,
     "net_profit": 21197000000.0,
@@ -1722,13 +1870,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2019-09-30",
-    "disclosure_date": "2019-10-28",
+    "disclosure_date": "2019-10-31",
     "revenue": 63509000000.0,
     "operating_profit": 43312000000.0,
     "net_profit": 32412000000.0,
@@ -1745,13 +1895,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2019-12-31",
-    "disclosure_date": "2020-04-25",
+    "disclosure_date": "2020-04-30",
     "revenue": 88854000000.0,
     "operating_profit": 59041000000.0,
     "net_profit": 43970000000.0,
@@ -1768,13 +1920,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2020-03-31",
-    "disclosure_date": "2020-04-28",
+    "disclosure_date": "2020-04-30",
     "revenue": 25298000000.0,
     "operating_profit": 18561000000.0,
     "net_profit": 13863000000.0,
@@ -1791,13 +1945,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2020-06-30",
-    "disclosure_date": "2020-08-28",
+    "disclosure_date": "2020-08-31",
     "revenue": 45634000000.0,
     "operating_profit": 32081000000.0,
     "net_profit": 23928000000.0,
@@ -1814,13 +1970,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2020-09-30",
-    "disclosure_date": "2020-10-28",
+    "disclosure_date": "2020-10-31",
     "revenue": 69575000000.0,
     "operating_profit": 47986000000.0,
     "net_profit": 35851000000.0,
@@ -1837,13 +1995,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2020-12-31",
-    "disclosure_date": "2021-04-25",
+    "disclosure_date": "2021-04-30",
     "revenue": 97993000000.0,
     "operating_profit": 66635000000.0,
     "net_profit": 49523000000.0,
@@ -1860,13 +2020,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2021-03-31",
-    "disclosure_date": "2021-04-28",
+    "disclosure_date": "2021-04-30",
     "revenue": 28064999999.999996,
     "operating_profit": 19714000000.0,
     "net_profit": 14772000000.0,
@@ -1883,13 +2045,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 103000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2021-06-30",
-    "disclosure_date": "2021-08-28",
+    "disclosure_date": "2021-08-31",
     "revenue": 50722000000.0,
     "operating_profit": 35072000000.0,
     "net_profit": 26207000000.0,
@@ -1906,13 +2070,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 93083000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2021-09-30",
-    "disclosure_date": "2021-10-28",
+    "disclosure_date": "2021-10-31",
     "revenue": 77053000000.0,
     "operating_profit": 53023000000.0,
     "net_profit": 39575000000.0,
@@ -1929,13 +2095,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 90903400.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2021-12-31",
-    "disclosure_date": "2022-04-25",
+    "disclosure_date": "2022-04-30",
     "revenue": 109464000000.00002,
     "operating_profit": 74751000000.0,
     "net_profit": 55721000000.0,
@@ -1952,13 +2120,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 104000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2022-03-31",
-    "disclosure_date": "2022-04-28",
+    "disclosure_date": "2022-04-30",
     "revenue": 33187000000.0,
     "operating_profit": 24027000000.0,
     "net_profit": 17952000000.0,
@@ -1975,13 +2145,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 111000000.00000001,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2022-06-30",
-    "disclosure_date": "2022-08-28",
+    "disclosure_date": "2022-08-31",
     "revenue": 59444000000.00001,
     "operating_profit": 41635000000.0,
     "net_profit": 31105000000.0,
@@ -1998,13 +2170,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 81207300.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2022-09-30",
-    "disclosure_date": "2022-10-28",
+    "disclosure_date": "2022-10-31",
     "revenue": 89786000000.0,
     "operating_profit": 61962000000.0,
     "net_profit": 46314000000.0,
@@ -2021,13 +2195,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 113999999.99999999,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2022-12-31",
-    "disclosure_date": "2023-04-25",
+    "disclosure_date": "2023-04-30",
     "revenue": 127554000000.0,
     "operating_profit": 87880000000.0,
     "net_profit": 65376000000.0,
@@ -2044,13 +2220,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 109000000.00000001,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2023-03-31",
-    "disclosure_date": "2023-04-28",
+    "disclosure_date": "2023-04-30",
     "revenue": 39379000000.0,
     "operating_profit": 28686000000.0,
     "net_profit": 21525000000.0,
@@ -2067,13 +2245,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 90213400.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2023-06-30",
-    "disclosure_date": "2023-08-28",
+    "disclosure_date": "2023-08-31",
     "revenue": 70987000000.0,
     "operating_profit": 49892000000.0,
     "net_profit": 37332000000.0,
@@ -2090,13 +2270,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 69441100.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2023-09-30",
-    "disclosure_date": "2023-10-28",
+    "disclosure_date": "2023-10-31",
     "revenue": 105316000000.00002,
     "operating_profit": 73171000000.0,
     "net_profit": 54827000000.0,
@@ -2113,13 +2295,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 62366400.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2023-12-31",
-    "disclosure_date": "2024-04-25",
+    "disclosure_date": "2024-04-30",
     "revenue": 150560000000.0,
     "operating_profit": 103708999999.99998,
     "net_profit": 77521000000.0,
@@ -2136,13 +2320,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 57054900.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2024-03-31",
-    "disclosure_date": "2024-04-28",
+    "disclosure_date": "2024-04-30",
     "revenue": 46485000000.0,
     "operating_profit": 33157000000.0,
     "net_profit": 24882000000.0,
@@ -2159,13 +2345,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 56128000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2024-06-30",
-    "disclosure_date": "2024-08-28",
+    "disclosure_date": "2024-08-31",
     "revenue": 83451000000.0,
     "operating_profit": 57551000000.0,
     "net_profit": 43177000000.0,
@@ -2182,13 +2370,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 60411600.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2024-09-30",
-    "disclosure_date": "2024-10-28",
+    "disclosure_date": "2024-10-31",
     "revenue": 123123000000.0,
     "operating_profit": 83997000000.0,
     "net_profit": 63030999999.99999,
@@ -2205,13 +2395,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 47926700.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2024-12-31",
-    "disclosure_date": "2025-04-25",
+    "disclosure_date": "2025-04-30",
     "revenue": 174144000000.0,
     "operating_profit": 119689000000.00002,
     "net_profit": 89335000000.0,
@@ -2228,13 +2420,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 112000000.00000001,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2025-03-31",
-    "disclosure_date": "2025-04-28",
+    "disclosure_date": "2025-04-30",
     "revenue": 51442999999.99999,
     "operating_profit": 37037000000.0,
     "net_profit": 27775000000.0,
@@ -2251,13 +2445,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 43648000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2025-06-30",
-    "disclosure_date": "2025-08-28",
+    "disclosure_date": "2025-08-31",
     "revenue": 91094000000.0,
     "operating_profit": 62769000000.00001,
     "net_profit": 46987000000.0,
@@ -2274,13 +2470,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 55435800.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2025-09-30",
-    "disclosure_date": "2025-10-28",
+    "disclosure_date": "2025-10-31",
     "revenue": 130904000000.0,
     "operating_profit": 89490000000.0,
     "net_profit": 66899000000.0,
@@ -2297,13 +2495,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 57447800.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2025-12-31",
-    "disclosure_date": "2026-04-25",
+    "disclosure_date": "2026-04-30",
     "revenue": 172054000000.0,
     "operating_profit": 114808999999.99998,
     "net_profit": 85310000000.0,
@@ -2320,13 +2520,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 44206200.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2026-03-31",
-    "disclosure_date": "2026-04-28",
+    "disclosure_date": "2026-04-30",
     "revenue": 54703000000.0,
     "operating_profit": 37537000000.0,
     "net_profit": 28154000000.000004,
@@ -2343,13 +2545,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 53309200.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600519",
     "name": "贵州茅台",
     "period_end_date": "2026-06-30",
-    "disclosure_date": "2026-08-28",
+    "disclosure_date": "2026-08-31",
     "revenue": 92278000000.0,
     "operating_profit": 61411000000.0,
     "net_profit": 46033000000.0,
@@ -2366,6 +2570,8 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 56855400.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   }
 ]

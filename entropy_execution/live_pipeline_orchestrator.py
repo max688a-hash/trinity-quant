@@ -16,6 +16,8 @@ from typing import Any, Dict, List, Optional
 
 from entropy_execution.dynamic_kelly import DynamicKellyAllocator
 from entropy_execution.paper_trading_engine import PaperExecutionReceipt, PaperTradingEngine
+from entropy_execution.trade_statistics import RollingTradeStatistics, resolve_optional_market_cap
+from gravity_brain.dcf_gravity import GravityValuationEngine
 from gravity_brain.institutional_turtle import InstitutionalTurtleEngine, TurtleSignalType
 from gravity_brain.multi_timeframe_fractal import MultiTimeframeFractalEngine, ResonanceGrade
 from immune_system.insider_dump_monitor import (
@@ -60,8 +62,13 @@ class LivePipelineOrchestrator:
         reflex_central: Optional[BioReflexCentral] = None,
         fractal_engine: Optional[MultiTimeframeFractalEngine] = None,
         turtle_engine: Optional[InstitutionalTurtleEngine] = None,
-        kelly_allocator: Optional[DynamicKellyAllocator] = None
+        kelly_allocator: Optional[DynamicKellyAllocator] = None,
+        valuation_engine: Optional[GravityValuationEngine] = None,
+        trade_statistics: Optional[RollingTradeStatistics] = None,
+        cold_start_weight: float = 0.02
     ) -> None:
+        if not 0.0 < cold_start_weight <= 0.05:
+            raise ValueError("冷启动探仓权重必须在 (0, 5%]")
         self.paper = paper_engine or PaperTradingEngine(initial_capital=10_000_000.0)
         self.firewall = firewall or PoisonFirewall()
         self.dump_monitor = dump_monitor or InsiderDumpMonitor()
@@ -70,6 +77,47 @@ class LivePipelineOrchestrator:
         self.fractal_engine = fractal_engine or MultiTimeframeFractalEngine()
         self.turtle_engine = turtle_engine or InstitutionalTurtleEngine()
         self.kelly = kelly_allocator or DynamicKellyAllocator()
+        self.valuation = valuation_engine or GravityValuationEngine()
+        self.trade_stats = trade_statistics or RollingTradeStatistics()
+        self.cold_start_weight = cold_start_weight
+
+    def record_closed_trade(self, net_return_pct: float) -> None:
+        """已平仓真实净收益率回灌滚动统计，驱动后续凯利仓位"""
+        self.trade_stats.record_closed_trade(net_return_pct)
+
+    def _resolve_target_weight(
+        self,
+        sym: str,
+        current_price: float,
+        financial_record: Optional[CompanyFinancialRecord],
+        shares_outstanding: Optional[float],
+        trace: Dict[str, Any]
+    ) -> float:
+        """凯利仓位 = f(实证 p/b/CVaR, 引力势能)；样本不足时走显式冷启动探仓"""
+        gravity_potential: Optional[float] = None
+        market_cap = resolve_optional_market_cap(current_price, shares_outstanding)
+        if financial_record is not None and market_cap is not None:
+            val = self.valuation.compute_intrinsic_value(financial_record, market_cap=market_cap)
+            gravity_potential = val.gravity_potential
+            trace["gravity_valuation"] = {"V_G": val.gravity_value, "market_cap": market_cap, "potential": gravity_potential}
+        else:
+            trace["gravity_valuation"] = "UNAVAILABLE_NO_FINANCIALS_OR_SHARES"
+
+        stats = self.trade_stats.compute()
+        trace["trade_statistics"] = {
+            "n": stats.sample_size, "p": stats.win_rate, "b": stats.payoff_ratio,
+            "cvar": stats.cvar_alpha, "sufficient": stats.has_sufficient_evidence
+        }
+        if not stats.has_sufficient_evidence:
+            trace["kelly"] = {"mode": "COLD_START_PROBE", "weight": self.cold_start_weight}
+            return 0.0 if (gravity_potential is not None and gravity_potential <= 0) else self.cold_start_weight
+
+        kelly_res = self.kelly.calculate_weight(
+            symbol=sym, win_rate=stats.win_rate, payoff_ratio=stats.payoff_ratio,
+            cvar_alpha=stats.cvar_alpha, gravity_potential=gravity_potential, is_firewall_admitted=True
+        )
+        trace["kelly"] = {"mode": "EMPIRICAL", "weight": kelly_res.target_weight, "reason": kelly_res.allocation_reason}
+        return kelly_res.target_weight
 
     def execute_tick(
         self,
@@ -84,7 +132,8 @@ class LivePipelineOrchestrator:
         insider_dump_ratio_adv: float = 0.0,
         insider_pledge_ratio: float = 0.0,
         current_breakout_volume: float = 10000.0,
-        recent_avg_volume: float = 10000.0
+        recent_avg_volume: float = 10000.0,
+        shares_outstanding: Optional[float] = None
     ) -> PipelineCycleResult:
         """
         四层端到端闭环驱动：从微观财务核验到订单成交
@@ -189,11 +238,16 @@ class LivePipelineOrchestrator:
             )
 
         # 4. 第四级：动态凯利仓位配比与仿真撮合成交 (Entropy Execution)
-        equity = self.paper.total_equity
-        allocated_capital = equity * 0.10
+        target_weight = self._resolve_target_weight(sym, current_price, financial_record, shares_outstanding, trace)
+        allocated_capital = self.paper.total_equity * target_weight
         target_shares = int(allocated_capital / current_price / 100) * 100
         if target_shares <= 0:
-            target_shares = 100
+            return PipelineCycleResult(
+                symbol=sym, is_executed=False, action="STAND_ASIDE",
+                stage_immune_passed=True, stage_gravity_passed=True, stage_execution_passed=False,
+                veto_reason=f"凯利目标仓位 {target_weight:.2%} 不足一手或为零，不开仓",
+                alert_type="NONE", alert_color="none", audit_trace=trace, receipt=None
+            )
 
         rcpt = self.paper.submit_order(
             symbol=sym,

@@ -3,7 +3,7 @@
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2007-12-31",
-    "disclosure_date": "2008-04-25",
+    "disclosure_date": "2008-04-30",
     "revenue": 36916300.0,
     "operating_profit": 14920500.0,
     "net_profit": 14683500.0,
@@ -20,13 +20,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2008-12-31",
-    "disclosure_date": "2009-04-25",
+    "disclosure_date": "2009-04-30",
     "revenue": 73607100.0,
     "operating_profit": 31687199.999999996,
     "net_profit": 30254699.999999996,
@@ -43,13 +45,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2009-06-30",
-    "disclosure_date": "2009-08-28",
+    "disclosure_date": "2009-08-31",
     "revenue": 59792600.0,
     "operating_profit": 19747700.0,
     "net_profit": 17961900.0,
@@ -66,13 +70,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2009-09-30",
-    "disclosure_date": "2009-10-28",
+    "disclosure_date": "2009-10-31",
     "revenue": 104000000.0,
     "operating_profit": 33178400.0,
     "net_profit": 30556000.0,
@@ -89,13 +95,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2009-12-31",
-    "disclosure_date": "2010-04-25",
+    "disclosure_date": "2010-04-30",
     "revenue": 146000000.0,
     "operating_profit": 47423800.0,
     "net_profit": 44478200.0,
@@ -112,13 +120,15 @@
     "short_term_debt": 40000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2010-03-31",
-    "disclosure_date": "2010-04-28",
+    "disclosure_date": "2010-04-30",
     "revenue": 45153500.0,
     "operating_profit": 15972800.0,
     "net_profit": 15817500.0,
@@ -135,13 +145,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2010-06-30",
-    "disclosure_date": "2010-08-28",
+    "disclosure_date": "2010-08-31",
     "revenue": 102000000.0,
     "operating_profit": 32713400.0,
     "net_profit": 31186500.0,
@@ -158,13 +170,15 @@
     "short_term_debt": 95500000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2010-09-30",
-    "disclosure_date": "2010-10-28",
+    "disclosure_date": "2010-10-31",
     "revenue": 173000000.0,
     "operating_profit": 54275500.0,
     "net_profit": 50524200.0,
@@ -181,13 +195,15 @@
     "short_term_debt": 26200000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2010-12-31",
-    "disclosure_date": "2011-04-25",
+    "disclosure_date": "2011-04-30",
     "revenue": 238000000.0,
     "operating_profit": 72926100.0,
     "net_profit": 70099400.0,
@@ -204,13 +220,15 @@
     "short_term_debt": 70000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2011-03-31",
-    "disclosure_date": "2011-04-28",
+    "disclosure_date": "2011-04-30",
     "revenue": 105000000.0,
     "operating_profit": 34692500.0,
     "net_profit": 29064200.0,
@@ -227,13 +245,15 @@
     "short_term_debt": 70000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2011-06-30",
-    "disclosure_date": "2011-08-28",
+    "disclosure_date": "2011-08-31",
     "revenue": 223000000.0,
     "operating_profit": 71198700.0,
     "net_profit": 58395100.0,
@@ -250,13 +270,15 @@
     "short_term_debt": 200000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2011-09-30",
-    "disclosure_date": "2011-10-28",
+    "disclosure_date": "2011-10-31",
     "revenue": 356000000.0,
     "operating_profit": 109000000.00000001,
     "net_profit": 87399400.0,
@@ -273,13 +295,15 @@
     "short_term_debt": 267000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2011-12-31",
-    "disclosure_date": "2012-04-25",
+    "disclosure_date": "2012-04-30",
     "revenue": 599000000.0,
     "operating_profit": 161000000.0,
     "net_profit": 131000000.0,
@@ -296,13 +320,15 @@
     "short_term_debt": 340000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 854900.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2012-03-31",
-    "disclosure_date": "2012-04-28",
+    "disclosure_date": "2012-04-30",
     "revenue": 276000000.0,
     "operating_profit": 58761300.0,
     "net_profit": 51027100.0,
@@ -319,13 +345,15 @@
     "short_term_debt": 380000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 854900.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2012-06-30",
-    "disclosure_date": "2012-08-28",
+    "disclosure_date": "2012-08-31",
     "revenue": 553000000.0,
     "operating_profit": 102000000.0,
     "net_profit": 90461000.0,
@@ -342,13 +370,15 @@
     "short_term_debt": 474000000.0,
     "long_term_debt_due_within_1y": 45000000.0,
     "goodwill": 854900.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2012-09-30",
-    "disclosure_date": "2012-10-28",
+    "disclosure_date": "2012-10-31",
     "revenue": 828999999.9999999,
     "operating_profit": 134000000.00000001,
     "net_profit": 132000000.0,
@@ -365,13 +395,15 @@
     "short_term_debt": 511000000.00000006,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 854900.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2012-12-31",
-    "disclosure_date": "2013-04-25",
+    "disclosure_date": "2013-04-30",
     "revenue": 1167000000.0,
     "operating_profit": 197000000.0,
     "net_profit": 190000000.0,
@@ -388,13 +420,15 @@
     "short_term_debt": 509000000.0,
     "long_term_debt_due_within_1y": 127000000.0,
     "goodwill": 854900.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2013-03-31",
-    "disclosure_date": "2013-04-28",
+    "disclosure_date": "2013-04-30",
     "revenue": 342000000.0,
     "operating_profit": 82043000.0,
     "net_profit": 70106600.0,
@@ -411,13 +445,15 @@
     "short_term_debt": 539000000.0,
     "long_term_debt_due_within_1y": 113999999.99999999,
     "goodwill": 854900.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2013-06-30",
-    "disclosure_date": "2013-08-28",
+    "disclosure_date": "2013-08-31",
     "revenue": 752000000.0,
     "operating_profit": 131000000.0,
     "net_profit": 112000000.00000001,
@@ -434,13 +470,15 @@
     "short_term_debt": 685000000.0,
     "long_term_debt_due_within_1y": 97594300.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2013-09-30",
-    "disclosure_date": "2013-10-28",
+    "disclosure_date": "2013-10-31",
     "revenue": 1365000000.0,
     "operating_profit": 182000000.0,
     "net_profit": 173000000.0,
@@ -457,13 +495,15 @@
     "short_term_debt": 565000000.0,
     "long_term_debt_due_within_1y": 264000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2013-12-31",
-    "disclosure_date": "2014-04-25",
+    "disclosure_date": "2014-04-30",
     "revenue": 2361000000.0,
     "operating_profit": 237000000.0,
     "net_profit": 231999999.99999997,
@@ -480,13 +520,15 @@
     "short_term_debt": 969999999.9999999,
     "long_term_debt_due_within_1y": 291000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2014-03-31",
-    "disclosure_date": "2014-04-28",
+    "disclosure_date": "2014-04-30",
     "revenue": 1027000000.0,
     "operating_profit": 43771300.0,
     "net_profit": 41946500.0,
@@ -503,13 +545,15 @@
     "short_term_debt": 1150000000.0,
     "long_term_debt_due_within_1y": 265000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2014-06-30",
-    "disclosure_date": "2014-08-28",
+    "disclosure_date": "2014-08-31",
     "revenue": 2939000000.0,
     "operating_profit": 52512400.0,
     "net_profit": 66295100.0,
@@ -526,13 +570,15 @@
     "short_term_debt": 1239000000.0,
     "long_term_debt_due_within_1y": 494000000.00000006,
     "goodwill": 749000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2014-09-30",
-    "disclosure_date": "2014-10-28",
+    "disclosure_date": "2014-10-31",
     "revenue": 4745000000.0,
     "operating_profit": 12628699.999999998,
     "net_profit": 73132500.0,
@@ -549,13 +595,15 @@
     "short_term_debt": 1389000000.0,
     "long_term_debt_due_within_1y": 405000000.0,
     "goodwill": 749000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2014-12-31",
-    "disclosure_date": "2015-04-25",
+    "disclosure_date": "2015-04-30",
     "revenue": 6819000000.0,
     "operating_profit": 47866500.0,
     "net_profit": 129000000.0,
@@ -572,13 +620,15 @@
     "short_term_debt": 1388000000.0,
     "long_term_debt_due_within_1y": 401000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2015-03-31",
-    "disclosure_date": "2015-04-28",
+    "disclosure_date": "2015-04-30",
     "revenue": 2132999999.9999998,
     "operating_profit": 23108000.0,
     "net_profit": 20702300.0,
@@ -595,13 +645,15 @@
     "short_term_debt": 1053999999.9999999,
     "long_term_debt_due_within_1y": 405999999.99999994,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2015-06-30",
-    "disclosure_date": "2015-08-28",
+    "disclosure_date": "2015-08-31",
     "revenue": 4461000000.0,
     "operating_profit": 73363000.0,
     "net_profit": 109000000.00000001,
@@ -618,13 +670,15 @@
     "short_term_debt": 1375000000.0,
     "long_term_debt_due_within_1y": 238000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2015-09-30",
-    "disclosure_date": "2015-10-28",
+    "disclosure_date": "2015-10-31",
     "revenue": 8375000000.0,
     "operating_profit": 54166600.0,
     "net_profit": 151000000.0,
@@ -641,13 +695,15 @@
     "short_term_debt": 1347000000.0,
     "long_term_debt_due_within_1y": 111000000.00000001,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2015-12-31",
-    "disclosure_date": "2016-04-25",
+    "disclosure_date": "2016-04-30",
     "revenue": 13016999999.999998,
     "operating_profit": 69422800.0,
     "net_profit": 217000000.0,
@@ -664,13 +720,15 @@
     "short_term_debt": 1735000000.0000002,
     "long_term_debt_due_within_1y": 98975700.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2016-03-31",
-    "disclosure_date": "2016-04-28",
+    "disclosure_date": "2016-04-30",
     "revenue": 4635000000.0,
     "operating_profit": 123000000.0,
     "net_profit": 79030000.0,
@@ -682,18 +740,20 @@
     "total_liabilities": 12911000000.000002,
     "total_equity": 4076000000.0,
     "cash_and_equivalents": 2619000000.0,
-    "restricted_cash": 1178550000.0,
+    "restricted_cash": 0.0,
     "receivables": 4140000000.0,
     "short_term_debt": 1929000000.0,
     "long_term_debt_due_within_1y": 82933799.99999999,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED_REMOVED_HINDSIGHT_INJECTION"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2016-06-30",
-    "disclosure_date": "2016-08-28",
+    "disclosure_date": "2016-08-31",
     "revenue": 10063000000.0,
     "operating_profit": 28372300.0,
     "net_profit": 80298100.0,
@@ -705,18 +765,20 @@
     "total_liabilities": 19800000000.0,
     "total_equity": 4829000000.0,
     "cash_and_equivalents": 5557000000.0,
-    "restricted_cash": 2500650000.0,
+    "restricted_cash": 0.0,
     "receivables": 4113000000.0000005,
     "short_term_debt": 1493000000.0,
     "long_term_debt_due_within_1y": 77654500.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED_REMOVED_HINDSIGHT_INJECTION"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2016-09-30",
-    "disclosure_date": "2016-10-28",
+    "disclosure_date": "2016-10-31",
     "revenue": 16794999999.999998,
     "operating_profit": 24478800.0,
     "net_profit": 139000000.0,
@@ -728,18 +790,20 @@
     "total_liabilities": 18972000000.0,
     "total_equity": 9820000000.0,
     "cash_and_equivalents": 5611000000.0,
-    "restricted_cash": 2524950000.0,
+    "restricted_cash": 0.0,
     "receivables": 5078000000.0,
     "short_term_debt": 2986000000.0,
     "long_term_debt_due_within_1y": 60368100.00000001,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED_REMOVED_HINDSIGHT_INJECTION"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2016-12-31",
-    "disclosure_date": "2017-04-25",
+    "disclosure_date": "2017-04-30",
     "revenue": 21987000000.0,
     "operating_profit": -373000000.0,
     "net_profit": -222000000.00000003,
@@ -751,18 +815,20 @@
     "total_liabilities": 21752000000.0,
     "total_equity": 10226000000.0,
     "cash_and_equivalents": 3669000000.0,
-    "restricted_cash": 1651050000.0,
+    "restricted_cash": 0.0,
     "receivables": 8692000000.0,
     "short_term_debt": 2600000000.0,
     "long_term_debt_due_within_1y": 2646000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED_REMOVED_HINDSIGHT_INJECTION"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2017-03-31",
-    "disclosure_date": "2017-04-28",
+    "disclosure_date": "2017-04-30",
     "revenue": 4132000000.0,
     "operating_profit": 239000000.0,
     "net_profit": -348700.0,
@@ -774,18 +840,20 @@
     "total_liabilities": 18786000000.0,
     "total_equity": 13619000000.0,
     "cash_and_equivalents": 3658000000.0,
-    "restricted_cash": 1646100000.0,
+    "restricted_cash": 0.0,
     "receivables": 9740000000.0,
     "short_term_debt": 2178000000.0,
     "long_term_debt_due_within_1y": 1980000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED_REMOVED_HINDSIGHT_INJECTION"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2017-06-30",
-    "disclosure_date": "2017-08-28",
+    "disclosure_date": "2017-08-31",
     "revenue": 5579000000.0,
     "operating_profit": -1094000000.0,
     "net_profit": -830000000.0000001,
@@ -797,18 +865,20 @@
     "total_liabilities": 19351000000.0,
     "total_equity": 13563999999.999998,
     "cash_and_equivalents": 2982000000.0,
-    "restricted_cash": 1341900000.0,
+    "restricted_cash": 0.0,
     "receivables": 9548000000.0,
     "short_term_debt": 2111000000.0,
     "long_term_debt_due_within_1y": 2359000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED_REMOVED_HINDSIGHT_INJECTION"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2017-09-30",
-    "disclosure_date": "2017-10-28",
+    "disclosure_date": "2017-10-31",
     "revenue": 6152000000.0,
     "operating_profit": -2861000000.0,
     "net_profit": -2282000000.0,
@@ -820,18 +890,20 @@
     "total_liabilities": 17412000000.0,
     "total_equity": 12483000000.0,
     "cash_and_equivalents": 834000000.0,
-    "restricted_cash": 375300000.0,
+    "restricted_cash": 0.0,
     "receivables": 9742000000.0,
     "short_term_debt": 3008000000.0,
     "long_term_debt_due_within_1y": 505000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED_REMOVED_HINDSIGHT_INJECTION"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2017-12-31",
-    "disclosure_date": "2018-04-25",
+    "disclosure_date": "2018-04-30",
     "revenue": 7095999999.999999,
     "operating_profit": -17408000000.0,
     "net_profit": -18184000000.0,
@@ -843,18 +915,20 @@
     "total_liabilities": 18564000000.0,
     "total_equity": 663000000.0,
     "cash_and_equivalents": 852999999.9999999,
-    "restricted_cash": 383849999.99999994,
+    "restricted_cash": 0.0,
     "receivables": 3615999999.9999995,
     "short_term_debt": 2755000000.0,
     "long_term_debt_due_within_1y": 1515000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED_REMOVED_HINDSIGHT_INJECTION"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2018-03-31",
-    "disclosure_date": "2018-04-28",
+    "disclosure_date": "2018-04-30",
     "revenue": 437000000.0,
     "operating_profit": -445000000.0,
     "net_profit": -446000000.0,
@@ -871,13 +945,15 @@
     "short_term_debt": 3315000000.0,
     "long_term_debt_due_within_1y": 1515000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2018-06-30",
-    "disclosure_date": "2018-08-28",
+    "disclosure_date": "2018-08-31",
     "revenue": 1003999999.9999999,
     "operating_profit": -1310000000.0,
     "net_profit": -1309000000.0,
@@ -894,13 +970,15 @@
     "short_term_debt": 2177000000.0,
     "long_term_debt_due_within_1y": 1386000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2018-09-30",
-    "disclosure_date": "2018-10-28",
+    "disclosure_date": "2018-10-31",
     "revenue": 1371000000.0,
     "operating_profit": -1857999999.9999998,
     "net_profit": -1848000000.0,
@@ -917,13 +995,15 @@
     "short_term_debt": 1955999999.9999998,
     "long_term_debt_due_within_1y": 1358000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2018-12-31",
-    "disclosure_date": "2019-04-25",
+    "disclosure_date": "2019-04-30",
     "revenue": 1581000000.0,
     "operating_profit": -5703000000.0,
     "net_profit": -5734000000.0,
@@ -940,13 +1020,15 @@
     "short_term_debt": 42075000.0,
     "long_term_debt_due_within_1y": 323000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2019-03-31",
-    "disclosure_date": "2019-04-28",
+    "disclosure_date": "2019-04-30",
     "revenue": 129000000.0,
     "operating_profit": -187000000.0,
     "net_profit": -183000000.0,
@@ -963,13 +1045,15 @@
     "short_term_debt": 42075000.0,
     "long_term_debt_due_within_1y": 247000000.00000003,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2019-06-30",
-    "disclosure_date": "2019-08-28",
+    "disclosure_date": "2019-08-31",
     "revenue": 254000000.0,
     "operating_profit": -264000000.0,
     "net_profit": -10065000000.0,
@@ -986,13 +1070,15 @@
     "short_term_debt": 42075000.0,
     "long_term_debt_due_within_1y": 218000000.00000003,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2019-09-30",
-    "disclosure_date": "2019-10-28",
+    "disclosure_date": "2019-10-31",
     "revenue": 393000000.0,
     "operating_profit": -424000000.0,
     "net_profit": -10221000000.0,
@@ -1009,13 +1095,15 @@
     "short_term_debt": 42075000.0,
     "long_term_debt_due_within_1y": 743000000.0,
     "goodwill": 748000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2019-12-31",
-    "disclosure_date": "2020-04-25",
+    "disclosure_date": "2020-04-30",
     "revenue": 499000000.0,
     "operating_profit": -2239000000.0,
     "net_profit": -11337000000.0,
@@ -1032,13 +1120,15 @@
     "short_term_debt": 42075000.0,
     "long_term_debt_due_within_1y": 637000000.0,
     "goodwill": 596000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2020-03-31",
-    "disclosure_date": "2020-04-28",
+    "disclosure_date": "2020-04-30",
     "revenue": 88949900.0,
     "operating_profit": -161000000.0,
     "net_profit": -160000000.0,
@@ -1055,13 +1145,15 @@
     "short_term_debt": 42075000.0,
     "long_term_debt_due_within_1y": 636000000.0,
     "goodwill": 596000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2020-06-30",
-    "disclosure_date": "2020-08-28",
+    "disclosure_date": "2020-08-31",
     "revenue": 142000000.0,
     "operating_profit": -298000000.0,
     "net_profit": -294000000.0,
@@ -1078,13 +1170,15 @@
     "short_term_debt": 42075000.0,
     "long_term_debt_due_within_1y": 292000000.0,
     "goodwill": 596000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2020-09-30",
-    "disclosure_date": "2020-10-28",
+    "disclosure_date": "2020-10-31",
     "revenue": 223000000.0,
     "operating_profit": -976000000.0,
     "net_profit": -968000000.0,
@@ -1101,13 +1195,15 @@
     "short_term_debt": 42075000.0,
     "long_term_debt_due_within_1y": 124000000.0,
     "goodwill": 179000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2020-12-31",
-    "disclosure_date": "2021-04-25",
+    "disclosure_date": "2021-04-30",
     "revenue": 468000000.0,
     "operating_profit": -2187000000.0,
     "net_profit": -2544000000.0,
@@ -1124,13 +1220,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 73000000.0,
     "goodwill": 179000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2021-03-31",
-    "disclosure_date": "2021-04-28",
+    "disclosure_date": "2021-04-30",
     "revenue": 53813600.0,
     "operating_profit": -136000000.0,
     "net_profit": -135000000.0,
@@ -1147,13 +1245,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 73000000.0,
     "goodwill": 179000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2021-06-30",
-    "disclosure_date": "2021-08-28",
+    "disclosure_date": "2021-08-31",
     "revenue": 196000000.0,
     "operating_profit": -186000000.0,
     "net_profit": -186000000.0,
@@ -1170,13 +1270,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 73000000.0,
     "goodwill": 179000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2021-09-30",
-    "disclosure_date": "2021-10-28",
+    "disclosure_date": "2021-10-31",
     "revenue": 296000000.0,
     "operating_profit": -162000000.0,
     "net_profit": -162000000.0,
@@ -1193,13 +1295,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 73000000.0,
     "goodwill": 179000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2021-12-31",
-    "disclosure_date": "2022-04-25",
+    "disclosure_date": "2022-04-30",
     "revenue": 418000000.0,
     "operating_profit": -1268000000.0,
     "net_profit": -2022000000.0,
@@ -1216,13 +1320,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2022-03-31",
-    "disclosure_date": "2022-04-28",
+    "disclosure_date": "2022-04-30",
     "revenue": 152000000.0,
     "operating_profit": -119000000.0,
     "net_profit": -119000000.0,
@@ -1239,13 +1345,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2022-06-30",
-    "disclosure_date": "2022-08-28",
+    "disclosure_date": "2022-08-31",
     "revenue": 216000000.0,
     "operating_profit": -250999999.99999997,
     "net_profit": -250000000.0,
@@ -1262,13 +1370,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2022-09-30",
-    "disclosure_date": "2022-10-28",
+    "disclosure_date": "2022-10-31",
     "revenue": 267000000.0,
     "operating_profit": -353000000.0,
     "net_profit": -352000000.0,
@@ -1285,13 +1395,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2022-12-31",
-    "disclosure_date": "2023-04-25",
+    "disclosure_date": "2023-04-30",
     "revenue": 393000000.0,
     "operating_profit": -302000000.0,
     "net_profit": -317000000.0,
@@ -1308,13 +1420,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 3689800.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2023-03-31",
-    "disclosure_date": "2023-04-28",
+    "disclosure_date": "2023-04-30",
     "revenue": 42991200.0,
     "operating_profit": -121000000.0,
     "net_profit": -109000000.00000001,
@@ -1331,13 +1445,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 3474900.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2023-06-30",
-    "disclosure_date": "2023-08-28",
+    "disclosure_date": "2023-08-31",
     "revenue": 98208700.00000001,
     "operating_profit": -145000000.0,
     "net_profit": -199000000.0,
@@ -1354,13 +1470,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 3437600.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2023-09-30",
-    "disclosure_date": "2023-10-28",
+    "disclosure_date": "2023-10-31",
     "revenue": 142000000.0,
     "operating_profit": -202000000.0,
     "net_profit": -1597000000.0,
@@ -1377,13 +1495,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 3057900.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2023-12-31",
-    "disclosure_date": "2024-04-25",
+    "disclosure_date": "2024-04-30",
     "revenue": 245000000.00000003,
     "operating_profit": -521000000.0,
     "net_profit": -2202000000.0,
@@ -1400,13 +1520,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 3188800.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2024-03-31",
-    "disclosure_date": "2024-04-28",
+    "disclosure_date": "2024-04-30",
     "revenue": 36130100.0,
     "operating_profit": -76324000.0,
     "net_profit": -76485000.0,
@@ -1423,13 +1545,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 3446300.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2024-06-30",
-    "disclosure_date": "2024-08-28",
+    "disclosure_date": "2024-08-31",
     "revenue": 78666900.0,
     "operating_profit": -109000000.00000001,
     "net_profit": -149000000.0,
@@ -1446,13 +1570,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 2314600.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2024-09-30",
-    "disclosure_date": "2024-10-28",
+    "disclosure_date": "2024-10-31",
     "revenue": 118000000.0,
     "operating_profit": -175000000.0,
     "net_profit": -174000000.0,
@@ -1469,13 +1595,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 2066600.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2024-12-31",
-    "disclosure_date": "2025-04-25",
+    "disclosure_date": "2025-04-30",
     "revenue": 188000000.0,
     "operating_profit": -67415700.0,
     "net_profit": -96554300.0,
@@ -1492,13 +1620,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 3184600.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2025-03-31",
-    "disclosure_date": "2025-04-28",
+    "disclosure_date": "2025-04-30",
     "revenue": 29177800.000000004,
     "operating_profit": -85686400.0,
     "net_profit": -85560000.0,
@@ -1515,13 +1645,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 3184600.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2025-06-30",
-    "disclosure_date": "2025-08-28",
+    "disclosure_date": "2025-08-31",
     "revenue": 72879200.0,
     "operating_profit": -185000000.0,
     "net_profit": -174000000.0,
@@ -1538,13 +1670,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 2589100.0000000005,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2025-09-30",
-    "disclosure_date": "2025-10-28",
+    "disclosure_date": "2025-10-31",
     "revenue": 114999999.99999999,
     "operating_profit": -254000000.0,
     "net_profit": -243000000.00000003,
@@ -1561,13 +1695,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 2589100.0000000005,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2025-12-31",
-    "disclosure_date": "2026-04-25",
+    "disclosure_date": "2026-04-30",
     "revenue": 186000000.0,
     "operating_profit": 2092000000.0000002,
     "net_profit": -290000000.0,
@@ -1584,13 +1720,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2026-03-31",
-    "disclosure_date": "2026-04-28",
+    "disclosure_date": "2026-04-30",
     "revenue": 56825900.0,
     "operating_profit": -72458800.0,
     "net_profit": -72028500.0,
@@ -1607,13 +1745,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "300104",
     "name": "乐视退",
     "period_end_date": "2026-06-30",
-    "disclosure_date": "2026-08-28",
+    "disclosure_date": "2026-08-31",
     "revenue": 112999999.99999999,
     "operating_profit": -147000000.0,
     "net_profit": -159000000.0,
@@ -1630,6 +1770,8 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   }
 ]

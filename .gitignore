@@ -21,3 +21,7 @@ web/dist/
 
 # Accidental nested empty repo created when a window opened the wrong folder
 /顶级量化/
+
+# 真实凭证与密钥（仅允许本地/环境变量）
+configs/api_credentials.env
+.env

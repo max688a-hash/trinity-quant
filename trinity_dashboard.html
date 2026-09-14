@@ -2596,6 +2596,11 @@
   </div>
 
   <script>
+    // 高危管理接口令牌：由操作员在浏览器 localStorage 中设置 TRINITY_API_TOKEN，服务端以 X-Trinity-Token 校验
+    function adminHeaders(extra) {
+      const token = window.localStorage.getItem('TRINITY_API_TOKEN') || '';
+      return Object.assign({}, extra || {}, token ? { 'X-Trinity-Token': token } : {});
+    }
     const STOCKS = [
       {
         "symbol": "600519", "name": "贵州茅台", "category": "现金流造血典范",
@@ -3645,7 +3650,7 @@
         try {
           const res = await fetch('/api/real_money/toggle', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: adminHeaders({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({ enabled: targetState })
           });
           const data = await res.json();
@@ -3747,7 +3752,7 @@
         try {
           const res = await fetch('/api/real_money/order', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: adminHeaders({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({
               symbol: sym, action: action, price: price, quantity: qty,
               market_price: price, algo: algo
@@ -3809,7 +3814,7 @@
       if (!window.location.protocol.startsWith('http')) return;
       try {
         const [vaultRes, supRes] = await Promise.all([
-          fetch('/api/vault/status').then(r => r.ok ? r.json() : null),
+          fetch('/api/vault/status', { headers: adminHeaders() }).then(r => r.ok ? r.json() : null),
           fetch('/api/supervisor/telemetry').then(r => r.ok ? r.json() : null)
         ]);
 
@@ -3894,7 +3899,7 @@
       try {
         const res = await fetch('/api/vault/save', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: adminHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify({ gateway: gw, credentials: creds })
         });
         const data = await res.json();
@@ -3982,7 +3987,7 @@
         try {
           const res = await fetch('/api/real_money/unlock', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: adminHeaders({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({ safety_key: key })
           });
           const data = await res.json();
@@ -3993,11 +3998,7 @@
           console.warn("unlock error", e);
         }
       }
-      if (key === "TRINITY_MASTER_OVERRIDE_SAFETY_KEY_2026") {
-        alert("紧急熔断已人工解除");
-      } else {
-        alert("密钥错误");
-      }
+      alert("离线静态页面无法校验密钥，请通过服务端 /api/real_money/unlock 解锁");
     }
 
     // ========================================================
@@ -4132,7 +4133,7 @@
     async function toggleAutoPilotDaemon() {
       if (window.location.protocol.startsWith('http')) {
         try {
-          const res = await fetch('/api/autopilot/toggle', { method: 'POST' });
+          const res = await fetch('/api/autopilot/toggle', { method: 'POST', headers: adminHeaders() });
           const data = await res.json();
           playQuantAlert('ENTRY_PING');
           await syncAutoPilotStatus();

@@ -19,6 +19,8 @@ from entropy_execution.reconciliation_engine import ReconciliationEngine
 from entropy_execution.supervisor_watchdog import SupervisorWatchdog
 
 from entropy_execution.gateway_connection_manager import GatewayConnectionManager
+from entropy_execution.physical_broker_gateways import BinancePhysicalGateway, QmtPhysicalGateway
+from entropy_execution.real_money_service import bind_physical_gateways_to_router
 from gravity_brain.market_regime_classifier import MarketRegimeClassifier
 from gravity_brain.meta_kelly_allocator import MetaKellyAllocator
 from gravity_brain.regime_multi_strategy_engine import RegimeMultiStrategyEngine
@@ -42,9 +44,20 @@ def handle_save_vault_credentials(payload: Dict[str, Any]) -> Dict[str, Any]:
     if not gw or not isinstance(creds, dict):
         return {"success": False, "error": "Invalid payload"}
     ok = _GLOBAL_VAULT.save_gateway_credentials(gw, creds)
-    if ok:
-        _GLOBAL_GATEWAY_MGR.initialize_gateways(_GLOBAL_VAULT.get_masked_status())
-    return {"success": ok, "gateway": gw}
+    if not ok:
+        return {"success": False, "gateway": gw, "error": "保险箱主密钥未配置 (TRINITY_VAULT_MASTER_KEY) 或凭据为空"}
+    handshake = connect_physical_gateways()
+    return {"success": True, "gateway": gw, "handshake": handshake}
+
+
+def connect_physical_gateways() -> Dict[str, bool]:
+    """用保险箱原始凭据握手物理驱动，并把驱动注入真金路由器；握手失败的网关保持拒单"""
+    results = _GLOBAL_GATEWAY_MGR.initialize_gateways(_GLOBAL_VAULT.get_all_credentials())
+    bind_physical_gateways_to_router([
+        QmtPhysicalGateway(_GLOBAL_GATEWAY_MGR.qmt_driver),
+        BinancePhysicalGateway(_GLOBAL_GATEWAY_MGR.binance_driver),
+    ])
+    return results
 
 
 def handle_get_alert_history() -> Dict[str, Any]:
@@ -196,7 +209,7 @@ def handle_get_preflight_checklist(engine: PaperTradingEngine, lock: threading.L
 
     # 2. 手机外呼检查
     alerts_history = _GLOBAL_ALERT_RELAY.get_recent_alerts(5)
-    has_alert = len(alerts_history) > 0 or len(_GLOBAL_ALERT_RELAY._webhook_urls) > 0
+    has_alert = len(alerts_history) > 0 or len(_GLOBAL_ALERT_RELAY.get_webhooks()) > 0
 
     # 3. 柜台心跳检查
     telemetries = _GLOBAL_GATEWAY_MGR.heartbeat_patrol()

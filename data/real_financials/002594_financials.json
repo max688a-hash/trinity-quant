@@ -3,7 +3,7 @@
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2008-12-31",
-    "disclosure_date": "2009-04-25",
+    "disclosure_date": "2009-04-30",
     "revenue": 27727000000.0,
     "operating_profit": 990000000.0,
     "net_profit": 1276000000.0,
@@ -20,13 +20,15 @@
     "short_term_debt": 4134000000.0000005,
     "long_term_debt_due_within_1y": 237000000.0,
     "goodwill": 58603000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2009-12-31",
-    "disclosure_date": "2010-04-25",
+    "disclosure_date": "2010-04-30",
     "revenue": 41114000000.0,
     "operating_profit": 4169000000.0,
     "net_profit": 4078000000.0,
@@ -43,13 +45,15 @@
     "short_term_debt": 284000000.0,
     "long_term_debt_due_within_1y": 263000000.0,
     "goodwill": 58603000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2010-03-31",
-    "disclosure_date": "2010-04-28",
+    "disclosure_date": "2010-04-30",
     "revenue": 13247000000.0,
     "operating_profit": 1812000000.0,
     "net_profit": 1789999999.9999998,
@@ -66,13 +70,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2010-06-30",
-    "disclosure_date": "2010-08-28",
+    "disclosure_date": "2010-08-31",
     "revenue": 25265000000.0,
     "operating_profit": 2632000000.0,
     "net_profit": 2588000000.0,
@@ -89,13 +95,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2010-09-30",
-    "disclosure_date": "2010-10-28",
+    "disclosure_date": "2010-10-31",
     "revenue": 35891000000.0,
     "operating_profit": 2775000000.0,
     "net_profit": 2718000000.0,
@@ -112,13 +120,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2010-12-31",
-    "disclosure_date": "2011-04-25",
+    "disclosure_date": "2011-04-30",
     "revenue": 48448000000.0,
     "operating_profit": 2768000000.0,
     "net_profit": 2919000000.0,
@@ -135,13 +145,15 @@
     "short_term_debt": 9796000000.0,
     "long_term_debt_due_within_1y": 1207000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2011-03-31",
-    "disclosure_date": "2011-04-28",
+    "disclosure_date": "2011-04-30",
     "revenue": 11710000000.0,
     "operating_profit": 345000000.0,
     "net_profit": 324000000.0,
@@ -158,13 +170,15 @@
     "short_term_debt": 10357000000.0,
     "long_term_debt_due_within_1y": 1401000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2011-06-30",
-    "disclosure_date": "2011-08-28",
+    "disclosure_date": "2011-08-31",
     "revenue": 22545000000.0,
     "operating_profit": 328000000.0,
     "net_profit": 395000000.0,
@@ -181,13 +195,15 @@
     "short_term_debt": 8972000000.0,
     "long_term_debt_due_within_1y": 1571000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2011-09-30",
-    "disclosure_date": "2011-10-28",
+    "disclosure_date": "2011-10-31",
     "revenue": 34333999999.999996,
     "operating_profit": 430000000.0,
     "net_profit": 512000000.0,
@@ -204,13 +220,15 @@
     "short_term_debt": 9771000000.0,
     "long_term_debt_due_within_1y": 953999999.9999999,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2011-12-31",
-    "disclosure_date": "2012-04-25",
+    "disclosure_date": "2012-04-30",
     "revenue": 48882000000.0,
     "operating_profit": 1410000000.0,
     "net_profit": 1595000000.0,
@@ -227,13 +245,15 @@
     "short_term_debt": 10011000000.0,
     "long_term_debt_due_within_1y": 1331000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2012-03-31",
-    "disclosure_date": "2012-04-28",
+    "disclosure_date": "2012-04-30",
     "revenue": 11734000000.0,
     "operating_profit": 40591000.0,
     "net_profit": 53606000.0,
@@ -250,13 +270,15 @@
     "short_term_debt": 8645000000.0,
     "long_term_debt_due_within_1y": 1655000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2012-06-30",
-    "disclosure_date": "2012-08-28",
+    "disclosure_date": "2012-08-31",
     "revenue": 22582000000.0,
     "operating_profit": -71898000.0,
     "net_profit": 104000000.0,
@@ -273,13 +295,15 @@
     "short_term_debt": 6818000000.000001,
     "long_term_debt_due_within_1y": 1896000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2012-09-30",
-    "disclosure_date": "2012-10-28",
+    "disclosure_date": "2012-10-31",
     "revenue": 33108999999.999996,
     "operating_profit": -146000000.0,
     "net_profit": 139000000.0,
@@ -296,13 +320,15 @@
     "short_term_debt": 8509999999.999999,
     "long_term_debt_due_within_1y": 2995000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2012-12-31",
-    "disclosure_date": "2013-04-25",
+    "disclosure_date": "2013-04-30",
     "revenue": 46854000000.0,
     "operating_profit": -304000000.0,
     "net_profit": 213000000.0,
@@ -319,13 +345,15 @@
     "short_term_debt": 8418000000.000001,
     "long_term_debt_due_within_1y": 2870000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2013-03-31",
-    "disclosure_date": "2013-04-28",
+    "disclosure_date": "2013-04-30",
     "revenue": 12884000000.0,
     "operating_profit": 132000000.0,
     "net_profit": 156000000.0,
@@ -342,13 +370,15 @@
     "short_term_debt": 9437000000.0,
     "long_term_debt_due_within_1y": 3400000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2013-06-30",
-    "disclosure_date": "2013-08-28",
+    "disclosure_date": "2013-08-31",
     "revenue": 26041000000.000004,
     "operating_profit": 272000000.0,
     "net_profit": 536000000.00000006,
@@ -365,13 +395,15 @@
     "short_term_debt": 10792000000.0,
     "long_term_debt_due_within_1y": 4765000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2013-09-30",
-    "disclosure_date": "2013-10-28",
+    "disclosure_date": "2013-10-31",
     "revenue": 38704000000.0,
     "operating_profit": 267000000.0,
     "net_profit": 624000000.0,
@@ -388,13 +420,15 @@
     "short_term_debt": 12584000000.0,
     "long_term_debt_due_within_1y": 3708000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2013-12-31",
-    "disclosure_date": "2014-04-25",
+    "disclosure_date": "2014-04-30",
     "revenue": 52863000000.0,
     "operating_profit": 107000000.0,
     "net_profit": 776000000.0,
@@ -411,13 +445,15 @@
     "short_term_debt": 12402000000.0,
     "long_term_debt_due_within_1y": 3771000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2014-03-31",
-    "disclosure_date": "2014-04-28",
+    "disclosure_date": "2014-04-30",
     "revenue": 11724000000.0,
     "operating_profit": 3468000.0,
     "net_profit": 87514000.0,
@@ -434,13 +470,15 @@
     "short_term_debt": 11369000000.0,
     "long_term_debt_due_within_1y": 2873000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2014-06-30",
-    "disclosure_date": "2014-08-28",
+    "disclosure_date": "2014-08-31",
     "revenue": 26716000000.000004,
     "operating_profit": 333000000.0,
     "net_profit": 562000000.0,
@@ -457,13 +495,15 @@
     "short_term_debt": 13012000000.0,
     "long_term_debt_due_within_1y": 5700000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2014-09-30",
-    "disclosure_date": "2014-10-28",
+    "disclosure_date": "2014-10-31",
     "revenue": 40409000000.0,
     "operating_profit": -41545000.0,
     "net_profit": 618000000.0,
@@ -480,13 +520,15 @@
     "short_term_debt": 13368000000.0,
     "long_term_debt_due_within_1y": 6347000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2014-12-31",
-    "disclosure_date": "2015-04-25",
+    "disclosure_date": "2015-04-30",
     "revenue": 58196000000.0,
     "operating_profit": -179000000.0,
     "net_profit": 740000000.0,
@@ -503,13 +545,15 @@
     "short_term_debt": 12676000000.0,
     "long_term_debt_due_within_1y": 6495999999.999999,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2015-03-31",
-    "disclosure_date": "2015-04-28",
+    "disclosure_date": "2015-04-30",
     "revenue": 15283000000.000002,
     "operating_profit": 107000000.0,
     "net_profit": 153000000.0,
@@ -526,13 +570,15 @@
     "short_term_debt": 10997000000.0,
     "long_term_debt_due_within_1y": 6826000000.000001,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2015-06-30",
-    "disclosure_date": "2015-08-28",
+    "disclosure_date": "2015-08-31",
     "revenue": 31582000000.0,
     "operating_profit": 462000000.0,
     "net_profit": 624000000.0,
@@ -549,13 +595,15 @@
     "short_term_debt": 15008000000.000002,
     "long_term_debt_due_within_1y": 3738000000.0000005,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2015-09-30",
-    "disclosure_date": "2015-10-28",
+    "disclosure_date": "2015-10-31",
     "revenue": 48494000000.0,
     "operating_profit": 2272000000.0,
     "net_profit": 2183000000.0,
@@ -572,13 +620,15 @@
     "short_term_debt": 20511000000.0,
     "long_term_debt_due_within_1y": 5992000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2015-12-31",
-    "disclosure_date": "2016-04-25",
+    "disclosure_date": "2016-04-30",
     "revenue": 80009000000.0,
     "operating_profit": 3176000000.0,
     "net_profit": 3138000000.0,
@@ -595,13 +645,15 @@
     "short_term_debt": 19944000000.0,
     "long_term_debt_due_within_1y": 6469000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2016-03-31",
-    "disclosure_date": "2016-04-28",
+    "disclosure_date": "2016-04-30",
     "revenue": 20285000000.0,
     "operating_profit": 1084000000.0,
     "net_profit": 898000000.0,
@@ -618,13 +670,15 @@
     "short_term_debt": 21344000000.0,
     "long_term_debt_due_within_1y": 7117000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2016-06-30",
-    "disclosure_date": "2016-08-28",
+    "disclosure_date": "2016-08-31",
     "revenue": 44950000000.0,
     "operating_profit": 2787000000.0,
     "net_profit": 2469000000.0,
@@ -641,13 +695,15 @@
     "short_term_debt": 25277000000.0,
     "long_term_debt_due_within_1y": 11298000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2016-09-30",
-    "disclosure_date": "2016-10-28",
+    "disclosure_date": "2016-10-31",
     "revenue": 72798000000.0,
     "operating_profit": 4443000000.0,
     "net_profit": 3972000000.0,
@@ -664,13 +720,15 @@
     "short_term_debt": 19170000000.0,
     "long_term_debt_due_within_1y": 7288000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2016-12-31",
-    "disclosure_date": "2017-04-25",
+    "disclosure_date": "2017-04-30",
     "revenue": 103470000000.0,
     "operating_profit": 5850000000.0,
     "net_profit": 5480000000.0,
@@ -687,13 +745,15 @@
     "short_term_debt": 25010000000.0,
     "long_term_debt_due_within_1y": 7919000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2017-03-31",
-    "disclosure_date": "2017-04-28",
+    "disclosure_date": "2017-04-30",
     "revenue": 21046000000.0,
     "operating_profit": 826000000.0,
     "net_profit": 781000000.0,
@@ -710,13 +770,15 @@
     "short_term_debt": 27977000000.0,
     "long_term_debt_due_within_1y": 7395000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2017-06-30",
-    "disclosure_date": "2017-08-28",
+    "disclosure_date": "2017-08-31",
     "revenue": 45038000000.0,
     "operating_profit": 2568000000.0,
     "net_profit": 2165000000.0,
@@ -733,13 +795,15 @@
     "short_term_debt": 34032000000.0,
     "long_term_debt_due_within_1y": 4533000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2017-09-30",
-    "disclosure_date": "2017-10-28",
+    "disclosure_date": "2017-10-31",
     "revenue": 73933000000.0,
     "operating_profit": 4065999999.9999995,
     "net_profit": 3461999999.9999995,
@@ -756,13 +820,15 @@
     "short_term_debt": 35296000000.0,
     "long_term_debt_due_within_1y": 8670000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2017-12-31",
-    "disclosure_date": "2018-04-25",
+    "disclosure_date": "2018-04-30",
     "revenue": 105915000000.00002,
     "operating_profit": 5411000000.0,
     "net_profit": 4917000000.0,
@@ -779,13 +845,15 @@
     "short_term_debt": 35775000000.0,
     "long_term_debt_due_within_1y": 9874000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2018-03-31",
-    "disclosure_date": "2018-04-28",
+    "disclosure_date": "2018-04-30",
     "revenue": 24738000000.0,
     "operating_profit": 249000000.00000003,
     "net_profit": 264000000.0,
@@ -802,13 +870,15 @@
     "short_term_debt": 37461000000.0,
     "long_term_debt_due_within_1y": 14038999999.999998,
     "goodwill": 88394000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2018-06-30",
-    "disclosure_date": "2018-08-28",
+    "disclosure_date": "2018-08-31",
     "revenue": 54151000000.0,
     "operating_profit": 981000000.0,
     "net_profit": 874000000.0,
@@ -825,13 +895,15 @@
     "short_term_debt": 40147000000.0,
     "long_term_debt_due_within_1y": 13966000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2018-09-30",
-    "disclosure_date": "2018-10-28",
+    "disclosure_date": "2018-10-31",
     "revenue": 88981000000.0,
     "operating_profit": 2301000000.0,
     "net_profit": 2146000000.0,
@@ -848,13 +920,15 @@
     "short_term_debt": 41262000000.0,
     "long_term_debt_due_within_1y": 9004000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2018-12-31",
-    "disclosure_date": "2019-04-25",
+    "disclosure_date": "2019-04-30",
     "revenue": 130055000000.0,
     "operating_profit": 4242000000.0,
     "net_profit": 3556000000.0,
@@ -871,13 +945,15 @@
     "short_term_debt": 37789000000.0,
     "long_term_debt_due_within_1y": 7483000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2019-03-31",
-    "disclosure_date": "2019-04-28",
+    "disclosure_date": "2019-04-30",
     "revenue": 30304000000.000004,
     "operating_profit": 1015000000.0,
     "net_profit": 888000000.0000001,
@@ -894,13 +970,15 @@
     "short_term_debt": 43527000000.0,
     "long_term_debt_due_within_1y": 3824000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2019-06-30",
-    "disclosure_date": "2019-08-28",
+    "disclosure_date": "2019-08-31",
     "revenue": 62184000000.0,
     "operating_profit": 1789000000.0,
     "net_profit": 1648000000.0,
@@ -917,13 +995,15 @@
     "short_term_debt": 45647000000.0,
     "long_term_debt_due_within_1y": 6028000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2019-09-30",
-    "disclosure_date": "2019-10-28",
+    "disclosure_date": "2019-10-31",
     "revenue": 93822000000.0,
     "operating_profit": 2055999999.9999998,
     "net_profit": 1895000000.0,
@@ -940,13 +1020,15 @@
     "short_term_debt": 43001000000.0,
     "long_term_debt_due_within_1y": 6687000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2019-12-31",
-    "disclosure_date": "2020-04-25",
+    "disclosure_date": "2020-04-30",
     "revenue": 127739000000.00002,
     "operating_profit": 2312000000.0,
     "net_profit": 2119000000.0000002,
@@ -963,13 +1045,15 @@
     "short_term_debt": 40332000000.0,
     "long_term_debt_due_within_1y": 8747000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2020-03-31",
-    "disclosure_date": "2020-04-28",
+    "disclosure_date": "2020-04-30",
     "revenue": 19679000000.0,
     "operating_profit": 375000000.0,
     "net_profit": 322000000.0,
@@ -986,13 +1070,15 @@
     "short_term_debt": 38467000000.0,
     "long_term_debt_due_within_1y": 8538000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2020-06-30",
-    "disclosure_date": "2020-08-28",
+    "disclosure_date": "2020-08-31",
     "revenue": 60503000000.0,
     "operating_profit": 2948000000.0,
     "net_profit": 2383000000.0,
@@ -1009,13 +1095,15 @@
     "short_term_debt": 32091000000.000004,
     "long_term_debt_due_within_1y": 9540000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2020-09-30",
-    "disclosure_date": "2020-10-28",
+    "disclosure_date": "2020-10-31",
     "revenue": 105023000000.0,
     "operating_profit": 5800000000.0,
     "net_profit": 4902000000.0,
@@ -1032,13 +1120,15 @@
     "short_term_debt": 24790000000.0,
     "long_term_debt_due_within_1y": 9201000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2020-12-31",
-    "disclosure_date": "2021-04-25",
+    "disclosure_date": "2021-04-30",
     "revenue": 156598000000.0,
     "operating_profit": 7086000000.0,
     "net_profit": 6014000000.0,
@@ -1055,13 +1145,15 @@
     "short_term_debt": 16401000000.0,
     "long_term_debt_due_within_1y": 11412000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2021-03-31",
-    "disclosure_date": "2021-04-28",
+    "disclosure_date": "2021-04-30",
     "revenue": 40992000000.0,
     "operating_profit": 646000000.0,
     "net_profit": 511000000.00000006,
@@ -1078,13 +1170,15 @@
     "short_term_debt": 16588000000.0,
     "long_term_debt_due_within_1y": 14730000000.000002,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2021-06-30",
-    "disclosure_date": "2021-08-28",
+    "disclosure_date": "2021-08-31",
     "revenue": 90885000000.0,
     "operating_profit": 2216000000.0,
     "net_profit": 1811000000.0,
@@ -1101,13 +1195,15 @@
     "short_term_debt": 11257000000.0,
     "long_term_debt_due_within_1y": 14260000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2021-09-30",
-    "disclosure_date": "2021-10-28",
+    "disclosure_date": "2021-10-31",
     "revenue": 145192000000.0,
     "operating_profit": 3869000000.0,
     "net_profit": 3297000000.0,
@@ -1124,13 +1220,15 @@
     "short_term_debt": 15485000000.0,
     "long_term_debt_due_within_1y": 14622999999.999998,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2021-12-31",
-    "disclosure_date": "2022-04-25",
+    "disclosure_date": "2022-04-30",
     "revenue": 216142000000.0,
     "operating_profit": 4632000000.0,
     "net_profit": 3967000000.0,
@@ -1147,13 +1245,15 @@
     "short_term_debt": 10204000000.0,
     "long_term_debt_due_within_1y": 12983000000.000002,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2022-03-31",
-    "disclosure_date": "2022-04-28",
+    "disclosure_date": "2022-04-30",
     "revenue": 66825000000.0,
     "operating_profit": 1061000000.0,
     "net_profit": 911999999.9999999,
@@ -1170,13 +1270,15 @@
     "short_term_debt": 5481000000.0,
     "long_term_debt_due_within_1y": 8559999999.999999,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2022-06-30",
-    "disclosure_date": "2022-08-28",
+    "disclosure_date": "2022-08-31",
     "revenue": 150607000000.0,
     "operating_profit": 4622000000.0,
     "net_profit": 3933000000.0,
@@ -1193,13 +1295,15 @@
     "short_term_debt": 10179000000.0,
     "long_term_debt_due_within_1y": 9346000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2022-09-30",
-    "disclosure_date": "2022-10-28",
+    "disclosure_date": "2022-10-31",
     "revenue": 267688000000.0,
     "operating_profit": 12085000000.0,
     "net_profit": 9988000000.0,
@@ -1216,13 +1320,15 @@
     "short_term_debt": 9513000000.0,
     "long_term_debt_due_within_1y": 6723999999.999999,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2022-12-31",
-    "disclosure_date": "2023-04-25",
+    "disclosure_date": "2023-04-30",
     "revenue": 424060999999.99994,
     "operating_profit": 21542000000.0,
     "net_profit": 17713000000.0,
@@ -1239,13 +1345,15 @@
     "short_term_debt": 5153000000.0,
     "long_term_debt_due_within_1y": 6465000000.000001,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2023-03-31",
-    "disclosure_date": "2023-04-28",
+    "disclosure_date": "2023-04-30",
     "revenue": 120174000000.0,
     "operating_profit": 5299000000.0,
     "net_profit": 4370000000.0,
@@ -1262,13 +1370,15 @@
     "short_term_debt": 15701000000.0,
     "long_term_debt_due_within_1y": 7761000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2023-06-30",
-    "disclosure_date": "2023-08-28",
+    "disclosure_date": "2023-08-31",
     "revenue": 260123999999.99997,
     "operating_profit": 13731000000.0,
     "net_profit": 11440000000.0,
@@ -1285,13 +1395,15 @@
     "short_term_debt": 9835000000.0,
     "long_term_debt_due_within_1y": 7225000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2023-09-30",
-    "disclosure_date": "2023-10-28",
+    "disclosure_date": "2023-10-31",
     "revenue": 422275000000.0,
     "operating_profit": 26637000000.0,
     "net_profit": 22326000000.0,
@@ -1308,13 +1420,15 @@
     "short_term_debt": 10098000000.0,
     "long_term_debt_due_within_1y": 5864000000.0,
     "goodwill": 65914000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2023-12-31",
-    "disclosure_date": "2024-04-25",
+    "disclosure_date": "2024-04-30",
     "revenue": 602315000000.0,
     "operating_profit": 38103000000.0,
     "net_profit": 31344000000.0,
@@ -1331,13 +1445,15 @@
     "short_term_debt": 18323000000.0,
     "long_term_debt_due_within_1y": 7740000000.000001,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2024-03-31",
-    "disclosure_date": "2024-04-28",
+    "disclosure_date": "2024-04-30",
     "revenue": 124944000000.0,
     "operating_profit": 5798000000.0,
     "net_profit": 4771000000.0,
@@ -1354,13 +1470,15 @@
     "short_term_debt": 13719000000.0,
     "long_term_debt_due_within_1y": 8170000000.0,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2024-06-30",
-    "disclosure_date": "2024-08-28",
+    "disclosure_date": "2024-08-31",
     "revenue": 301127000000.0,
     "operating_profit": 17323000000.0,
     "net_profit": 14113000000.0,
@@ -1377,13 +1495,15 @@
     "short_term_debt": 10048000000.0,
     "long_term_debt_due_within_1y": 8059999999.999999,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2024-09-30",
-    "disclosure_date": "2024-10-28",
+    "disclosure_date": "2024-10-31",
     "revenue": 502251000000.0,
     "operating_profit": 31747000000.000004,
     "net_profit": 26248000000.0,
@@ -1400,13 +1520,15 @@
     "short_term_debt": 20551000000.0,
     "long_term_debt_due_within_1y": 9780000000.0,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2024-12-31",
-    "disclosure_date": "2025-04-25",
+    "disclosure_date": "2025-04-30",
     "revenue": 777102000000.0,
     "operating_profit": 50486000000.0,
     "net_profit": 41588000000.0,
@@ -1423,13 +1545,15 @@
     "short_term_debt": 12103000000.0,
     "long_term_debt_due_within_1y": 10223000000.0,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2025-03-31",
-    "disclosure_date": "2025-04-28",
+    "disclosure_date": "2025-04-30",
     "revenue": 170360000000.0,
     "operating_profit": 11021000000.0,
     "net_profit": 9443000000.0,
@@ -1446,13 +1570,15 @@
     "short_term_debt": 13144999999.999998,
     "long_term_debt_due_within_1y": 12001000000.0,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2025-06-30",
-    "disclosure_date": "2025-08-28",
+    "disclosure_date": "2025-08-31",
     "revenue": 371281000000.0,
     "operating_profit": 18720000000.0,
     "net_profit": 16038999999.999998,
@@ -1469,13 +1595,15 @@
     "short_term_debt": 16107000000.0,
     "long_term_debt_due_within_1y": 9577000000.0,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2025-09-30",
-    "disclosure_date": "2025-10-28",
+    "disclosure_date": "2025-10-31",
     "revenue": 566266000000.0,
     "operating_profit": 28906000000.0,
     "net_profit": 24232000000.0,
@@ -1492,13 +1620,15 @@
     "short_term_debt": 15291000000.0,
     "long_term_debt_due_within_1y": 6592000000.0,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2025-12-31",
-    "disclosure_date": "2026-04-25",
+    "disclosure_date": "2026-04-30",
     "revenue": 803965000000.0,
     "operating_profit": 40185000000.0,
     "net_profit": 33761000000.0,
@@ -1515,13 +1645,15 @@
     "short_term_debt": 38485000000.0,
     "long_term_debt_due_within_1y": 6312000000.0,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2026-03-31",
-    "disclosure_date": "2026-04-28",
+    "disclosure_date": "2026-04-30",
     "revenue": 150225000000.0,
     "operating_profit": 4696000000.0,
     "net_profit": 4011000000.0,
@@ -1538,13 +1670,15 @@
     "short_term_debt": 66296000000.0,
     "long_term_debt_due_within_1y": 3951000000.0,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "002594",
     "name": "比亚迪",
     "period_end_date": "2026-06-30",
-    "disclosure_date": "2026-08-28",
+    "disclosure_date": "2026-08-31",
     "revenue": 344815000000.0,
     "operating_profit": 14744000000.0,
     "net_profit": 12334000000.0,
@@ -1561,6 +1695,8 @@
     "short_term_debt": 37646000000.0,
     "long_term_debt_due_within_1y": 3453000000.0,
     "goodwill": 4428000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   }
 ]

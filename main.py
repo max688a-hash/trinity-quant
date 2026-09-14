@@ -26,6 +26,7 @@ WORKSPACE_ROOT = os.path.dirname(os.path.abspath(__file__))
 SPA_DIST = os.path.join(WORKSPACE_ROOT, "web", "dist")
 sys.path.insert(0, WORKSPACE_ROOT)
 
+from entropy_execution.api_auth_guard import authorize, resolve_bind_host, resolve_cors_origin
 from entropy_execution.autopilot_learning_daemon import AutoPilotLearningDaemon
 from entropy_execution.autonomous_learning_sandbox import AutonomousLearningSandbox
 from entropy_execution.black_swan_stress_tester import BlackSwanStressTester
@@ -118,6 +119,10 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             "/api/preflight/check": lambda: handle_get_preflight_checklist(_GLOBAL_PAPER_ENGINE, _GLOBAL_PAPER_LOCK),
         }
         if parsed.path in api_map:
+            denial = authorize("GET", parsed.path, self.headers)
+            if denial is not None:
+                self._send_json({"success": False, "error": denial}, status=403)
+                return
             self._send_json(api_map[parsed.path]())
         else:
             rel = parsed.path.lstrip("/")
@@ -157,6 +162,10 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
             )),
         }
         if parsed.path in post_map:
+            denial = authorize("POST", parsed.path, self.headers)
+            if denial is not None:
+                self._send_json({"success": False, "error": denial}, status=403)
+                return
             self._send_json(post_map[parsed.path]())
         else:
             self.send_error(404, "Endpoint not found")
@@ -166,7 +175,10 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(raw)))
-        self.send_header("Access-Control-Allow-Origin", "*")
+        cors_origin = resolve_cors_origin()
+        if cors_origin is not None:
+            self.send_header("Access-Control-Allow-Origin", cors_origin)
+            self.send_header("Vary", "Origin")
         self.end_headers()
         self.wfile.write(raw)
 
@@ -201,8 +213,9 @@ class TrinityRequestHandler(http.server.SimpleHTTPRequestHandler):
 def run_server(port: int = 8088) -> None:
     socketserver.TCPServer.allow_reuse_address = True
     _GLOBAL_AUTOPILOT_DAEMON.start()
-    with socketserver.TCPServer(("", port), TrinityRequestHandler) as httpd:
-        print(f"TRINITY QUANT 服务已启动: http://127.0.0.1:{port}/ (Tailscale: http://100.112.15.79:{port}/)", flush=True)
+    host = resolve_bind_host()
+    with socketserver.TCPServer((host, port), TrinityRequestHandler) as httpd:
+        print(f"TRINITY QUANT 服务已启动: http://{host}:{port}/ (高危接口需 X-Trinity-Token)", flush=True)
         print("• 全天候影子巡航自学习守护进程 (AutoPilot): [ACTIVE 运行中]", flush=True)
         try:
             httpd.serve_forever()
@@ -214,11 +227,17 @@ def run_server(port: int = 8088) -> None:
 def run_full_verification() -> int:
     print("▶ 启动 TRINITY QUANT 真实端到端全链路质检验收程序...")
     report = SystemQualityInspector(WORKSPACE_ROOT).run_full_inspection()
-    verdict = '[PASS 100% 通过]' if report.is_passed else '[FAIL 未通过]'
-    print(f"验收结果: {verdict}\n• 商业数据源: {'已激活并挂载' if report.commercial_api_active else '未激活'}\n"
-          f"• 561期财报审计: 否决 {report.audit_vetoed_count} 期, 准入 {report.audit_admitted_count} 期\n"
-          f"• 机构海龟: {'通过' if report.turtle_engine_verified else '失败'} | 模拟仿真: {'通过' if report.paper_trading_verified else '失败'}\n"
-          f"• 实盘风控与自学习巡航: 已就绪 | 综合判定: {report.summary_verdict}")
+    func = '[PASS]' if report.is_passed else '[FAIL]'
+    live = '[READY]' if report.is_live_ready else '[NOT READY]'
+    print(f"功能自检: {func} | 实盘就绪: {live}")
+    for name, ok in report.functional_checks.items():
+        print(f"  • [{'ok' if ok else 'FAIL'}] {name}")
+    print("实盘就绪缺口:" if report.live_readiness_gaps else "实盘就绪: 全部达标")
+    for gap in report.live_readiness_gaps:
+        print(f"  • [GAP] {gap}")
+    print(f"• 商业数据源: {report.commercial_api_detail}\n"
+          f"• 财报审计汇总: 共 {report.audit_total_statements} 期, 否决 {report.audit_vetoed_count}, 准入 {report.audit_admitted_count}\n"
+          f"• 回测: {report.backtest_detail}\n• 综合判定: {report.summary_verdict}")
     return 0 if report.is_passed else 1
 
 

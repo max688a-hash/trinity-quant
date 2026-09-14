@@ -5,7 +5,9 @@ tests/test_main_server.py
 """
 
 import json
+import os
 import unittest
+from unittest.mock import patch
 
 from entropy_execution.real_money_service import (
     _NETWORK_WATCHDOG,
@@ -80,12 +82,11 @@ class TestMainServer(unittest.TestCase):
         self.assertIn("is_live_combat_mode", status)
         self.assertIn("circuit_breaker_limit_pct", status)
 
-        handle_real_money_unlock({
-            "safety_key": "TRINITY_MASTER_OVERRIDE_SAFETY_KEY_2026"
-        })
+        os.environ["TRINITY_LIVE_COMBAT_SAFETY_KEY"] = "unit-test-safety-key-0123456789"
+        handle_real_money_unlock({"safety_key": "unit-test-safety-key-0123456789"})
         # 全仓 discover 会超过看门狗 3s 心跳窗口，必须先续心跳，否则误报断网冻结
         _NETWORK_WATCHDOG.restore_connection()
-        t_res = handle_real_money_toggle({"enabled": True, "safety_key": "TRINITY_MASTER_OVERRIDE_SAFETY_KEY_2026"})
+        t_res = handle_real_money_toggle({"enabled": True, "safety_key": "unit-test-safety-key-0123456789"})
         self.assertTrue(t_res["is_live_combat_mode"])
         t_res_off = handle_real_money_toggle({"enabled": False})
         self.assertFalse(t_res_off["is_live_combat_mode"])
@@ -100,7 +101,8 @@ class TestMainServer(unittest.TestCase):
         })
         self.assertFalse(o_res.get("success"), msg=str(o_res))
         self.assertNotEqual(o_res.get("status"), "FILLED")
-        self.assertIn("会话", str(o_res.get("rejection_reason") or o_res.get("reason") or ""))
+        reason = str(o_res.get("rejection_reason") or o_res.get("reason") or "")
+        self.assertTrue("会话" in reason or "未点燃" in reason, msg=reason)
         orders = get_real_money_orders(10)
         self.assertGreaterEqual(orders["count"], 1)
 
@@ -143,11 +145,17 @@ class TestMainServer(unittest.TestCase):
         vault_res = handle_get_vault_status()
         self.assertIn("gateways", vault_res)
 
-        save_res = handle_save_vault_credentials({
+        no_key_res = handle_save_vault_credentials({
             "gateway": "BINANCE_CRYPTO",
             "credentials": {"api_key": "abc123456", "api_secret": "sec987654"}
         })
-        self.assertTrue(save_res["success"])
+        self.assertFalse(no_key_res["success"], msg=str(no_key_res))
+        with patch.dict(os.environ, {"TRINITY_VAULT_MASTER_KEY": "unit-test-vault-master-key-0001"}):
+            save_res = handle_save_vault_credentials({
+                "gateway": "BINANCE_CRYPTO",
+                "credentials": {"api_key": "abc123456", "api_secret": "sec987654"}
+            })
+        self.assertTrue(save_res["success"], msg=str(save_res))
 
         alert_res = handle_trigger_test_alert({"channel": "WECHAT", "webhook_url": ""})
         self.assertTrue(alert_res["dispatched"])

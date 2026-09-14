@@ -197,13 +197,23 @@ class CryptoBinanceGateway(AbstractBrokerGateway):
 
 
 class RealBrokerRouter:
-    """跨市场实盘柜台智能路由器 — 默认全部 OFFLINE，禁止空 connect 点亮。"""
+    """跨市场实盘柜台智能路由器 — 默认全部 OFFLINE，禁止空 connect 点亮。
+    真实驱动通过 bind_physical_gateway() 注入（见 physical_broker_gateways.py）。"""
 
     def __init__(self, is_live_combat: bool = False) -> None:
         self.is_live_combat: bool = bool(is_live_combat)
-        self.ctp_gateway = CTPFuturesGateway()
-        self.qmt_gateway = QMTStockGateway()
-        self.binance_gateway = CryptoBinanceGateway()
+        self.ctp_gateway: AbstractBrokerGateway = CTPFuturesGateway()
+        self.qmt_gateway: AbstractBrokerGateway = QMTStockGateway()
+        self.binance_gateway: AbstractBrokerGateway = CryptoBinanceGateway()
+
+    def bind_physical_gateway(self, gateway: AbstractBrokerGateway) -> None:
+        """用持有真实 SDK/REST 会话的网关替换协议壳；未连接的网关依旧拒单"""
+        if gateway.gateway_type == BrokerGatewayType.QMT_STOCK:
+            self.qmt_gateway = gateway
+        elif gateway.gateway_type == BrokerGatewayType.BINANCE_CRYPTO:
+            self.binance_gateway = gateway
+        elif gateway.gateway_type == BrokerGatewayType.CTP_FUTURES:
+            self.ctp_gateway = gateway
 
     def set_live_combat_mode(self, enabled: bool) -> None:
         """切换实战真金状态；无会话时标志可开，但路由仍拒单。"""
@@ -248,6 +258,14 @@ class RealBrokerRouter:
             quantity=quantity, price=price, gateway_type=gw_type
         )
         gw = self.get_gateway(gw_type)
+        if not self.is_live_combat:
+            return RealOrderResponse(
+                cl_ord_id=ord_id, broker_order_id="", status=RealOrderStatus.REJECTED,
+                executed_price=0.0, executed_quantity=0.0, friction_cost=0.0,
+                rejection_reason="真金实盘模式未点燃且无真实柜台会话，路由器拒绝下发", is_live_combat=False
+            )
+        if not gw.is_connected:
+            return reject_without_live_session(req)
         return gw.submit_order(req)
 
     def get_system_health(self) -> Dict[str, Any]:

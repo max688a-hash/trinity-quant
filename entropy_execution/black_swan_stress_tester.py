@@ -10,7 +10,10 @@ TRINITY QUANT 工业级黑天鹅极端市场极端压力测试防爆引擎。
 2. 2015年流动性黑洞 (2015 Liquidity Vacuum & Limit-Down)：千股跌停封死，买盘为零，贴水恶意拉大；
 3. 2020年全球熔断闪崩 (2020 Flash Crash & Correlation Breakdown)：资产相关性趋同为1，波动率飙升8σ；
 4. 盘口深度雪崩极限滑点冲击 (Extreme Slippage & Book Depth Shock)：流动性蒸发90%，滑点放大10倍；
-5. 蒙特卡洛非对称尾部极端扰动 (Monte Carlo Extreme CVaR 99% Stress)：10,000次随机极端路径演化。
+5. 蒙特卡洛非对称尾部极端扰动 (Monte Carlo Extreme CVaR 99% Stress)：默认 2,000 次 Student-t 肥尾路径。
+
+诚实声明：以上均为**参数化合成情景**（以历史危机为原型设定冲击幅度），不是对 2008/2015/2020
+真实逐日行情的回放；情景 5 的每日亏损截断预设“拔插头熔断完美执行”，检验的是风控参数自洽性而非执行可靠性。
 """
 
 from dataclasses import dataclass
@@ -198,10 +201,13 @@ class BlackSwanStressTester:
 
     def test_scenario_monte_carlo_cvar_99(self, n_simulations: int = 2000) -> StressScenarioResult:
         """
-        情景 5：10,000 次蒙特卡洛非对称肥尾扰动与 99% CVaR 极限压力测试
-        采用 Students-t 肥尾分布注入极端行情扰动，验证在最极端 1% 最坏路径下，
-        系统事前硬风控能否确保总资产回撤绝对受控在 2.0% 的安全线内！
+        情景 5：n_simulations 次（默认 2,000）蒙特卡洛非对称肥尾扰动与 99% CVaR 极限压力测试
+        采用 Student-t(ν=3) 肥尾分布注入合成行情扰动，验证在最极端 1% 最坏路径下，
+        若日内拔插头熔断按设计执行，总资产回撤是否受控在 2.0% 安全线内。
+        注：熔断执行本身是假设输入（截断亏损），本情景不能证明实盘熔断一定能成交。
         """
+        if n_simulations < 100:
+            raise ValueError("蒙特卡洛样本数不得少于 100，否则 1% 尾部无统计意义")
         random.seed(42)
         tail_losses: List[float] = []
         base_equity = 10_000_000.0
@@ -227,8 +233,8 @@ class BlackSwanStressTester:
 
         return StressScenarioResult(
             scenario_name="蒙特卡洛 99% CVaR 肥尾极端扰动压力测试",
-            scenario_description="2,000次 Student-t 自由度3极端肥尾抽样，检验最坏 1% 路径下的系统生存能力",
-            historical_benchmark="百年一遇极端尾部事件 (5-Sigma Fat-Tail Distribution)",
+            scenario_description=f"{n_simulations:,}次 Student-t 自由度3合成肥尾抽样（非历史回放），检验最坏 1% 路径下的系统生存能力",
+            historical_benchmark="合成肥尾分布（非历史数据）",
             extreme_stress_inputs={"simulations": n_simulations, "degrees_of_freedom": 3},
             defense_mechanism_triggered="动态凯利仓位配比 (Half-Kelly) + 事前集中度管控 + 日内拔插头",
             is_defense_successful=is_cvar_safe,

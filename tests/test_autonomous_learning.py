@@ -27,7 +27,8 @@ class TestAutonomousLearningSandbox(unittest.TestCase):
         rep = self.sandbox.generate_learning_report()
         self.assertEqual(rep.total_auto_trades, 0)
         self.assertEqual(rep.empirical_win_rate, 0.0)
-        self.assertGreater(rep.calibrated_kelly_f, 0.05)
+        self.assertEqual(rep.calibrated_kelly_f, 0.0)
+        self.assertEqual(rep.empirical_payoff_ratio, 0.0)
         self.assertFalse(rep.is_cooling_down)
         self.assertIn("系统自学习中枢已就绪", rep.learning_synthesis)
 

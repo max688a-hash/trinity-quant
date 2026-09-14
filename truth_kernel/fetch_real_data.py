@@ -5,6 +5,11 @@ truth_kernel.fetch_real_data
 杜绝一切模拟假数据！
 涵盖真实造血白马（贵州茅台、长江电力、比亚迪）与历史真实暴雷/债务危机标的（乐视退、ST康美、万科A）。
 完整提取真实科目：经营现金流、CapEx、货币资金、受限及应收账款、短期借款、一年内到期负债、商誉。
+
+PIT 铁律：
+- 数据源不提供逐期真实公告日时，disclosure_date 取《证券法》/交易所规定的法定披露截止日
+  （年报 4-30、一季报 4-30、半年报 8-31、三季报 10-31），即“最晚可能可见日”，宁迟勿早；
+- 受限资金只取报表当期自身披露的科目，严禁用日后监管处罚结论回填历史（未来函数）。
 """
 
 import os
@@ -54,6 +59,21 @@ def clean_num(val: Any) -> float:
         return 0.0
 
 
+def statutory_disclosure_deadline(period_end: str) -> str:
+    """法定披露截止日（最晚可见日）；非标准报告期抛错，不猜"""
+    year = int(period_end[:4])
+    month_day = period_end[5:10]
+    if month_day == "12-31":
+        return f"{year + 1}-04-30"
+    if month_day == "03-31":
+        return f"{year}-04-30"
+    if month_day == "06-30":
+        return f"{year}-08-31"
+    if month_day == "09-30":
+        return f"{year}-10-31"
+    raise ValueError(f"非标准报告期无法确定法定披露截止日: {period_end}")
+
+
 def find_col(df: pd.DataFrame, keywords: List[str]) -> Optional[str]:
     """根据关键词匹配 DataFrame 的真实列名"""
     for kw in keywords:
@@ -87,6 +107,7 @@ def fetch_and_merge_stock(symbol: str, name: str) -> List[Dict[str, Any]]:
     col_st_debt = find_col(df_debt, ["短期借款"])
     col_due_1y = find_col(df_debt, ["一年内到期的非流动负债"])
     col_goodwill = find_col(df_debt, ["商誉"])
+    col_restricted = find_col(df_debt, ["使用受限的资金", "受限资金", "其他货币资金"])
     col_assets = find_col(df_debt, ["资产总计", "资产合计"])
     col_liab = find_col(df_debt, ["负债合计"])
     col_equity = find_col(df_debt, ["所有者权益合计", "股东权益合计"])
@@ -114,19 +135,10 @@ def fetch_and_merge_stock(symbol: str, name: str) -> List[Dict[str, Any]]:
         row_c = cash_dict.get(d, {})
         row_b = benefit_dict.get(d, {})
 
-        # Point-in-Time 真实披露日推算
-        year = d[:4]
-        month_day = d[5:]
-        if month_day == "12-31":
-            disc_date = f"{int(year)+1}-04-25"
-        elif month_day == "03-31":
-            disc_date = f"{year}-04-28"
-        elif month_day == "06-30":
-            disc_date = f"{year}-08-28"
-        elif month_day == "09-30":
-            disc_date = f"{year}-10-28"
-        else:
-            disc_date = f"{year}-12-31"
+        try:
+            disc_date = statutory_disclosure_deadline(d)
+        except ValueError:
+            continue
 
         cash_val = clean_num(row_d.get(col_cash, 0)) if col_cash else 0.0
         rec_val = clean_num(row_d.get(col_rec, 0)) if col_rec else 0.0
@@ -145,12 +157,7 @@ def fetch_and_merge_stock(symbol: str, name: str) -> List[Dict[str, Any]]:
         ocf_val = clean_num(row_c.get(col_ocf, 0)) if col_ocf else 0.0
         capex_val = clean_num(row_c.get(col_capex, 0)) if col_capex else 0.0
 
-        # 特殊历史案例真实标记（康美药业 2017-2018 证监会查明受限资金及假币）
-        restricted_cash_val = 0.0
-        if symbol == "600518" and "2017" in d:
-            restricted_cash_val = cash_val * 0.82  # 证监会行政处罚决定书认定的 299 亿虚假/受限资金
-        elif symbol == "300104" and ("2016" in d or "2017" in d):
-            restricted_cash_val = cash_val * 0.45  # 贾跃亭质押及受限冻结资金
+        restricted_cash_val = clean_num(row_d.get(col_restricted, 0)) if col_restricted else 0.0
 
         rec = {
             "symbol": symbol,
@@ -173,6 +180,8 @@ def fetch_and_merge_stock(symbol: str, name: str) -> List[Dict[str, Any]]:
             "short_term_debt": st_debt_val,
             "long_term_debt_due_within_1y": due_1y_val,
             "goodwill": goodwill_val,
+            "restricted_cash_source": col_restricted or "NOT_REPORTED",
+            "disclosure_date_basis": "STATUTORY_DEADLINE",
             "raw_source": "THS_AUDITED_3_STATEMENTS"
         }
         records.append(rec)

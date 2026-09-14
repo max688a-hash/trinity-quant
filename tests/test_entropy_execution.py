@@ -187,9 +187,42 @@ class TestEntropyExecution(unittest.TestCase):
             {"CRASH_TEST": 40.0}
         ]
 
-        report = test_backtester.run_simulation(snapshots, prices)
+        # 用更早样本内窗口的已平仓收益热启动（p=0.8, b=4），使凯利达到重仓以检验熔断路径
+        warm = [0.20] * 16 + [-0.05] * 4
+        report = test_backtester.run_simulation(snapshots, prices, warm_start_returns=warm)
         self.assertGreater(report.total_trades, 1)
+        self.assertEqual(report.cold_start_periods, 0)
         self.assertTrue(report.risk_metrics.circuit_breaker_active)
+
+    def test_backtest_cold_start_caps_exposure(self) -> None:
+        """无实证样本时严禁写死胜率重仓：单期暴跌 60% 对组合影响必须封顶在冷启动探仓以内"""
+        bs = BalanceSheet(1e10, 2e9, 8e9, 4e9)
+        inc = IncomeStatement(3e9, 1.5e9, 1.2e9)
+        cf = CashFlowStatement(1.5e9, 2e8)
+        rec = CompanyFinancialRecord("COLD", "2023-12-31", "2024-04-20", bs, inc, cf)
+        report = EventDrivenBacktester(initial_cash=1_000_000.0, cold_start_weight=0.02).run_simulation(
+            [{"COLD": rec}] * 2, [{"COLD": 100.0}, {"COLD": 40.0}]
+        )
+        self.assertEqual(report.cold_start_periods, 2)
+        self.assertGreaterEqual(report.final_equity, 1_000_000.0 * (1 - 0.02 * 0.60 - 0.001))
+
+    def test_backtest_pit_excludes_undisclosed_and_liquidates_delisted(self) -> None:
+        """披露日晚于调仓日的报表不可见；退市标的按最后已知价强制清算"""
+        from datetime import date
+        bs = BalanceSheet(1e10, 2e9, 8e9, 4e9)
+        inc = IncomeStatement(3e9, 1.5e9, 1.2e9)
+        cf = CashFlowStatement(1.5e9, 2e8)
+        late = CompanyFinancialRecord("LATE", "2024-03-31", "2024-04-28", bs, inc, cf)
+        ok = CompanyFinancialRecord("OK", "2023-12-31", "2024-03-20", bs, inc, cf)
+        snaps = [{"LATE": late, "OK": ok}, {"LATE": late, "OK": ok}]
+        prices = [{"LATE": 10.0, "OK": 20.0}, {"LATE": 10.0}]
+        report = EventDrivenBacktester(initial_cash=1_000_000.0).run_simulation(
+            snaps, prices, rebalance_dates=[date(2024, 3, 31), date(2024, 6, 30)],
+            last_known_prices=[{}, {"OK": 5.0}],
+        )
+        self.assertEqual(report.pit_excluded_records, 1)
+        self.assertEqual(len(report.forced_liquidations), 1)
+        self.assertIn("OK@2024-06-30:5.0", report.forced_liquidations[0])
 
 
 if __name__ == "__main__":

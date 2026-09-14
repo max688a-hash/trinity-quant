@@ -150,7 +150,7 @@ def _live_tick_bars(symbol: str) -> List[Dict[str, Any]]:
 def fetch_owned_kline(symbol: str) -> List[Dict[str, Any]]:
     """
     只返回该标的自己的历史。
-    上证不得借用茅台离线样本；无源则空列表。
+    不得借用任何离线手写样本；无源则空列表。
     """
     from truth_kernel.historical_kline_service import HistoricalKlineService
 
@@ -160,18 +160,6 @@ def fetch_owned_kline(symbol: str) -> List[Dict[str, Any]]:
     live = HistoricalKlineService._fetch_sina_kline(sym, scale=240, datalen=60)
     if live:
         return _bars_from_kline_objects(live)
-    if "600519" in sym:
-        return _bars_from_kline_objects(
-            HistoricalKlineService._build_candles_with_ma(
-                HistoricalKlineService._REAL_MOUTAI_DAILY
-            )
-        )
-    if "600900" in sym:
-        return _bars_from_kline_objects(
-            HistoricalKlineService._build_candles_with_ma(
-                HistoricalKlineService._REAL_CYPC_DAILY
-            )
-        )
     if sym.endswith("USDT") and sym.isalnum():
         crypto_bars = _fetch_binance_daily(sym)
         if crypto_bars:

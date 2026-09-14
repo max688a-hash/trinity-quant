@@ -10,6 +10,7 @@ TRINITY QUANT 机构级海龟引擎、自动模拟盘与商业API桥接测试套
 4. 模拟盘 T+1 锁仓、跨日解冻、全摩擦扣减与自动盯市跟踪止损 (PaperTradingEngine)
 """
 
+import os
 import unittest
 from truth_kernel.paid_data_bridge import PaidDataBridge
 from gravity_brain.institutional_turtle import (
@@ -24,12 +25,24 @@ from entropy_execution.paper_trading_engine import PaperTradingEngine
 class TestPaidDataBridge(unittest.TestCase):
     """测试商业 API 密钥解析与加载"""
 
-    def test_load_credentials(self) -> None:
-        bridge = PaidDataBridge()
-        creds = bridge.credentials
-        self.assertTrue(creds.is_active)
-        self.assertEqual(creds.tushare_key, "huanghanchi")
-        self.assertIn("indevs.in", creds.api_base_url)
+    def test_load_credentials_from_env_without_repo_secret(self) -> None:
+        os.environ["QR_TUSHARE_KEY"] = "env-test-key"
+        try:
+            bridge = PaidDataBridge(config_env_path="/nonexistent/api_credentials.env")
+            creds = bridge.credentials
+            self.assertTrue(creds.is_configured)
+            self.assertFalse(creds.is_active, "未探活前严禁宣称商业数据源已激活")
+            self.assertEqual(creds.tushare_key, "env-test-key")
+            self.assertIn("indevs.in", creds.api_base_url)
+        finally:
+            os.environ.pop("QR_TUSHARE_KEY", None)
+
+    def test_missing_credentials_not_configured(self) -> None:
+        os.environ.pop("QR_TUSHARE_KEY", None)
+        bridge = PaidDataBridge(config_env_path="/nonexistent/api_credentials.env")
+        self.assertFalse(bridge.credentials.is_configured)
+        self.assertFalse(bridge.credentials.is_active)
+        self.assertEqual(bridge.probe_liveness().liveness_detail, "NOT_CONFIGURED")
 
 
 class TestInstitutionalTurtle(unittest.TestCase):

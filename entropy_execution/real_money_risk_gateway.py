@@ -15,15 +15,13 @@ TRINITY QUANT 真金级事前硬风控网关与日内最大回撤熔断中枢。
 """
 
 import math
-import secrets
 import time
 from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, List, Optional, Tuple
 
 from entropy_execution.capital_scale_morpher import CapitalScaleMorpher
-
-LIVE_COMBAT_SAFETY_KEY = "TRINITY_MASTER_OVERRIDE_SAFETY_KEY_2026"  # ref: AGENTS.md 第24条
+from entropy_execution.live_safety_key import verify_live_combat_safety_key
 
 
 class RiskVerdict(str, Enum):
@@ -95,8 +93,8 @@ class RealMoneyRiskGateway:
         self._kill_switch_reason = str(reason)
 
     def unlock_emergency_kill_switch(self, operator_key: str) -> bool:
-        """人工主管高权限解锁拔插头"""
-        if secrets.compare_digest(str(operator_key), LIVE_COMBAT_SAFETY_KEY):
+        """人工主管高权限解锁拔插头（密钥仅来自环境变量，未配置则拒绝）"""
+        if verify_live_combat_safety_key(str(operator_key)):
             self._kill_switch_active = False
             self._kill_switch_reason = ""
             return True
