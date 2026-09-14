@@ -42,7 +42,7 @@ class PipelineCycleResult:
     stage_execution_passed: bool
     veto_reason: Optional[str]
     alert_type: str                   # NONE / ENTRY_PING / CRISIS_ALARM
-    alert_color: str                  # none / emerald-pulse / rose-strobe
+    alert_color: str                  # none / rose-pulse (买) / rose-strobe (危) / emerald-pulse (卖)
     audit_trace: Dict[str, Any]
     receipt: Optional[PaperExecutionReceipt]
 
@@ -140,6 +140,13 @@ class LivePipelineOrchestrator:
         """
         sym = symbol.upper()
         trace: Dict[str, Any] = {}
+        if current_price <= 0.0 or current_price != current_price:
+            return PipelineCycleResult(
+                symbol=sym, is_executed=False, action="VETO",
+                stage_immune_passed=False, stage_gravity_passed=False, stage_execution_passed=False,
+                veto_reason="DATA_UNAVAILABLE: 成交价缺失或非法，禁止除零撮合",
+                alert_type="CRISIS_ALARM", alert_color="rose-strobe", audit_trace=trace, receipt=None
+            )
 
         # 1. 第一级：脊髓原始反射弧 (Spinal Primitive Reflex)
         spinal_cmd = self.reflex_central.evaluate_primitive_reflex(
@@ -274,7 +281,7 @@ class LivePipelineOrchestrator:
             stage_execution_passed=rcpt.is_success,
             veto_reason=rcpt.rejection_reason,
             alert_type="ENTRY_PING" if rcpt.is_success else "NONE",
-            alert_color="emerald-pulse" if rcpt.is_success else "none",
+            alert_color="rose-pulse" if rcpt.is_success else "none",
             audit_trace=trace,
             receipt=rcpt
         )

@@ -27,7 +27,18 @@ PROTECTED_POST_PATHS = frozenset({
 })
 PROTECTED_GET_PATHS = frozenset({
     "/api/vault/status",
+    "/api/real_money/status",
+    "/api/real_money/orders",
 })
+
+
+def _header_value(headers: Mapping[str, str], name: str) -> str:
+    """HTTP 头名大小写不敏感读取"""
+    wanted = name.lower()
+    for key, value in headers.items():
+        if str(key).lower() == wanted:
+            return str(value or "")
+    return ""
 
 
 def resolve_bind_host() -> str:
@@ -59,7 +70,7 @@ def authorize(method: str, path: str, headers: Mapping[str, str]) -> Optional[st
         return None
     if not resolve_api_token():
         return "管理令牌未配置 (TRINITY_API_TOKEN)，高危接口已锁闭"
-    candidate = headers.get(TOKEN_HEADER, "") or headers.get(TOKEN_HEADER.lower(), "")
+    candidate = _header_value(headers, TOKEN_HEADER)
     if not verify_api_token(candidate):
         return "管理令牌缺失或错误"
     return None

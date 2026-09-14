@@ -90,6 +90,16 @@ class TestLiquidityDefenseAndOrchestrator(unittest.TestCase):
         self.assertIsNotNone(res.receipt)
         self.assertTrue(res.receipt.is_success)
 
+    def test_zero_price_does_not_crash_or_fill(self) -> None:
+        res = self.orchestrator.execute_tick(
+            symbol="600519.SH",
+            current_price=0.0,
+            macro_history=[100.0 + i for i in range(25)],
+            meso_history=[120.0 + i for i in range(12)],
+        )
+        self.assertFalse(res.is_executed)
+        self.assertIn("DATA_UNAVAILABLE", res.veto_reason or res.action)
+
 
 class TestMainServerPersistence(unittest.TestCase):
     """测试 main.py 的状态持久化与 REST API 响应"""

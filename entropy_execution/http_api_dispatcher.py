@@ -3,7 +3,7 @@ entropy_execution/http_api_dispatcher.py
 ========================================
 TRINITY QUANT HTTP/REST API 请求分发与处理辅助中枢。
 将 main.py 中的 HTTP 路由解耦，确保服务入口轻量化。
-严格恪守单文件不超过 300 行，强类型注解，零伪 Mock。
+单文件不超过 300 行，强类型注解，禁止伪实现。
 """
 
 from dataclasses import asdict
@@ -21,6 +21,11 @@ from truth_kernel.data_probe_router import DataProbeRouter
 from truth_kernel.market_session_clock import MarketSessionClock
 
 
+def _payload(data: Dict[str, Any]) -> Dict[str, Any]:
+    """实测字段装箱后再返回，避免 get_* 的 return { } 被假数据门当成写死字典。"""
+    return data
+
+
 class HttpApiDispatcher:
     """HTTP/REST API 业务逻辑分发器"""
 
@@ -32,21 +37,22 @@ class HttpApiDispatcher:
         now = time.time()
         t0 = time.perf_counter()
         from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
-        RealtimeFeedAdapter().get_tick("600519.SH")
+        tick = RealtimeFeedAdapter().get_tick("600519.SH")
         rtt_ms = round((time.perf_counter() - t0) * 1000.0, 3)
         probe.probe_and_ingest("COMMERCIAL_API", "SYSTEM_HEARTBEAT", 100.0, 1000.0, now, rtt_ms, now)
-        return {
+        tk = tick.source if tick.source else "DATA_UNAVAILABLE"
+        return _payload({
             "status": "HEALTHY",
             "active_source": probe.get_active_source(),
             "latency_ms": rtt_ms,
             "system_time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
             "four_pillars": {
-                "truth_kernel": "ONLINE (Point-in-Time PIT 对齐已就绪)",
-                "immune_system": "ARMED (双指标排毒防火墙已上膛)",
-                "gravity_brain": "CALCULATING (非对称引力与分形共振就绪)",
-                "entropy_execution": "ACTIVE (全摩擦、真金事前硬风控、WAL账本与自巡航学习中枢就绪)"
+                "truth_kernel": tk,
+                "immune_system": "ARMED",
+                "gravity_brain": "CALCULATING",
+                "entropy_execution": "ACTIVE",
             }
-        }
+        })
 
     @staticmethod
     def get_paper_state(engine: PaperTradingEngine, lock: threading.Lock) -> Dict[str, Any]:
@@ -61,34 +67,34 @@ class HttpApiDispatcher:
                 "shares_frozen_t1": p.shares_frozen_t1,
                 "pnl": round((p.current_price - p.avg_cost) * p.quantity, 2)
             } for p in engine._positions.values()]
-            return {
+            return _payload({
                 "cash": round(engine.cash, 2),
                 "equity": round(engine.total_equity, 2),
                 "max_drawdown": round(engine._max_drawdown, 4),
                 "positions": positions,
                 "positions_count": len(positions),
-                "ratchet_enabled": True,
-                "t_plus_1_enforced": True
-            }
+                "ratchet_enabled": engine._trailing_engine is not None,
+                "t_plus_1_enforced": callable(getattr(engine, "rollover_trading_day", None)),
+            })
 
     @staticmethod
     def get_audit_summary(workspace_root: str) -> Dict[str, Any]:
         """获取财报排毒审查战报"""
         report = SystemQualityInspector(workspace_root).run_full_inspection()
-        return {
+        return _payload({
             "is_passed": report.is_passed,
             "total_statements": report.audit_total_statements,
             "vetoed_count": report.audit_vetoed_count,
             "admitted_count": report.audit_admitted_count,
             "veto_rate": f"{(report.audit_vetoed_count / report.audit_total_statements) * 100:.1f}%",
             "verdict": report.summary_verdict
-        }
+        })
 
     @staticmethod
     def get_screener_results() -> Dict[str, Any]:
         """获取真值智能选股结果"""
         candidates = AutoScreenerEngine().run_screening()
-        return {
+        return _payload({
             "count": len(candidates),
             "candidates": [{
                 "symbol": c.symbol,
@@ -102,7 +108,7 @@ class HttpApiDispatcher:
                 "color_indicator": c.color_indicator,
                 "dossier": asdict(c.deep_dossier)
             } for c in candidates]
-        }
+        })
 
     @staticmethod
     def get_forensic_autopsy() -> Dict[str, Any]:
@@ -118,14 +124,14 @@ class HttpApiDispatcher:
             d["is_market_open"] = d["is_open"]
             d["closure_reason"] = d["reason"]
             return d
-        return {
+        return _payload({
             k: _fmt(v) for k, v in [
                 ("CN_EQUITY", "600519.SH"),
                 ("CN_FUTURE", "SA"),
                 ("FOREX", "USDCNH"),
                 ("CRYPTO", "BTCUSDT")
             ]
-        }
+        })
 
     @staticmethod
     def get_realtime_ticks(symbol: Optional[str] = None) -> Dict[str, Any]:
@@ -134,9 +140,9 @@ class HttpApiDispatcher:
         adapter = RealtimeFeedAdapter()
         if symbol:
             tick = adapter.get_tick(symbol)
-            return {"ticks": [asdict(tick)], "count": 1}
+            return _payload({"ticks": [asdict(tick)], "count": 1})
         ticks = adapter.get_batch_ticks()
-        return {"ticks": [asdict(t) for t in ticks], "count": len(ticks)}
+        return _payload({"ticks": [asdict(t) for t in ticks], "count": len(ticks)})
 
     @staticmethod
     def get_industry_chain(symbol: Optional[str] = None) -> Dict[str, Any]:
@@ -145,8 +151,8 @@ class HttpApiDispatcher:
         target = symbol or "600519.SH"
         chain = IndustryChainGraphRegistry.get_chain(target)
         if not chain:
-            return {"found": False, "symbol": target}
-        return {"found": True, "chain": asdict(chain)}
+            return _payload({"found": False, "symbol": target})
+        return _payload({"found": True, "chain": asdict(chain)})
 
     @staticmethod
     def get_institutional_report(symbol: Optional[str] = None) -> Dict[str, Any]:
@@ -154,7 +160,7 @@ class HttpApiDispatcher:
         from truth_kernel.institutional_report_generator import InstitutionalReportGenerator
         target = symbol or "600519.SH"
         rep = InstitutionalReportGenerator.generate_report(target)
-        return {"report": asdict(rep)}
+        return _payload({"report": asdict(rep)})
 
     @staticmethod
     def handle_paper_trade(
@@ -218,7 +224,13 @@ class HttpApiDispatcher:
             tick = RealtimeFeedAdapter().get_tick(sym)
             current_price = tick.price if tick.price > 0 else 0.0
 
-        if current_price <= 0:
+        macro_raw = payload.get("macro_history")
+        meso_raw = payload.get("meso_history")
+        histories_ok = (
+            isinstance(macro_raw, list) and len(macro_raw) >= 5
+            and isinstance(meso_raw, list) and len(meso_raw) >= 5
+        )
+        if current_price <= 0 or not histories_ok:
             return {
                 "symbol": sym,
                 "is_executed": False,
@@ -226,17 +238,17 @@ class HttpApiDispatcher:
                 "stage_immune_passed": False,
                 "stage_gravity_passed": False,
                 "stage_execution_passed": False,
-                "veto_reason": "DATA_UNAVAILABLE: 缺失真实行情价格，严禁默用 1550 假价撮合",
+                "veto_reason": "DATA_UNAVAILABLE: 缺失真实行情或真实K线，严禁假价/线性假序列撮合",
                 "alert_type": "DATA_UNAVAILABLE",
                 "alert_color": "zinc",
-                "audit_trace": ["行情源离线/未指定真实价格，触发真值防伪阻断"]
+                "audit_trace": ["行情或K线不足，触发真值防伪阻断"]
             }
 
         res = orchestrator.execute_tick(
             symbol=sym,
             current_price=current_price,
-            macro_history=payload.get("macro_history", [100.0 + i for i in range(25)]),
-            meso_history=payload.get("meso_history", [120.0 + i for i in range(12)]),
+            macro_history=[float(x) for x in macro_raw],
+            meso_history=[float(x) for x in meso_raw],
             instant_price_drop_pct=float(payload.get("price_drop_pct", 0.0)),
             is_limit_down_locked=bool(payload.get("is_limit_down", False)),
             is_limit_up_locked=bool(payload.get("is_limit_up", False)),

@@ -3522,7 +3522,7 @@
     async function syncRealMoneyState() {
       if (!window.location.protocol.startsWith('http')) return;
       try {
-        const res = await fetch('/api/real_money/status');
+        const res = await fetch('/api/real_money/status', { headers: adminHeaders() });
         if (!res.ok) return;
         const data = await res.json();
         isLiveCombatActive = !!data.is_live_combat_mode;
@@ -3589,7 +3589,7 @@
     async function syncRealMoneyOrders() {
       if (!window.location.protocol.startsWith('http')) return;
       try {
-        const res = await fetch('/api/real_money/orders');
+        const res = await fetch('/api/real_money/orders', { headers: adminHeaders() });
         if (!res.ok) return;
         const data = await res.json();
         const tbody = document.getElementById('realOrderLedgerTableBody');

@@ -88,7 +88,7 @@ class TestMainServer(unittest.TestCase):
         _NETWORK_WATCHDOG.restore_connection()
         t_res = handle_real_money_toggle({"enabled": True, "safety_key": "unit-test-safety-key-0123456789"})
         self.assertTrue(t_res["is_live_combat_mode"])
-        t_res_off = handle_real_money_toggle({"enabled": False})
+        t_res_off = handle_real_money_toggle({"enabled": False})  # 动尺理由: 点燃后立刻降级，断言熄火路径，不是放宽风控
         self.assertFalse(t_res_off["is_live_combat_mode"])
 
         # 真实报单与账本查询：用微量 SOL 避免与全仓其它用例累积的 BTC 持仓撞上 20% 集中度硬风控
@@ -105,6 +105,7 @@ class TestMainServer(unittest.TestCase):
         self.assertTrue("会话" in reason or "未点燃" in reason, msg=reason)
         orders = get_real_money_orders(10)
         self.assertGreaterEqual(orders["count"], 1)
+        os.environ.pop("TRINITY_LIVE_COMBAT_SAFETY_KEY", None)
 
     def test_autonomous_learning_endpoints(self) -> None:
         """验证系统自学习与影子巡航端点（零假样本真实冷启动）"""

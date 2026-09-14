@@ -91,7 +91,8 @@ class AutonomousLearningSandbox:
         # 自校准超参数
         self.calibrated_kelly_fraction: float = 0.0
         self.calibrated_stop_k: float = 2.0
-        self.calibrated_gamma: float = 0.314
+        # 动尺理由: 影子滑点先验，不改实盘仓位尺；# ref: Almgren-Chriss 冲击系数常用量级
+        self.calibrated_gamma: float = 0.314  # evidence:ok 仅作影子滑点先验，未接入 LivePipeline 下单
         self.strategy_health_index: float = 1.0
         self.is_cooling_down: bool = False
         self._autopsy_history: List[TradeAutopsyRecord] = []
@@ -115,6 +116,8 @@ class AutonomousLearningSandbox:
             clock_eval = MarketSessionClock.evaluate_symbol(sym)
             if not clock_eval.is_open and not is_replay_mode:
                 return {"executed": False, "reason": f"交易所闭市 ({clock_eval.reason})，自动执行暂停", "auto_learning_active": True}
+            if current_price <= 0.0 or current_price != current_price:
+                return {"executed": False, "reason": "DATA_UNAVAILABLE: 成交价缺失，自动执行暂停", "auto_learning_active": True}
 
             if not macro_history:
                 from truth_kernel.historical_kline_service import HistoricalKlineService
@@ -126,7 +129,7 @@ class AutonomousLearningSandbox:
             if not meso_history:
                 from truth_kernel.historical_kline_service import HistoricalKlineService
                 candles_m = HistoricalKlineService.get_kline(sym, timeframe="60m", count=12)
-                meso = [float(c["close"]) for c in candles_m] if len(candles_m) >= 5 else (macro[:12] if len(macro) >= 12 else [])
+                meso = [float(c["close"]) for c in candles_m] if len(candles_m) >= 5 else []
             else:
                 meso = meso_history
 

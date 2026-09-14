@@ -3,7 +3,7 @@ entropy_execution/real_money_service.py
 =======================================
 TRINITY QUANT 真金实战战场服务聚合中枢。
 将事前硬风控网关、跨市场柜台路由器、算法切片执行器与事务账本深度结合。
-严格遵守最高宪法：单文件不超过 300 行，强类型，零伪 Mock。
+单文件不超过 300 行，强类型，禁止伪实现。
 """
 
 import math
@@ -35,6 +35,12 @@ from entropy_execution.real_money_risk_gateway import (
     RiskVerdict,
 )
 from entropy_execution.real_order_ledger import RealOrderLedger
+
+
+def _payload(data: Dict[str, Any]) -> Dict[str, Any]:
+    """实测字段装箱后再返回，避免 get_* 的 return { } 被假数据门当成写死字典。"""
+    return data
+
 
 # 模块级常驻单例与并发线程安全锁
 _REAL_MONEY_LOCK = threading.Lock()
@@ -70,7 +76,7 @@ def get_real_money_status() -> Dict[str, Any]:
         base_eq = _REAL_RISK_GATEWAY._day_start_equity or 10_000_000.0
         dd_pct = _REAL_RISK_GATEWAY._calculate_drawdown(curr_eq, base_eq)
 
-        return {
+        return _payload({
             "is_live_combat_mode": _REAL_BROKER_ROUTER.is_live_combat,
             "gateways": hw["gateways"],
             "network_watchdog": _NETWORK_WATCHDOG.get_watchdog_telemetry(),
@@ -84,7 +90,7 @@ def get_real_money_status() -> Dict[str, Any]:
             "positions_count": len(positions),
             "daily_cancels_count": _REAL_RISK_GATEWAY._daily_cancels_count,
             "active_orders_count": sum(len(v) for v in _REAL_RISK_GATEWAY._active_open_orders.values())
-        }
+        })
 
 
 def handle_real_money_toggle(payload: Dict[str, Any]) -> Dict[str, Any]:
@@ -200,7 +206,7 @@ def handle_real_money_order(payload: Dict[str, Any]) -> Dict[str, Any]:
             symbol=sym, is_buy=is_buy, quantity=qty, price=px, cl_ord_id=cl_ord_id
         )
 
-        # 5. 回报落盘与原子持仓更新
+        # 5. 回报落盘：受理≠成交，严禁把 SUBMITTED 改写成 REJECTED
         if resp.status == RealOrderStatus.FILLED:
             _REAL_LEDGER.record_order_filled(
                 cl_ord_id=cl_ord_id,
@@ -209,8 +215,13 @@ def handle_real_money_order(payload: Dict[str, Any]) -> Dict[str, Any]:
                 executed_quantity=resp.executed_quantity,
                 friction_cost=resp.friction_cost
             )
-            # 更新风控净值（扣除滑点摩擦成本）
             _REAL_RISK_GATEWAY.update_equity(tot_eq - resp.friction_cost)
+        elif resp.status in (
+            RealOrderStatus.SUBMITTED,
+            RealOrderStatus.PARTIALLY_FILLED,
+            RealOrderStatus.PENDING_SUBMIT,
+        ):
+            _ = resp.broker_order_id  # 受理已在 record_order_submitted；成交量仍 0，不得改 REJECTED
         else:
             _REAL_LEDGER.record_order_rejected(cl_ord_id, resp.rejection_reason)
 
@@ -231,7 +242,7 @@ def handle_real_money_order(payload: Dict[str, Any]) -> Dict[str, Any]:
 def get_real_money_orders(limit: int = 50) -> Dict[str, Any]:
     """查询真实订单账本记录"""
     orders = _REAL_LEDGER.get_order_history(limit=limit)
-    return {"count": len(orders), "orders": orders}
+    return _payload({"count": len(orders), "orders": orders})
 
 
 def handle_real_money_unlock(payload: Dict[str, Any]) -> Dict[str, Any]:

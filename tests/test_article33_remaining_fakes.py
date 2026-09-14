@@ -98,6 +98,20 @@ class TestArticle33RemainingFakes(unittest.TestCase):
         html = self._src("trinity_dashboard.html")
         self.assertNotIn("高保真微观布朗流", html)
 
+    def test_pipeline_must_not_default_linear_fake_kline(self) -> None:
+        src = self._src("entropy_execution/http_api_dispatcher.py")
+        self.assertNotIn("[100.0 + i for i in range(25)]", src)
+        self.assertNotIn("[120.0 + i for i in range(12)]", src)
+
+    def test_shadow_tick_must_not_fill_minutes_with_daily(self) -> None:
+        src = self._src("entropy_execution/autonomous_learning_sandbox.py")
+        self.assertNotIn("macro[:12]", src)
+
+    def test_buy_fill_hud_must_be_rose_not_emerald(self) -> None:
+        src = self._src("entropy_execution/live_pipeline_orchestrator.py")
+        self.assertNotIn('alert_color="emerald-pulse" if rcpt.is_success', src)
+        self.assertIn("rose-pulse", src)
+
 
 if __name__ == "__main__":
     unittest.main()

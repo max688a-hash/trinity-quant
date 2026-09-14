@@ -131,6 +131,14 @@ class AutoPilotLearningDaemon:
         from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
         real_tick = RealtimeFeedAdapter().get_tick(sym)
         px = real_tick.price
+        if px <= 0.0 or real_tick.source == "DATA_UNAVAILABLE":
+            with self._lock:
+                self._total_ticks += 1
+                self._last_tick_time = self._now_str()
+                self._last_symbol = sym
+                self._last_action = "DATA_UNAVAILABLE"
+                self._last_summary = f"标的 {sym} 行情不可用，跳过影子撮合"
+            return {"executed": False, "reason": "DATA_UNAVAILABLE", "symbol": sym}
 
         # 触发影子沙盒流水线 (严格基于真实行情)
         res = self.sandbox.run_autonomous_tick(
