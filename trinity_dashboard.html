@@ -1951,14 +1951,14 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
           <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">自动影子成交与胜率</span>
-          <div class="text-xl font-black text-white font-mono" id="learningWinRate">66.7%</div>
-          <span class="text-[10px] text-emerald-400 font-mono mt-1 block" id="learningTradesCount">共 20 笔实证 · 盈亏比 2.10</span>
+          <div class="text-xl font-black text-white font-mono" id="learningWinRate">0.0%</div>
+          <span class="text-[10px] text-slate-400 font-mono mt-1 block" id="learningTradesCount">共 0 笔实证 · 盈亏比 0.00</span>
         </div>
 
         <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
           <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">贝叶斯自校准半凯利 f*</span>
-          <div class="text-xl font-black text-cyan-400 font-mono" id="learningKellyF">18.0%</div>
-          <span class="text-[10px] text-slate-400 mt-1 block">基于后验动态进化配比</span>
+          <div class="text-xl font-black text-cyan-400 font-mono" id="learningKellyF">0.0%</div>
+          <span class="text-[10px] text-amber-400 mt-1 block" id="learningKellyHint">影子校准未进撮合（不改仓位）</span>
         </div>
 
         <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
@@ -1969,7 +1969,7 @@
 
         <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
           <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">策略健康度指数 H</span>
-          <div class="text-xl font-black text-emerald-400 font-mono" id="learningHealthScore">92.0 / 100</div>
+          <div class="text-xl font-black text-emerald-400 font-mono" id="learningHealthScore">100.0 / 100</div>
           <span class="text-[10px] text-emerald-400 mt-1 block" id="learningCoolingStatus">🟢 运行在健康区间</span>
         </div>
       </div>
@@ -4023,6 +4023,8 @@
         if (wr) wr.textContent = `${(data.empirical_win_rate * 100).toFixed(1)}%`;
         if (tc) tc.textContent = `共 ${data.total_auto_trades} 笔实证 · 盈亏比 ${data.empirical_payoff_ratio.toFixed(2)}`;
         if (kf) kf.textContent = `${(data.calibrated_kelly_f * 100).toFixed(1)}%`;
+        const kh = document.getElementById('learningKellyHint');
+        if (kh) kh.textContent = data.shadow_kelly_wired_into_sizing ? '已接入撮合' : '影子校准未进撮合（不改仓位）';
         if (sk) sk.textContent = `${data.calibrated_trailing_stop_k.toFixed(1)} ATR`;
         if (hs) hs.textContent = `${(data.strategy_health_index * 100).toFixed(1)} / 100`;
         if (cs) {

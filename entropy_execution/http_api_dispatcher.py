@@ -253,7 +253,8 @@ class HttpApiDispatcher:
             is_limit_down_locked=bool(payload.get("is_limit_down", False)),
             is_limit_up_locked=bool(payload.get("is_limit_up", False)),
             insider_dump_ratio_adv=float(payload.get("dump_ratio_adv", 0.0)),
-            insider_pledge_ratio=float(payload.get("pledge_ratio", 0.0))
+            insider_pledge_ratio=float(payload.get("pledge_ratio", 0.0)),
+            calibrated_kelly_fraction=float(payload.get("calibrated_kelly_fraction") or 0.0),
         )
         return {
             "symbol": res.symbol,

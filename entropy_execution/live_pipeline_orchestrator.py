@@ -133,13 +133,23 @@ class LivePipelineOrchestrator:
         insider_pledge_ratio: float = 0.0,
         current_breakout_volume: float = 10000.0,
         recent_avg_volume: float = 10000.0,
-        shares_outstanding: Optional[float] = None
+        shares_outstanding: Optional[float] = None,
+        calibrated_kelly_fraction: Optional[float] = None,
     ) -> PipelineCycleResult:
         """
-        四层端到端闭环驱动：从微观财务核验到订单成交
+        四层端到端闭环驱动：从微观财务核验到订单成交。
+        calibrated_kelly_fraction 仅入审计，禁止改仓位（影子校准未进撮合）。
         """
         sym = symbol.upper()
         trace: Dict[str, Any] = {}
+        shadow_f = 0.0 if calibrated_kelly_fraction is None else float(calibrated_kelly_fraction)
+        if shadow_f != shadow_f or shadow_f < 0.0:
+            shadow_f = 0.0
+        trace["shadow_kelly"] = {
+            "calibrated_kelly_fraction": shadow_f,
+            "wired_into_sizing": False,
+            "reason": "影子校准未进撮合",
+        }
         if current_price <= 0.0 or current_price != current_price:
             return PipelineCycleResult(
                 symbol=sym, is_executed=False, action="VETO",

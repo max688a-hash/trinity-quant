@@ -65,6 +65,7 @@ class SelfLearningReport:
     is_cooling_down: bool
     recent_autopsies: List[Dict[str, Any]]
     learning_synthesis: str
+    shadow_kelly_wired_into_sizing: bool
 
 
 class AutonomousLearningSandbox:
@@ -136,7 +137,10 @@ class AutonomousLearningSandbox:
             if not macro or not meso:
                 return {"executed": False, "reason": "缺失真实历史K线序列，严禁虚构自造涨价曲线", "auto_learning_active": False}
 
-            pipe_res = self.orchestrator.execute_tick(symbol=sym, current_price=current_price, macro_history=macro, meso_history=meso)
+            pipe_res = self.orchestrator.execute_tick(
+                symbol=sym, current_price=current_price, macro_history=macro, meso_history=meso,
+                calibrated_kelly_fraction=self.calibrated_kelly_fraction,
+            )
             if pipe_res.is_executed and pipe_res.receipt is not None and sym not in self._entry_clock:
                 notional = pipe_res.receipt.executed_price * pipe_res.receipt.executed_quantity
                 self._entry_clock[sym] = time.time()
@@ -229,6 +233,7 @@ class AutonomousLearningSandbox:
                 syn = (
                     "【系统自学习中枢已就绪】：当前处于零假样本冷启动待命状态，"
                     "尚未产生实盘或影子成交样本，严禁虚构盈利历史；凯利 f*=0，流水线仅以显式冷启动探仓运行。"
+                    "影子校准未进撮合，禁止当实盘仓位。"
                 )
                 return SelfLearningReport(
                     total_auto_trades=0, winning_trades=0, losing_trades=0,
@@ -239,7 +244,8 @@ class AutonomousLearningSandbox:
                     strategy_health_index=self.strategy_health_index,
                     is_cooling_down=self.is_cooling_down,
                     recent_autopsies=[],
-                    learning_synthesis=syn
+                    learning_synthesis=syn,
+                    shadow_kelly_wired_into_sizing=False,
                 )
 
             win_rate = wins / max(1, total)
@@ -254,6 +260,7 @@ class AutonomousLearningSandbox:
                 f"最近一笔滑点误差 {self._autopsy_history[0].slippage_error if self._autopsy_history else 0.0:+.5f}，"
                 f"当前策略健康度指数为 {self.strategy_health_index * 100:.1f}/100 ("
                 f"{'🟢 运行在健康区间' if not self.is_cooling_down else '⚠️ 已触发模型退化自冷却熔断'})。"
+                "影子校准未进撮合，禁止当实盘仓位。"
             )
 
             return SelfLearningReport(
@@ -265,5 +272,6 @@ class AutonomousLearningSandbox:
                 strategy_health_index=self.strategy_health_index,
                 is_cooling_down=self.is_cooling_down,
                 recent_autopsies=[asdict(a) for a in self._autopsy_history[:10]],
-                learning_synthesis=syn
+                learning_synthesis=syn,
+                shadow_kelly_wired_into_sizing=False,
             )

@@ -30,7 +30,9 @@ class TestAutonomousLearningSandbox(unittest.TestCase):
         self.assertEqual(rep.calibrated_kelly_f, 0.0)
         self.assertEqual(rep.empirical_payoff_ratio, 0.0)
         self.assertFalse(rep.is_cooling_down)
+        self.assertFalse(rep.shadow_kelly_wired_into_sizing)
         self.assertIn("系统自学习中枢已就绪", rep.learning_synthesis)
+        self.assertIn("未进撮合", rep.learning_synthesis)
 
     def test_shadow_tick_execution(self) -> None:
         """测试影子自动巡航 Tick 执行与决策"""
@@ -86,6 +88,19 @@ class TestAutonomousLearningSandbox(unittest.TestCase):
         self.sandbox._calibrate_parameters()
         rep = self.sandbox.generate_learning_report()
         self.assertTrue(rep.is_cooling_down)
+        self.assertFalse(rep.shadow_kelly_wired_into_sizing)
+        self.assertIn("未进撮合", rep.learning_synthesis)
+
+    def test_dashboard_discloses_shadow_kelly_not_wired(self) -> None:
+        """看板禁止把 RAM 凯利渲染成已进撮合的仓位尺。"""
+        import os
+        root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        dash = os.path.join(root, "trinity_dashboard.html")
+        with open(dash, "r", encoding="utf-8") as fp:
+            html = fp.read()
+        self.assertIn("影子校准未进撮合", html)
+        self.assertNotIn('id="learningKellyF">18.0%', html)
+        self.assertNotIn('id="learningWinRate">66.7%', html)
 
 
 if __name__ == "__main__":

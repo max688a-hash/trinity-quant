@@ -100,6 +100,24 @@ class TestLiquidityDefenseAndOrchestrator(unittest.TestCase):
         self.assertFalse(res.is_executed)
         self.assertIn("DATA_UNAVAILABLE", res.veto_reason or res.action)
 
+    def test_shadow_kelly_is_read_but_not_wired_into_sizing(self) -> None:
+        """影子凯利必须被 execute_tick 读取入审计，但不得改冷启动探仓尺。"""
+        res = self.orchestrator.execute_tick(
+            symbol="600519.SH",
+            current_price=150.0,
+            macro_history=[100.0 + i for i in range(25)],
+            meso_history=[120.0 + i for i in range(12)],
+            calibrated_kelly_fraction=0.35,
+        )
+        shadow = res.audit_trace.get("shadow_kelly") or {}
+        self.assertEqual(shadow.get("calibrated_kelly_fraction"), 0.35)
+        self.assertFalse(shadow.get("wired_into_sizing"))
+        self.assertIn("未进撮合", str(shadow.get("reason") or ""))
+        self.assertEqual(res.audit_trace["kelly"]["mode"], "COLD_START_PROBE")
+        self.assertTrue(res.is_executed, msg=str(res.veto_reason))
+        notional = res.receipt.executed_price * res.receipt.executed_quantity
+        self.assertLessEqual(notional, 5_000_000.0 * 0.02 + 1e-6)
+
 
 class TestMainServerPersistence(unittest.TestCase):
     """测试 main.py 的状态持久化与 REST API 响应"""
