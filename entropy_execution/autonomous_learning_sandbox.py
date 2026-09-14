@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional
 
 from entropy_execution.algorithmic_order_slicer import MarketImpactModel
 from entropy_execution.live_pipeline_orchestrator import LivePipelineOrchestrator
-from entropy_execution.paper_trading_engine import PaperTradingEngine
+from entropy_execution.paper_trading_engine import PaperExecutionReceipt, PaperTradingEngine
 from truth_kernel.market_session_clock import MarketSessionClock
 
 
@@ -89,12 +89,14 @@ class AutonomousLearningSandbox:
         self._loss_pnls: List[float] = []
 
         # 自校准超参数
-        self.calibrated_kelly_fraction: float = 0.10
+        self.calibrated_kelly_fraction: float = 0.0
         self.calibrated_stop_k: float = 2.0
         self.calibrated_gamma: float = 0.314
         self.strategy_health_index: float = 1.0
         self.is_cooling_down: bool = False
         self._autopsy_history: List[TradeAutopsyRecord] = []
+        self._entry_clock: Dict[str, float] = {}
+        self._entry_predicted_slippage: Dict[str, float] = {}
 
     def _now_str(self) -> str:
         return datetime.now(self.BEIJING_TZ).strftime("%Y-%m-%d %H:%M:%S")
@@ -132,6 +134,10 @@ class AutonomousLearningSandbox:
                 return {"executed": False, "reason": "缺失真实历史K线序列，严禁虚构自造涨价曲线", "auto_learning_active": False}
 
             pipe_res = self.orchestrator.execute_tick(symbol=sym, current_price=current_price, macro_history=macro, meso_history=meso)
+            if pipe_res.is_executed and pipe_res.receipt is not None and sym not in self._entry_clock:
+                notional = pipe_res.receipt.executed_price * pipe_res.receipt.executed_quantity
+                self._entry_clock[sym] = time.time()
+                self._entry_predicted_slippage[sym] = self.impact_model.estimate_impact(sym, notional).estimated_slippage_pct
             self._evaluate_auto_exit(sym, current_price)
 
             return {
@@ -152,15 +158,22 @@ class AutonomousLearningSandbox:
             if not pos.shares_frozen_t1:
                 rcpt = self.paper.submit_order(symbol=symbol, is_buy=False, quantity=pos.quantity, market_price=current_price, is_replay_mode=True)
                 if rcpt.is_success:
-                    self._record_autopsy_and_learn(symbol=symbol, entry_price=pos.avg_cost, exit_price=rcpt.executed_price, quantity=rcpt.executed_quantity, friction=rcpt.friction_cost, is_trailing_stop=True)
+                    self._record_autopsy_and_learn(symbol=symbol, entry_price=pos.avg_cost, exit_price=rcpt.executed_price, quantity=rcpt.executed_quantity, friction=rcpt.friction_cost, is_trailing_stop=True, receipt=rcpt)
 
     def _record_autopsy_and_learn(
         self, symbol: str, entry_price: float, exit_price: float,
-        quantity: float, friction: float, is_trailing_stop: bool
+        quantity: float, friction: float, is_trailing_stop: bool,
+        receipt: Optional[PaperExecutionReceipt] = None
     ) -> None:
-        """记录归因并触发贝叶斯在线参数迭代"""
+        """记录归因并触发贝叶斯在线参数迭代；持仓时长与滑点必须来自真实回执，禁止常量填充"""
         net_pnl = (exit_price - entry_price) * quantity - friction
-        pnl_pct = (exit_price - entry_price) / max(0.01, entry_price)
+        gross_notional = max(0.01, entry_price * quantity)
+        pnl_pct = net_pnl / gross_notional
+        entry_ts = self._entry_clock.pop(symbol, None)
+        holding_seconds = (time.time() - entry_ts) if entry_ts is not None else 0.0
+        predicted_slip = self._entry_predicted_slippage.pop(symbol, 0.0)
+        realized_slip = (receipt.slippage / max(0.01, receipt.executed_price * receipt.executed_quantity)) if receipt else 0.0
+        self.orchestrator.record_closed_trade(pnl_pct)
 
         if net_pnl > 0:
             self._prior_wins += 1.0
@@ -175,8 +188,9 @@ class AutonomousLearningSandbox:
             trade_id=f"AUTO_{int(time.time() * 1000)}", symbol=symbol, action="BUY->SELL",
             entry_price=round(entry_price, 2), exit_price=round(exit_price, 2),
             quantity=quantity, pnl=round(net_pnl, 2), pnl_pct=round(pnl_pct, 4),
-            friction_cost=round(friction, 2), holding_seconds=14400.0,
-            predicted_slippage=0.0005, realized_slippage=0.00048, slippage_error=-0.00002,
+            friction_cost=round(friction, 2), holding_seconds=round(holding_seconds, 1),
+            predicted_slippage=round(predicted_slip, 6), realized_slippage=round(realized_slip, 6),
+            slippage_error=round(realized_slip - predicted_slip, 6),
             verdict=verdict, timestamp=self._now_str()
         )
         self._autopsy_history.insert(0, rec)
@@ -188,13 +202,13 @@ class AutonomousLearningSandbox:
         """贝叶斯更新后验胜率与盈亏比，动态校准凯利 f* 与棘轮止损带宽"""
         total = self._prior_wins + self._prior_losses
         post_p = self._prior_wins / max(1.0, total)
-        avg_win = (sum(self._win_pnls[-10:]) / len(self._win_pnls[-10:])) if self._win_pnls else 1000.0
-        avg_loss = (sum(self._loss_pnls[-10:]) / len(self._loss_pnls[-10:])) if self._loss_pnls else 500.0
-        post_b = avg_win / max(1.0, avg_loss)
+        avg_win = (sum(self._win_pnls[-10:]) / len(self._win_pnls[-10:])) if self._win_pnls else 0.0
+        avg_loss = (sum(self._loss_pnls[-10:]) / len(self._loss_pnls[-10:])) if self._loss_pnls else 0.0
+        post_b = (avg_win / avg_loss) if avg_loss > 0 else (10.0 if avg_win > 0 else 0.0)
 
-        # 半凯利配置
+        # 半凯利配置；无优势时归零，不设人为下限
         raw_kelly = (post_p * post_b - (1.0 - post_p)) / max(0.1, post_b)
-        self.calibrated_kelly_fraction = round(max(0.05, min(0.35, raw_kelly * 0.50)), 4)
+        self.calibrated_kelly_fraction = round(max(0.0, min(0.35, raw_kelly * 0.50)), 4)
         self.calibrated_stop_k = 2.2 if post_p > 0.60 else (1.5 if post_p < 0.40 else 2.0)
 
         # 策略健康度评估与自冷却
@@ -211,7 +225,7 @@ class AutonomousLearningSandbox:
             if total == 0:
                 syn = (
                     "【系统自学习中枢已就绪】：当前处于零假样本冷启动待命状态，"
-                    "尚未产生实盘或影子成交样本，严禁虚构盈利历史；动态半凯利初始设定为 f*=10.0%。"
+                    "尚未产生实盘或影子成交样本，严禁虚构盈利历史；凯利 f*=0，流水线仅以显式冷启动探仓运行。"
                 )
                 return SelfLearningReport(
                     total_auto_trades=0, winning_trades=0, losing_trades=0,
@@ -226,15 +240,15 @@ class AutonomousLearningSandbox:
                 )
 
             win_rate = wins / max(1, total)
-            avg_win = (sum(self._win_pnls[-10:]) / len(self._win_pnls[-10:])) if self._win_pnls else 1000.0
-            avg_loss = (sum(self._loss_pnls[-10:]) / len(self._loss_pnls[-10:])) if self._loss_pnls else 500.0
-            payoff = avg_win / max(1.0, avg_loss)
+            avg_win = (sum(self._win_pnls[-10:]) / len(self._win_pnls[-10:])) if self._win_pnls else 0.0
+            avg_loss = (sum(self._loss_pnls[-10:]) / len(self._loss_pnls[-10:])) if self._loss_pnls else 0.0
+            payoff = (avg_win / avg_loss) if avg_loss > 0 else (10.0 if avg_win > 0 else 0.0)
 
             syn = (
                 f"【系统自学习总结】：基于最近 {total} 笔自动影子模拟成交实证，"
                 f"后验胜率收敛于 {win_rate * 100:.1f}%，盈亏比为 {payoff:.2f}。"
                 f"动态半凯利因子自进化至 f*={self.calibrated_kelly_fraction * 100:.1f}%；"
-                f"盘口实际滑点与理论模型吻合度良好，"
+                f"最近一笔滑点误差 {self._autopsy_history[0].slippage_error if self._autopsy_history else 0.0:+.5f}，"
                 f"当前策略健康度指数为 {self.strategy_health_index * 100:.1f}/100 ("
                 f"{'🟢 运行在健康区间' if not self.is_cooling_down else '⚠️ 已触发模型退化自冷却熔断'})。"
             )

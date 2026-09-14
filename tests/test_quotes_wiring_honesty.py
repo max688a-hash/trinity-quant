@@ -73,11 +73,11 @@ class TestQuotesWiringHonesty(unittest.TestCase):
     def test_btc_kline_must_not_borrow_moutai(self) -> None:
         from truth_kernel.historical_kline_service import HistoricalKlineService
 
-        moutai_last = float(HistoricalKlineService._REAL_MOUTAI_DAILY[-1]["close"])
+        self.assertFalse(hasattr(HistoricalKlineService, "_REAL_MOUTAI_DAILY"))
+        self.assertFalse(hasattr(HistoricalKlineService, "_REAL_CYPC_DAILY"))
         bars = HistoricalKlineService.get_kline("BTCUSDT", timeframe="D", count=30)
         if bars:
             last = float(bars[-1]["close"])
-            self.assertNotEqual(last, moutai_last)
             self.assertGreater(last, 1000.0)
         else:
             self.assertEqual(bars, [])

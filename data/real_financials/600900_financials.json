@@ -3,7 +3,7 @@
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2000-12-31",
-    "disclosure_date": "2001-04-25",
+    "disclosure_date": "2001-04-30",
     "revenue": 1407000000.0,
     "operating_profit": 752000000.0,
     "net_profit": 505000000.0,
@@ -20,13 +20,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2001-12-31",
-    "disclosure_date": "2002-04-25",
+    "disclosure_date": "2002-04-30",
     "revenue": 1415000000.0,
     "operating_profit": 733000000.0,
     "net_profit": 494000000.00000006,
@@ -43,13 +45,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2002-12-31",
-    "disclosure_date": "2003-04-25",
+    "disclosure_date": "2003-04-30",
     "revenue": 1371000000.0,
     "operating_profit": 680000000.0,
     "net_profit": 443000000.0,
@@ -66,13 +70,15 @@
     "short_term_debt": 165000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2003-03-31",
-    "disclosure_date": "2003-04-28",
+    "disclosure_date": "2003-04-30",
     "revenue": 231000000.0,
     "operating_profit": 85203200.0,
     "net_profit": 65388900.0,
@@ -89,13 +95,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2003-06-30",
-    "disclosure_date": "2003-08-28",
+    "disclosure_date": "2003-08-31",
     "revenue": 696000000.0,
     "operating_profit": 434000000.0,
     "net_profit": 306000000.0,
@@ -112,13 +120,15 @@
     "short_term_debt": 50000000.0,
     "long_term_debt_due_within_1y": 200000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2003-12-31",
-    "disclosure_date": "2004-04-25",
+    "disclosure_date": "2004-04-30",
     "revenue": 2986000000.0,
     "operating_profit": 1887000000.0,
     "net_profit": 1438000000.0,
@@ -135,13 +145,15 @@
     "short_term_debt": 50000000.0,
     "long_term_debt_due_within_1y": 200000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2004-03-31",
-    "disclosure_date": "2004-04-28",
+    "disclosure_date": "2004-04-30",
     "revenue": 1069999999.9999999,
     "operating_profit": 608000000.0,
     "net_profit": 471000000.0,
@@ -158,13 +170,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 200000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2004-06-30",
-    "disclosure_date": "2004-08-28",
+    "disclosure_date": "2004-08-31",
     "revenue": 2862000000.0,
     "operating_profit": 1834000000.0,
     "net_profit": 1400000000.0,
@@ -181,13 +195,15 @@
     "short_term_debt": 160000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2004-09-30",
-    "disclosure_date": "2004-10-28",
+    "disclosure_date": "2004-10-31",
     "revenue": 4658000000.0,
     "operating_profit": 3118000000.0,
     "net_profit": 2369000000.0,
@@ -204,13 +220,15 @@
     "short_term_debt": 160000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2004-12-31",
-    "disclosure_date": "2005-04-25",
+    "disclosure_date": "2005-04-30",
     "revenue": 6174000000.0,
     "operating_profit": 4002000000.0000005,
     "net_profit": 3039000000.0,
@@ -227,13 +245,15 @@
     "short_term_debt": 160000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2005-03-31",
-    "disclosure_date": "2005-04-28",
+    "disclosure_date": "2005-04-30",
     "revenue": 871000000.0000001,
     "operating_profit": 434999999.99999994,
     "net_profit": 343000000.0,
@@ -250,13 +270,15 @@
     "short_term_debt": 80000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2005-06-30",
-    "disclosure_date": "2005-08-28",
+    "disclosure_date": "2005-08-31",
     "revenue": 3013000000.0,
     "operating_profit": 1846000000.0,
     "net_profit": 1414000000.0,
@@ -273,13 +295,15 @@
     "short_term_debt": 80000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2005-09-30",
-    "disclosure_date": "2005-10-28",
+    "disclosure_date": "2005-10-31",
     "revenue": 5364000000.0,
     "operating_profit": 3442000000.0,
     "net_profit": 2575000000.0,
@@ -296,13 +320,15 @@
     "short_term_debt": 80000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2005-12-31",
-    "disclosure_date": "2006-04-25",
+    "disclosure_date": "2006-04-30",
     "revenue": 7259000000.0,
     "operating_profit": 4432000000.0,
     "net_profit": 3339000000.0,
@@ -319,13 +345,15 @@
     "short_term_debt": 80000000.0,
     "long_term_debt_due_within_1y": 5358000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2006-03-31",
-    "disclosure_date": "2006-04-28",
+    "disclosure_date": "2006-04-30",
     "revenue": 1107000000.0,
     "operating_profit": 480999999.99999994,
     "net_profit": 401000000.0,
@@ -342,13 +370,15 @@
     "short_term_debt": 880000000.0000001,
     "long_term_debt_due_within_1y": 2504000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2006-06-30",
-    "disclosure_date": "2006-08-28",
+    "disclosure_date": "2006-08-31",
     "revenue": 3047000000.0,
     "operating_profit": 1714000000.0,
     "net_profit": 1312000000.0,
@@ -365,13 +395,15 @@
     "short_term_debt": 1080000000.0,
     "long_term_debt_due_within_1y": 2504000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2006-09-30",
-    "disclosure_date": "2006-10-28",
+    "disclosure_date": "2006-10-31",
     "revenue": 5286000000.0,
     "operating_profit": 3226000000.0,
     "net_profit": 2462000000.0,
@@ -388,13 +420,15 @@
     "short_term_debt": 1580000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2006-12-31",
-    "disclosure_date": "2007-04-25",
+    "disclosure_date": "2007-04-30",
     "revenue": 7048999999.999999,
     "operating_profit": 4748000000.0,
     "net_profit": 3615000000.0,
@@ -411,13 +445,15 @@
     "short_term_debt": 5766000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2007-03-31",
-    "disclosure_date": "2007-04-28",
+    "disclosure_date": "2007-04-30",
     "revenue": 1094000000.0,
     "operating_profit": 457000000.0,
     "net_profit": 396000000.0,
@@ -434,13 +470,15 @@
     "short_term_debt": 7034999999.999999,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2007-06-30",
-    "disclosure_date": "2007-08-28",
+    "disclosure_date": "2007-08-31",
     "revenue": 3402000000.0000005,
     "operating_profit": 3092000000.0,
     "net_profit": 2261000000.0,
@@ -457,13 +495,15 @@
     "short_term_debt": 11970000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2007-09-30",
-    "disclosure_date": "2007-10-28",
+    "disclosure_date": "2007-10-31",
     "revenue": 6773999999.999999,
     "operating_profit": 5945000000.0,
     "net_profit": 4522000000.0,
@@ -480,13 +520,15 @@
     "short_term_debt": 11015000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2007-12-31",
-    "disclosure_date": "2008-04-25",
+    "disclosure_date": "2008-04-30",
     "revenue": 8735000000.0,
     "operating_profit": 6868000000.000001,
     "net_profit": 5372000000.0,
@@ -503,13 +545,15 @@
     "short_term_debt": 8054000000.000001,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2008-03-31",
-    "disclosure_date": "2008-04-28",
+    "disclosure_date": "2008-04-30",
     "revenue": 1087000000.0,
     "operating_profit": 219000000.0,
     "net_profit": 252000000.0,
@@ -526,13 +570,15 @@
     "short_term_debt": 7222000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2008-06-30",
-    "disclosure_date": "2008-08-28",
+    "disclosure_date": "2008-08-31",
     "revenue": 3349000000.0,
     "operating_profit": 1672000000.0,
     "net_profit": 1479000000.0,
@@ -549,13 +595,15 @@
     "short_term_debt": 5543000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2008-09-30",
-    "disclosure_date": "2008-10-28",
+    "disclosure_date": "2008-10-31",
     "revenue": 7103000000.0,
     "operating_profit": 4060000000.0,
     "net_profit": 3444000000.0,
@@ -572,13 +620,15 @@
     "short_term_debt": 6059000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2008-12-31",
-    "disclosure_date": "2009-04-25",
+    "disclosure_date": "2009-04-30",
     "revenue": 9374000000.0,
     "operating_profit": 4575000000.0,
     "net_profit": 4004999999.9999995,
@@ -595,13 +645,15 @@
     "short_term_debt": 5591000000.0,
     "long_term_debt_due_within_1y": 0.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2009-03-31",
-    "disclosure_date": "2009-04-28",
+    "disclosure_date": "2009-04-30",
     "revenue": 1327000000.0,
     "operating_profit": 955000000.0000001,
     "net_profit": 838000000.0000001,
@@ -618,13 +670,15 @@
     "short_term_debt": 4577000000.0,
     "long_term_debt_due_within_1y": 6800000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2009-06-30",
-    "disclosure_date": "2009-08-28",
+    "disclosure_date": "2009-08-31",
     "revenue": 3540000000.0,
     "operating_profit": 2261000000.0,
     "net_profit": 1982999999.9999998,
@@ -641,13 +695,15 @@
     "short_term_debt": 2610000000.0,
     "long_term_debt_due_within_1y": 6800000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2009-09-30",
-    "disclosure_date": "2009-10-28",
+    "disclosure_date": "2009-10-31",
     "revenue": 7066000000.0,
     "operating_profit": 4585000000.0,
     "net_profit": 3903000000.0,
@@ -664,13 +720,15 @@
     "short_term_debt": 1001000000.0,
     "long_term_debt_due_within_1y": 6800000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2009-12-31",
-    "disclosure_date": "2010-04-25",
+    "disclosure_date": "2010-04-30",
     "revenue": 11015000000.0,
     "operating_profit": 5029000000.0,
     "net_profit": 4619000000.0,
@@ -687,13 +745,15 @@
     "short_term_debt": 1007000000.0,
     "long_term_debt_due_within_1y": 11525000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2010-03-31",
-    "disclosure_date": "2010-04-28",
+    "disclosure_date": "2010-04-30",
     "revenue": 2905000000.0,
     "operating_profit": -125000000.0,
     "net_profit": 119000000.0,
@@ -710,13 +770,15 @@
     "short_term_debt": 1011999999.9999999,
     "long_term_debt_due_within_1y": 4725000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2010-06-30",
-    "disclosure_date": "2010-08-28",
+    "disclosure_date": "2010-08-31",
     "revenue": 7897000000.0,
     "operating_profit": 1977000000.0,
     "net_profit": 1982000000.0,
@@ -733,13 +795,15 @@
     "short_term_debt": 14522999999.999998,
     "long_term_debt_due_within_1y": 9923000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2010-09-30",
-    "disclosure_date": "2010-10-28",
+    "disclosure_date": "2010-10-31",
     "revenue": 17368000000.0,
     "operating_profit": 8139000000.0,
     "net_profit": 7164000000.0,
@@ -756,13 +820,15 @@
     "short_term_debt": 29686000000.0,
     "long_term_debt_due_within_1y": 29713000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2010-12-31",
-    "disclosure_date": "2011-04-25",
+    "disclosure_date": "2011-04-30",
     "revenue": 21880000000.0,
     "operating_profit": 8783000000.0,
     "net_profit": 8226000000.000001,
@@ -779,13 +845,15 @@
     "short_term_debt": 25992000000.0,
     "long_term_debt_due_within_1y": 30702999999.999996,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2011-03-31",
-    "disclosure_date": "2011-04-28",
+    "disclosure_date": "2011-04-30",
     "revenue": 3502000000.0000005,
     "operating_profit": 512000000.0,
     "net_profit": 648000000.0,
@@ -802,13 +870,15 @@
     "short_term_debt": 27091000000.000004,
     "long_term_debt_due_within_1y": 30695999999.999996,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2011-06-30",
-    "disclosure_date": "2011-08-28",
+    "disclosure_date": "2011-08-31",
     "revenue": 8336000000.0,
     "operating_profit": 2814000000.0,
     "net_profit": 2686000000.0,
@@ -825,13 +895,15 @@
     "short_term_debt": 25529000000.0,
     "long_term_debt_due_within_1y": 30688000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2011-09-30",
-    "disclosure_date": "2011-10-28",
+    "disclosure_date": "2011-10-31",
     "revenue": 15838999999.999998,
     "operating_profit": 7095000000.0,
     "net_profit": 6328000000.0,
@@ -848,13 +920,15 @@
     "short_term_debt": 29130000000.0,
     "long_term_debt_due_within_1y": 26676000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2011-12-31",
-    "disclosure_date": "2012-04-25",
+    "disclosure_date": "2012-04-30",
     "revenue": 20700000000.0,
     "operating_profit": 8384999999.999999,
     "net_profit": 7701000000.000001,
@@ -871,13 +945,15 @@
     "short_term_debt": 18700000000.0,
     "long_term_debt_due_within_1y": 24567000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2012-03-31",
-    "disclosure_date": "2012-04-28",
+    "disclosure_date": "2012-04-30",
     "revenue": 3378000000.0,
     "operating_profit": 139000000.0,
     "net_profit": 413999999.99999994,
@@ -894,13 +970,15 @@
     "short_term_debt": 29414999999.999996,
     "long_term_debt_due_within_1y": 24565000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2012-06-30",
-    "disclosure_date": "2012-08-28",
+    "disclosure_date": "2012-08-31",
     "revenue": 9278000000.0,
     "operating_profit": 2947000000.0,
     "net_profit": 2847000000.0,
@@ -917,13 +995,15 @@
     "short_term_debt": 28600000000.0,
     "long_term_debt_due_within_1y": 24465000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2012-09-30",
-    "disclosure_date": "2012-10-28",
+    "disclosure_date": "2012-10-31",
     "revenue": 20035000000.0,
     "operating_profit": 9872000000.0,
     "net_profit": 8641000000.0,
@@ -940,13 +1020,15 @@
     "short_term_debt": 51412000000.0,
     "long_term_debt_due_within_1y": 466000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2012-12-31",
-    "disclosure_date": "2013-04-25",
+    "disclosure_date": "2013-04-30",
     "revenue": 25782000000.0,
     "operating_profit": 11451000000.0,
     "net_profit": 10353000000.0,
@@ -963,13 +1045,15 @@
     "short_term_debt": 35000000000.0,
     "long_term_debt_due_within_1y": 462000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2013-03-31",
-    "disclosure_date": "2013-04-28",
+    "disclosure_date": "2013-04-30",
     "revenue": 3439000000.0,
     "operating_profit": 208000000.0,
     "net_profit": 497000000.0,
@@ -986,13 +1070,15 @@
     "short_term_debt": 38000000000.0,
     "long_term_debt_due_within_1y": 461000000.00000006,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2013-06-30",
-    "disclosure_date": "2013-08-28",
+    "disclosure_date": "2013-08-31",
     "revenue": 8973000000.0,
     "operating_profit": 2885000000.0,
     "net_profit": 2847000000.0,
@@ -1009,13 +1095,15 @@
     "short_term_debt": 30000000000.0,
     "long_term_debt_due_within_1y": 404000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2013-09-30",
-    "disclosure_date": "2013-10-28",
+    "disclosure_date": "2013-10-31",
     "revenue": 18167000000.0,
     "operating_profit": 8434999999.999999,
     "net_profit": 7565000000.000001,
@@ -1032,13 +1120,15 @@
     "short_term_debt": 28000000000.0,
     "long_term_debt_due_within_1y": 401999999.99999994,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2013-12-31",
-    "disclosure_date": "2014-04-25",
+    "disclosure_date": "2014-04-30",
     "revenue": 22698000000.0,
     "operating_profit": 9625000000.0,
     "net_profit": 8994000000.0,
@@ -1055,13 +1145,15 @@
     "short_term_debt": 27000000000.0,
     "long_term_debt_due_within_1y": 339000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2014-03-31",
-    "disclosure_date": "2014-04-28",
+    "disclosure_date": "2014-04-30",
     "revenue": 3565999999.9999995,
     "operating_profit": 497000000.0,
     "net_profit": 636000000.0,
@@ -1078,13 +1170,15 @@
     "short_term_debt": 23000000000.0,
     "long_term_debt_due_within_1y": 12841999999.999998,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2014-06-30",
-    "disclosure_date": "2014-08-28",
+    "disclosure_date": "2014-08-31",
     "revenue": 9699000000.0,
     "operating_profit": 3724000000.0,
     "net_profit": 3393000000.0,
@@ -1101,13 +1195,15 @@
     "short_term_debt": 20000000000.0,
     "long_term_debt_due_within_1y": 12833000000.000002,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2014-09-30",
-    "disclosure_date": "2014-10-28",
+    "disclosure_date": "2014-10-31",
     "revenue": 20623000000.0,
     "operating_profit": 11055000000.0,
     "net_profit": 9450000000.0,
@@ -1124,13 +1220,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 12833000000.000002,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2014-12-31",
-    "disclosure_date": "2015-04-25",
+    "disclosure_date": "2015-04-30",
     "revenue": 26898000000.0,
     "operating_profit": 13549000000.0,
     "net_profit": 11830000000.0,
@@ -1147,13 +1245,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 11701000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2015-03-31",
-    "disclosure_date": "2015-04-28",
+    "disclosure_date": "2015-04-30",
     "revenue": 3827000000.0000005,
     "operating_profit": 1834000000.0,
     "net_profit": 1887000000.0,
@@ -1170,13 +1270,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 5832000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2015-06-30",
-    "disclosure_date": "2015-08-28",
+    "disclosure_date": "2015-08-31",
     "revenue": 18428000000.0,
     "operating_profit": 7114000000.0,
     "net_profit": 7098999999.999999,
@@ -1193,13 +1295,15 @@
     "short_term_debt": 2000000000.0,
     "long_term_debt_due_within_1y": 5809000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2015-09-30",
-    "disclosure_date": "2015-10-28",
+    "disclosure_date": "2015-10-31",
     "revenue": 35553000000.0,
     "operating_profit": 17016000000.0,
     "net_profit": 16440000000.0,
@@ -1216,13 +1320,15 @@
     "short_term_debt": 0.0,
     "long_term_debt_due_within_1y": 11322000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2015-12-31",
-    "disclosure_date": "2016-04-25",
+    "disclosure_date": "2016-04-30",
     "revenue": 47435000000.0,
     "operating_profit": 21101000000.0,
     "net_profit": 21113000000.0,
@@ -1239,13 +1345,15 @@
     "short_term_debt": 2000000000.0,
     "long_term_debt_due_within_1y": 32702000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2016-03-31",
-    "disclosure_date": "2016-04-28",
+    "disclosure_date": "2016-04-30",
     "revenue": 7834999999.999999,
     "operating_profit": 2063000000.0,
     "net_profit": 2322000000.0,
@@ -1262,13 +1370,15 @@
     "short_term_debt": 4000000000.0,
     "long_term_debt_due_within_1y": 3279000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2016-06-30",
-    "disclosure_date": "2016-08-28",
+    "disclosure_date": "2016-08-31",
     "revenue": 20069000000.0,
     "operating_profit": 8287000000.0,
     "net_profit": 7680000000.0,
@@ -1285,13 +1395,15 @@
     "short_term_debt": 15500000000.0,
     "long_term_debt_due_within_1y": 24677000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2016-09-30",
-    "disclosure_date": "2016-10-28",
+    "disclosure_date": "2016-10-31",
     "revenue": 37251000000.0,
     "operating_profit": 17961000000.0,
     "net_profit": 16336000000.000002,
@@ -1308,13 +1420,15 @@
     "short_term_debt": 19435000000.0,
     "long_term_debt_due_within_1y": 20861000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2016-12-31",
-    "disclosure_date": "2017-04-25",
+    "disclosure_date": "2017-04-30",
     "revenue": 48939000000.0,
     "operating_profit": 22297000000.0,
     "net_profit": 20938000000.0,
@@ -1331,13 +1445,15 @@
     "short_term_debt": 16300000000.0,
     "long_term_debt_due_within_1y": 17669000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2017-03-31",
-    "disclosure_date": "2017-04-28",
+    "disclosure_date": "2017-04-30",
     "revenue": 7855000000.0,
     "operating_profit": 2694000000.0,
     "net_profit": 2709000000.0,
@@ -1354,13 +1470,15 @@
     "short_term_debt": 23920000000.0,
     "long_term_debt_due_within_1y": 17579000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2017-06-30",
-    "disclosure_date": "2017-08-28",
+    "disclosure_date": "2017-08-31",
     "revenue": 19290000000.0,
     "operating_profit": 9722000000.0,
     "net_profit": 8105000000.0,
@@ -1377,13 +1495,15 @@
     "short_term_debt": 24820000000.0,
     "long_term_debt_due_within_1y": 22076000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2017-09-30",
-    "disclosure_date": "2017-10-28",
+    "disclosure_date": "2017-10-31",
     "revenue": 37232000000.0,
     "operating_profit": 21290000000.0,
     "net_profit": 17758000000.0,
@@ -1400,13 +1520,15 @@
     "short_term_debt": 23800000000.0,
     "long_term_debt_due_within_1y": 15009000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2017-12-31",
-    "disclosure_date": "2018-04-25",
+    "disclosure_date": "2018-04-30",
     "revenue": 50146000000.0,
     "operating_profit": 27077000000.0,
     "net_profit": 22275000000.0,
@@ -1423,13 +1545,15 @@
     "short_term_debt": 19005000000.0,
     "long_term_debt_due_within_1y": 13508000000.000002,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2018-03-31",
-    "disclosure_date": "2018-04-28",
+    "disclosure_date": "2018-04-30",
     "revenue": 8148999999.999999,
     "operating_profit": 3383000000.0,
     "net_profit": 2833000000.0,
@@ -1446,13 +1570,15 @@
     "short_term_debt": 26000000000.0,
     "long_term_debt_due_within_1y": 8966000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2018-06-30",
-    "disclosure_date": "2018-08-28",
+    "disclosure_date": "2018-08-31",
     "revenue": 19210000000.0,
     "operating_profit": 10216000000.0,
     "net_profit": 8526000000.000001,
@@ -1469,13 +1595,15 @@
     "short_term_debt": 26100000000.0,
     "long_term_debt_due_within_1y": 13278000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2018-09-30",
-    "disclosure_date": "2018-10-28",
+    "disclosure_date": "2018-10-31",
     "revenue": 39066000000.0,
     "operating_profit": 21748000000.0,
     "net_profit": 17929000000.0,
@@ -1492,13 +1620,15 @@
     "short_term_debt": 17600000000.0,
     "long_term_debt_due_within_1y": 16036000000.000002,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2018-12-31",
-    "disclosure_date": "2019-04-25",
+    "disclosure_date": "2019-04-30",
     "revenue": 51214000000.0,
     "operating_profit": 27392000000.0,
     "net_profit": 22644000000.0,
@@ -1515,13 +1645,15 @@
     "short_term_debt": 12700000000.0,
     "long_term_debt_due_within_1y": 15297999999.999998,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2019-03-31",
-    "disclosure_date": "2019-04-28",
+    "disclosure_date": "2019-04-30",
     "revenue": 8608000000.0,
     "operating_profit": 3445000000.0000005,
     "net_profit": 2917000000.0,
@@ -1538,13 +1670,15 @@
     "short_term_debt": 21355000000.0,
     "long_term_debt_due_within_1y": 10499000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2019-06-30",
-    "disclosure_date": "2019-08-28",
+    "disclosure_date": "2019-08-31",
     "revenue": 20363000000.0,
     "operating_profit": 10380000000.0,
     "net_profit": 8575000000.0,
@@ -1561,13 +1695,15 @@
     "short_term_debt": 26382000000.0,
     "long_term_debt_due_within_1y": 4500000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2019-09-30",
-    "disclosure_date": "2019-10-28",
+    "disclosure_date": "2019-10-31",
     "revenue": 38084000000.0,
     "operating_profit": 21886000000.0,
     "net_profit": 17843000000.0,
@@ -1584,13 +1720,15 @@
     "short_term_debt": 23489000000.0,
     "long_term_debt_due_within_1y": 2500000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2019-12-31",
-    "disclosure_date": "2020-04-25",
+    "disclosure_date": "2020-04-30",
     "revenue": 49874000000.0,
     "operating_profit": 26933000000.0,
     "net_profit": 21567000000.0,
@@ -1607,13 +1745,15 @@
     "short_term_debt": 21308000000.0,
     "long_term_debt_due_within_1y": 2500000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2020-03-31",
-    "disclosure_date": "2020-04-28",
+    "disclosure_date": "2020-04-30",
     "revenue": 8384000000.0,
     "operating_profit": 2872000000.0,
     "net_profit": 2294000000.0,
@@ -1630,13 +1770,15 @@
     "short_term_debt": 17700000000.0,
     "long_term_debt_due_within_1y": 5497000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2020-06-30",
-    "disclosure_date": "2020-08-28",
+    "disclosure_date": "2020-08-31",
     "revenue": 19913000000.0,
     "operating_profit": 9747000000.0,
     "net_profit": 7953000000.0,
@@ -1653,13 +1795,15 @@
     "short_term_debt": 42793000000.0,
     "long_term_debt_due_within_1y": 6198000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2020-09-30",
-    "disclosure_date": "2020-10-28",
+    "disclosure_date": "2020-10-31",
     "revenue": 42860000000.0,
     "operating_profit": 25260000000.0,
     "net_profit": 20351000000.0,
@@ -1676,13 +1820,15 @@
     "short_term_debt": 46706000000.0,
     "long_term_debt_due_within_1y": 19902000000.0,
     "goodwill": 0.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2020-12-31",
-    "disclosure_date": "2021-04-25",
+    "disclosure_date": "2021-04-30",
     "revenue": 57783000000.00001,
     "operating_profit": 32895999999.999996,
     "net_profit": 26506000000.0,
@@ -1699,13 +1845,15 @@
     "short_term_debt": 24058000000.0,
     "long_term_debt_due_within_1y": 23924000000.0,
     "goodwill": 1010000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2021-03-31",
-    "disclosure_date": "2021-04-28",
+    "disclosure_date": "2021-04-30",
     "revenue": 8870000000.0,
     "operating_profit": 3661999999.9999995,
     "net_profit": 2919000000.0,
@@ -1722,13 +1870,15 @@
     "short_term_debt": 22812000000.0,
     "long_term_debt_due_within_1y": 25014000000.0,
     "goodwill": 1007000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2021-06-30",
-    "disclosure_date": "2021-08-28",
+    "disclosure_date": "2021-08-31",
     "revenue": 19901000000.0,
     "operating_profit": 10246000000.0,
     "net_profit": 8680000000.0,
@@ -1745,13 +1895,15 @@
     "short_term_debt": 16547999999.999998,
     "long_term_debt_due_within_1y": 25101000000.0,
     "goodwill": 1000000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2021-09-30",
-    "disclosure_date": "2021-10-28",
+    "disclosure_date": "2021-10-31",
     "revenue": 40448000000.0,
     "operating_profit": 24126000000.0,
     "net_profit": 19726000000.0,
@@ -1768,13 +1920,15 @@
     "short_term_debt": 12131000000.0,
     "long_term_debt_due_within_1y": 20939000000.0,
     "goodwill": 1002999999.9999999,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2021-12-31",
-    "disclosure_date": "2022-04-25",
+    "disclosure_date": "2022-04-30",
     "revenue": 55646000000.0,
     "operating_profit": 32876000000.0,
     "net_profit": 26485000000.000004,
@@ -1791,13 +1945,15 @@
     "short_term_debt": 12316000000.0,
     "long_term_debt_due_within_1y": 17440000000.0,
     "goodwill": 986999999.9999999,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2022-03-31",
-    "disclosure_date": "2022-04-28",
+    "disclosure_date": "2022-04-30",
     "revenue": 12302000000.0,
     "operating_profit": 4100000000.0,
     "net_profit": 3166000000.0,
@@ -1814,13 +1970,15 @@
     "short_term_debt": 11527000000.0,
     "long_term_debt_due_within_1y": 18703000000.0,
     "goodwill": 984000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2022-06-30",
-    "disclosure_date": "2022-08-28",
+    "disclosure_date": "2022-08-31",
     "revenue": 31458000000.0,
     "operating_profit": 14682000000.0,
     "net_profit": 11779000000.0,
@@ -1837,13 +1995,15 @@
     "short_term_debt": 12763000000.0,
     "long_term_debt_due_within_1y": 18617000000.0,
     "goodwill": 1039000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2022-09-30",
-    "disclosure_date": "2022-10-28",
+    "disclosure_date": "2022-10-31",
     "revenue": 53066999999.99999,
     "operating_profit": 26293000000.0,
     "net_profit": 21684000000.0,
@@ -1860,13 +2020,15 @@
     "short_term_debt": 24235000000.0,
     "long_term_debt_due_within_1y": 6880000000.0,
     "goodwill": 1081000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2022-12-31",
-    "disclosure_date": "2023-04-25",
+    "disclosure_date": "2023-04-30",
     "revenue": 68863000000.0,
     "operating_profit": 30388000000.0,
     "net_profit": 25102000000.0,
@@ -1883,13 +2045,15 @@
     "short_term_debt": 26752000000.0,
     "long_term_debt_due_within_1y": 8195999999.999999,
     "goodwill": 1081000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2023-03-31",
-    "disclosure_date": "2023-04-28",
+    "disclosure_date": "2023-04-30",
     "revenue": 15397000000.0,
     "operating_profit": 4426000000.0,
     "net_profit": 3736999999.9999995,
@@ -1906,13 +2070,15 @@
     "short_term_debt": 71841000000.0,
     "long_term_debt_due_within_1y": 32258999999.999996,
     "goodwill": 1067000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2023-06-30",
-    "disclosure_date": "2023-08-28",
+    "disclosure_date": "2023-08-31",
     "revenue": 30975000000.0,
     "operating_profit": 10796000000.0,
     "net_profit": 9143000000.0,
@@ -1929,13 +2095,15 @@
     "short_term_debt": 71811000000.0,
     "long_term_debt_due_within_1y": 31150000000.0,
     "goodwill": 1122000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2023-09-30",
-    "disclosure_date": "2023-10-28",
+    "disclosure_date": "2023-10-31",
     "revenue": 57854999999.99999,
     "operating_profit": 25549000000.0,
     "net_profit": 21899000000.0,
@@ -1952,13 +2120,15 @@
     "short_term_debt": 57366000000.0,
     "long_term_debt_due_within_1y": 58183000000.00001,
     "goodwill": 1113000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2023-12-31",
-    "disclosure_date": "2024-04-25",
+    "disclosure_date": "2024-04-30",
     "revenue": 78144000000.0,
     "operating_profit": 33231000000.0,
     "net_profit": 27967000000.0,
@@ -1975,13 +2145,15 @@
     "short_term_debt": 53985000000.0,
     "long_term_debt_due_within_1y": 48070000000.0,
     "goodwill": 1136000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2024-03-31",
-    "disclosure_date": "2024-04-28",
+    "disclosure_date": "2024-04-30",
     "revenue": 15657000000.0,
     "operating_profit": 4867000000.0,
     "net_profit": 4079000000.0,
@@ -1998,13 +2170,15 @@
     "short_term_debt": 56463000000.0,
     "long_term_debt_due_within_1y": 61454000000.0,
     "goodwill": 1139000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2024-06-30",
-    "disclosure_date": "2024-08-28",
+    "disclosure_date": "2024-08-31",
     "revenue": 34838000000.0,
     "operating_profit": 13931000000.0,
     "net_profit": 11590000000.0,
@@ -2021,13 +2195,15 @@
     "short_term_debt": 59629999999.99999,
     "long_term_debt_due_within_1y": 55769000000.00001,
     "goodwill": 1143000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2024-09-30",
-    "disclosure_date": "2024-10-28",
+    "disclosure_date": "2024-10-31",
     "revenue": 66330999999.99999,
     "operating_profit": 33747000000.000004,
     "net_profit": 28377999999.999996,
@@ -2044,13 +2220,15 @@
     "short_term_debt": 71012000000.0,
     "long_term_debt_due_within_1y": 53217999999.99999,
     "goodwill": 1132000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2024-12-31",
-    "disclosure_date": "2025-04-25",
+    "disclosure_date": "2025-04-30",
     "revenue": 84492000000.0,
     "operating_profit": 39645000000.0,
     "net_profit": 32930000000.0,
@@ -2067,13 +2245,15 @@
     "short_term_debt": 69692000000.0,
     "long_term_debt_due_within_1y": 46860000000.0,
     "goodwill": 1153000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2025-03-31",
-    "disclosure_date": "2025-04-28",
+    "disclosure_date": "2025-04-30",
     "revenue": 17015000000.0,
     "operating_profit": 6323000000.0,
     "net_profit": 5290000000.0,
@@ -2090,13 +2270,15 @@
     "short_term_debt": 73414000000.0,
     "long_term_debt_due_within_1y": 94612000000.0,
     "goodwill": 1151000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2025-06-30",
-    "disclosure_date": "2025-08-28",
+    "disclosure_date": "2025-08-31",
     "revenue": 36698000000.0,
     "operating_profit": 15965000000.0,
     "net_profit": 13283000000.000002,
@@ -2113,13 +2295,15 @@
     "short_term_debt": 17088000000.0,
     "long_term_debt_due_within_1y": 80718000000.0,
     "goodwill": 1148000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2025-09-30",
-    "disclosure_date": "2025-10-28",
+    "disclosure_date": "2025-10-31",
     "revenue": 65741000000.0,
     "operating_profit": 34213000000.0,
     "net_profit": 28555000000.0,
@@ -2136,13 +2320,15 @@
     "short_term_debt": 14332000000.0,
     "long_term_debt_due_within_1y": 68551000000.0,
     "goodwill": 1140000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2025-12-31",
-    "disclosure_date": "2026-04-25",
+    "disclosure_date": "2026-04-30",
     "revenue": 86242000000.0,
     "operating_profit": 42599000000.0,
     "net_profit": 34949000000.0,
@@ -2159,13 +2345,15 @@
     "short_term_debt": 15181000000.0,
     "long_term_debt_due_within_1y": 70204000000.0,
     "goodwill": 1117000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2026-03-31",
-    "disclosure_date": "2026-04-28",
+    "disclosure_date": "2026-04-30",
     "revenue": 18112000000.0,
     "operating_profit": 8320000000.0,
     "net_profit": 6883000000.0,
@@ -2182,13 +2370,15 @@
     "short_term_debt": 16104000000.0,
     "long_term_debt_due_within_1y": 77502000000.0,
     "goodwill": 1096000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   },
   {
     "symbol": "600900",
     "name": "长江电力",
     "period_end_date": "2026-06-30",
-    "disclosure_date": "2026-08-28",
+    "disclosure_date": "2026-08-31",
     "revenue": 37929000000.0,
     "operating_profit": 18358000000.0,
     "net_profit": 15034000000.0,
@@ -2205,6 +2395,8 @@
     "short_term_debt": 6703000000.0,
     "long_term_debt_due_within_1y": 65738000000.0,
     "goodwill": 1083000000.0,
-    "raw_source": "THS_AUDITED_3_STATEMENTS"
+    "raw_source": "THS_AUDITED_3_STATEMENTS",
+    "disclosure_date_basis": "STATUTORY_DEADLINE",
+    "restricted_cash_source": "NOT_REPORTED"
   }
 ]

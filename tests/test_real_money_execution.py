@@ -114,8 +114,12 @@ class TestRealMoneyRiskGateway(unittest.TestCase):
         self.assertFalse(res.is_allowed)
         self.assertEqual(res.verdict, RiskVerdict.EMERGENCY_LOCKDOWN)
 
-        # 管理员密码解锁
-        self.assertTrue(self.gw.unlock_emergency_kill_switch("TRINITY_MASTER_OVERRIDE_SAFETY_KEY_2026"))
+        # 未配置环境密钥时任何解锁必须失败（fail-closed）
+        os.environ.pop("TRINITY_LIVE_COMBAT_SAFETY_KEY", None)
+        self.assertFalse(self.gw.unlock_emergency_kill_switch("anything"))
+        # 配置环境密钥后主管解锁
+        os.environ["TRINITY_LIVE_COMBAT_SAFETY_KEY"] = "unit-test-safety-key-0123456789"
+        self.assertTrue(self.gw.unlock_emergency_kill_switch("unit-test-safety-key-0123456789"))
         self.assertFalse(self.gw.is_kill_switch_active)
 
 

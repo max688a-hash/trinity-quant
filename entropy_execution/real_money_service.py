@@ -7,7 +7,6 @@ TRINITY QUANT 真金实战战场服务聚合中枢。
 """
 
 import math
-import secrets
 import threading
 import time
 import uuid
@@ -19,6 +18,7 @@ from entropy_execution.algorithmic_order_slicer import (
     TWAPOrderSlicer,
 )
 from entropy_execution.broker_gateway_adapter import (
+    AbstractBrokerGateway,
     RealBrokerRouter,
     RealOrderStatus,
 )
@@ -26,8 +26,11 @@ from entropy_execution.network_watchdog import (
     NetworkLinkStatus,
     NetworkWatchdog,
 )
+from entropy_execution.live_safety_key import (
+    is_live_combat_safety_key_configured,
+    verify_live_combat_safety_key,
+)
 from entropy_execution.real_money_risk_gateway import (
-    LIVE_COMBAT_SAFETY_KEY,
     RealMoneyRiskGateway,
     RiskVerdict,
 )
@@ -49,6 +52,13 @@ _REAL_BROKER_ROUTER = RealBrokerRouter(is_live_combat=False)
 _REAL_LEDGER = RealOrderLedger(db_path="data/real_money_ledger.db")
 _TWAP_SLICER = TWAPOrderSlicer()
 _ICEBERG_SLICER = IcebergOrderSlicer()
+
+
+def bind_physical_gateways_to_router(gateways: List[AbstractBrokerGateway]) -> None:
+    """把持有真实驱动会话的网关注入真金路由器（由 battlefield_api_service 在保险箱握手后调用）"""
+    with _REAL_MONEY_LOCK:
+        for gw in gateways:
+            _REAL_BROKER_ROUTER.bind_physical_gateway(gw)
 
 
 def get_real_money_status() -> Dict[str, Any]:
@@ -83,7 +93,13 @@ def handle_real_money_toggle(payload: Dict[str, Any]) -> Dict[str, Any]:
     key = str(payload.get("safety_key", "") or "")
     with _REAL_MONEY_LOCK:
         if enabled:
-            if not secrets.compare_digest(key, LIVE_COMBAT_SAFETY_KEY):
+            if not is_live_combat_safety_key_configured():
+                return {
+                    "success": False,
+                    "is_live_combat_mode": _REAL_BROKER_ROUTER.is_live_combat,
+                    "message": "安全密钥未配置 (TRINITY_LIVE_COMBAT_SAFETY_KEY)，拒绝点燃真金实盘",
+                }
+            if not verify_live_combat_safety_key(key):
                 return {
                     "success": False,
                     "is_live_combat_mode": _REAL_BROKER_ROUTER.is_live_combat,

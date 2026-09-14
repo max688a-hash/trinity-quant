@@ -78,11 +78,13 @@ class TestLiquidityDefenseAndOrchestrator(unittest.TestCase):
         # 多头共振标的触发全链路顺畅买入
         res = self.orchestrator.execute_tick(
             symbol="600519.SH",
-            current_price=1500.0,
-            macro_history=[1000.0 + i * 10 for i in range(25)],
-            meso_history=[1200.0 + i * 10 for i in range(12)]
+            current_price=150.0,
+            macro_history=[100.0 + i for i in range(25)],
+            meso_history=[120.0 + i for i in range(12)]
         )
-        self.assertTrue(res.is_executed)
+        self.assertTrue(res.is_executed, msg=str(res.veto_reason))
+        self.assertEqual(res.audit_trace["kelly"]["mode"], "COLD_START_PROBE")
+        self.assertLessEqual(res.receipt.executed_price * res.receipt.executed_quantity, 5_000_000.0 * 0.02)
         self.assertEqual(res.action, "BUY_EXECUTED")
         self.assertEqual(res.alert_type, "ENTRY_PING")
         self.assertIsNotNone(res.receipt)

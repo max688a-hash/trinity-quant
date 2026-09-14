@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import os
 import unittest
 
 from entropy_execution.real_money_service import (
@@ -16,6 +17,7 @@ from entropy_execution.real_money_service import (
 
 class TestLiveCombatToggleKey(unittest.TestCase):
     def setUp(self) -> None:
+        os.environ["TRINITY_LIVE_COMBAT_SAFETY_KEY"] = "unit-test-safety-key-0123456789"
         handle_real_money_toggle({"enabled": False})
 
     def tearDown(self) -> None:
@@ -37,13 +39,19 @@ class TestLiveCombatToggleKey(unittest.TestCase):
     def test_correct_key_can_set_flag_then_disable_without_key(self) -> None:
         on = handle_real_money_toggle({
             "enabled": True,
-            "safety_key": "TRINITY_MASTER_OVERRIDE_SAFETY_KEY_2026",
+            "safety_key": "unit-test-safety-key-0123456789",
         })
         self.assertTrue(on.get("success"))
         self.assertTrue(on["is_live_combat_mode"])
         off = handle_real_money_toggle({"enabled": False})
         self.assertTrue(off.get("success"))
         self.assertFalse(off["is_live_combat_mode"])
+
+    def test_unconfigured_key_cannot_ignite(self) -> None:
+        os.environ.pop("TRINITY_LIVE_COMBAT_SAFETY_KEY", None)
+        res = handle_real_money_toggle({"enabled": True, "safety_key": "unit-test-safety-key-0123456789"})
+        self.assertFalse(res.get("success"))
+        self.assertIn("未配置", res.get("message", ""))
 
     def test_letv_kangmei_remain_vetoed(self) -> None:
         from tests.test_immune_system import TestImmuneSystem

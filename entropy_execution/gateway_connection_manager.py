@@ -70,22 +70,23 @@ class GatewayConnectionManager:
             self._heartbeats[gw] = time.time()
 
     def initialize_gateways(self, vault_data: Dict[str, Any]) -> Dict[str, bool]:
-        """依据钥匙保险箱凭据初始化各物理网关；失败必须保持 DISCONNECTED。"""
+        """依据钥匙保险箱**原始**凭据初始化各物理网关；失败必须保持 DISCONNECTED。
+        入参必须是 CredentialVault.get_all_credentials() 的明文字典，脱敏视图无法握手。"""
         results: Dict[str, bool] = {}
         with self._lock:
-            qmt_creds = vault_data.get("QMT", {})
-            if qmt_creds and isinstance(qmt_creds, dict):
+            qmt_creds = vault_data.get("QMT") or vault_data.get("QMT_STOCK") or {}
+            if qmt_creds and isinstance(qmt_creds, dict) and "masked_info" not in qmt_creds:
                 self.qmt_driver = MiniQmtPhysicalDriver(
                     account_id=str(qmt_creds.get("account_id", "")),
-                    mini_path=str(qmt_creds.get("mini_path", "")),
+                    mini_path=str(qmt_creds.get("mini_path") or qmt_creds.get("mini_qmt_path", "")),
                     token=str(qmt_creds.get("token", ""))
                 )
                 ok, _ = self._handshake("QMT")
                 self._mark("QMT", ok)
                 results["QMT"] = ok
 
-            bin_creds = vault_data.get("BINANCE", {})
-            if bin_creds and isinstance(bin_creds, dict):
+            bin_creds = vault_data.get("BINANCE") or vault_data.get("BINANCE_CRYPTO") or {}
+            if bin_creds and isinstance(bin_creds, dict) and "masked_info" not in bin_creds:
                 self.binance_driver = BinanceLiveDriver(
                     api_key=str(bin_creds.get("api_key", "")),
                     api_secret=str(bin_creds.get("api_secret", ""))
@@ -98,6 +99,11 @@ class GatewayConnectionManager:
             results["CTP"] = False
 
         return results
+
+    def get_state(self, gateway_name: str) -> ConnectionState:
+        """查询网关当前连接状态"""
+        with self._lock:
+            return self._states.get(gateway_name.upper(), ConnectionState.DISCONNECTED)
 
     def heartbeat_patrol(self) -> List[GatewayHealthTelemetry]:
         """心跳巡检：超时只允许真实重连成功后回到 CONNECTED。"""
