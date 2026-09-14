@@ -43,6 +43,25 @@ class TestQuotesWiringHonesty(unittest.TestCase):
         self.assertNotIn("asset?.base ?? 2400", page)
         self.assertNotIn("22.5", page)
         self.assertNotIn(".base ??", page)
+        self.assertNotIn("Promise.all", page)
+        self.assertIn("缺 ATR 只禁用", page)
+
+    def test_catalog_must_not_ship_toy_base_prices(self) -> None:
+        markets = self._src("web/src/lib/markets.ts")
+        self.assertIn("MARKET_SECTORS", markets)
+        self.assertNotIn("base:", markets)
+        self.assertNotIn("step:", markets)
+        self.assertNotIn("1550.0", markets)
+        self.assertNotIn("64200.0", markets)
+        self.assertNotIn("3042.0", markets)
+
+    def test_desktop_panels_must_reuse_screener_autopsy_apis(self) -> None:
+        panels = self._src("web/src/pages/DesktopPanels.tsx")
+        self.assertIn("fetchScreener", panels)
+        self.assertIn("fetchForensicAutopsy", panels)
+        self.assertIn("/api/screener", panels)
+        self.assertNotIn("from \"../lib/markets\"", panels)
+        self.assertNotIn("base:", panels)
 
     def test_kline_ma_cross_is_overlay_not_admission(self) -> None:
         chart = self._src("web/src/components/KlineChart.tsx")

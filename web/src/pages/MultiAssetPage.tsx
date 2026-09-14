@@ -42,8 +42,8 @@ export function MultiAssetPage() {
 
   useEffect(() => {
     let cancelled = false;
-    Promise.all([fetchBoardQuotes([code]), fetchKline(code, "D")])
-      .then(([quoteRes, klineRes]) => {
+    fetchBoardQuotes([code])
+      .then((quoteRes) => {
         if (cancelled) {
           return;
         }
@@ -51,17 +51,26 @@ export function MultiAssetPage() {
         if (quote?.available && quote.last != null && Number.isFinite(quote.last) && quote.last > 0) {
           setLast(quote.last);
           setQuoteStatus("OK");
-        } else {
-          setLast(null);
-          setQuoteStatus("DATA_UNAVAILABLE");
+          return;
         }
-        setAtr(atrFromCandles(klineRes.candles ?? []));
+        setLast(null);
+        setQuoteStatus("DATA_UNAVAILABLE");
       })
       .catch(() => {
         if (!cancelled) {
           setLast(null);
-          setAtr(null);
           setQuoteStatus("DATA_UNAVAILABLE");
+        }
+      });
+    fetchKline(code, "D")
+      .then((klineRes) => {
+        if (!cancelled) {
+          setAtr(atrFromCandles(klineRes.candles ?? []));
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setAtr(null);
         }
       });
     return () => {
@@ -87,7 +96,7 @@ export function MultiAssetPage() {
       <Card className="space-y-3">
         <h3 className="text-[18px] font-semibold">标的波动与订单审核模拟器</h3>
         <p className="text-[13px] text-muted-foreground">
-          μ 来自看板最后行情，σ 来自真实日K的 ATR。缺任一项就标 DATA_UNAVAILABLE，禁止用静态基准或死带宽冒充盘口。
+          μ 来自看板最后行情，σ 来自真实日K的 ATR。缺 ATR 只禁用模拟滑条，禁止因日K失败把已接到的最新价清掉。
         </p>
         <label className="text-[13px]">选择测试标的</label>
         <Select value={code} onValueChange={setCode}>
@@ -122,7 +131,9 @@ export function MultiAssetPage() {
         </p>
         <p className="text-[13px] text-muted-foreground">
           {band == null
-            ? "无真实行情或无真实 ATR，禁止用死基准画波动带。"
+            ? last != null
+              ? "已有最新价，但缺真实日K ATR，禁止用死带宽画波动带。"
+              : "无真实行情或无真实 ATR，禁止用死基准画波动带。"
             : `假设价在 [${band[0].toFixed(2)}, ${band[1].toFixed(2)}]；ATR 由日K真实波幅计算。`}
         </p>
       </Card>
