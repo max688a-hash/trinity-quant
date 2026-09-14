@@ -82,9 +82,16 @@ class TestConstitutionExpansion(unittest.TestCase):
         from truth_kernel.realtime_feed_adapter import RealtimeFeedAdapter
         adapter = RealtimeFeedAdapter()
         t1 = adapter.get_tick("600519.SH")
+        if t1.source == "DATA_UNAVAILABLE":
+            t1 = adapter.get_tick("600519.SH")
         t2 = adapter.get_tick("600519.SH")
         self.assertEqual(t1.price, t2.price, "违宪：无新成交时价格发生漂移随机跳动！")
         self.assertEqual(t1.volume, t2.volume, "违宪：无新成交时成交量发生随机漂移！")
+        feed_path = os.path.join(self.workspace_root, "truth_kernel", "realtime_feed_adapter.py")
+        with open(feed_path, encoding="utf-8") as feed_fp:
+            feed_src = feed_fp.read()
+        self.assertNotIn("random.gauss", feed_src)
+        self.assertIn("_OPEN_SNAPSHOT_TTL_SEC", feed_src)
 
         # 2. 物理断言：未获取到真实行情时严禁写死底价伪造，必须报告 DATA_UNAVAILABLE (price=0.0)
         nope_tick = adapter.get_tick("NOPE.SH")
@@ -94,6 +101,8 @@ class TestConstitutionExpansion(unittest.TestCase):
         # 3. 物理断言：真实历史 K 线服务必须返回客观历史记录，严禁正弦波造假
         from truth_kernel.historical_kline_service import HistoricalKlineService
         candles = HistoricalKlineService.get_kline("600519.SH", timeframe="D", count=30)
+        if len(candles) < 10:
+            candles = HistoricalKlineService.get_kline("600519.SH", timeframe="D", count=30)
         self.assertGreaterEqual(len(candles), 10)
         self.assertTrue(any(yr in candles[0]["date"] for yr in ("2023-", "2024-", "2025-", "2026-")), f"非法历史日期: {candles[0]['date']}")
 

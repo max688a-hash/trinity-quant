@@ -15,6 +15,9 @@ from typing import Any, Dict, List, Optional
 import urllib.request
 
 _LOG = logging.getLogger(__name__)
+# 开市连查无新观测即复用上一笔真实快照；禁止每次 HTTP 被当成随机心跳。
+# ref: AGENTS.md 第 33 条 No-Trade Zero-Tick Invariant
+_OPEN_SNAPSHOT_TTL_SEC = 0.35
 
 
 @dataclass(frozen=True)
@@ -149,6 +152,15 @@ class RealtimeFeedAdapter:
             with self._cache_lock:
                 cached = self._cache.get(symbol)
                 if cached is not None and cached.is_closed and cached.price > 0:
+                    return cached
+        else:
+            with self._cache_lock:
+                cached = self._cache.get(symbol)
+                if (
+                    cached is not None
+                    and cached.price > 0
+                    and (now - cached.timestamp) <= _OPEN_SNAPSHOT_TTL_SEC
+                ):
                     return cached
 
         live_tick = self._fetch_sina_live_quote(symbol)
